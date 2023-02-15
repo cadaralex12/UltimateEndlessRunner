@@ -335,4 +335,13 @@ public class Movement : MonoBehaviour
         //    GetComponent<Rigidbody>().AddForce(0, 750, 0);
         //}
     }
+
+    void OnPlayerCollisionEnter(Collider other)
+    {
+        if (other.CompareTag("LowerEnemy"))
+        {
+            Debug.Log("Pula");
+            m_Animator.Play("Fall Flat");
+        }
+    }
 }

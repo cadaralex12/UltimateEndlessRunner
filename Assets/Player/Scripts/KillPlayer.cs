@@ -18,11 +18,16 @@ public class KillPlayer : MonoBehaviour
         
     }
 
+    void reloadScene()
+    {
+        SceneManager.LoadScene(respawn);
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            SceneManager.LoadScene(respawn);
+            Invoke("reloadScene", 2);//this will happen after a delay of 1.5 seconds
         }
     }
 }
