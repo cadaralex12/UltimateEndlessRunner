@@ -86,6 +86,11 @@ public class Movement : MonoBehaviour
             {
                 lastSide = m_SIDE;
             }
+
+            if (m_char.isGrounded)
+            {
+                m_Animator.Play("Jog Strafe Left");
+            }
         }
 
         if (swipeRight)
@@ -113,6 +118,11 @@ public class Movement : MonoBehaviour
             else
             {
                 lastSide = m_SIDE;
+            }
+
+            if (m_char.isGrounded)
+            {
+                m_Animator.Play("Jog Strafe Right");
             }
         }
         x = Mathf.Lerp(x, (int)m_SIDE, Time.deltaTime * speedDodge);
