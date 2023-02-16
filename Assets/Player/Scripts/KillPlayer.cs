@@ -27,7 +27,7 @@ public class KillPlayer : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Invoke("reloadScene", 2);//this will happen after a delay of 1.5 seconds
+            Invoke("reloadScene", 0);//this will happen after a delay of 1.5 seconds
         }
     }
 }

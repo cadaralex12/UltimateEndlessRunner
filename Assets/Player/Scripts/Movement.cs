@@ -19,12 +19,12 @@ public class Movement : MonoBehaviour
     private Collider col;
     private float x;
     public float speedDodge;
-    public float jumpPower = 7f;
+    public float jumpPower = 25f;
     private float y;
     public bool inJump;
     public bool inSlide;
     private Animator m_Animator;
-    public float fwdSpeed = 40f;
+    public float fwdSpeed = 25f;
 
     private float colHeight;
     private float colCenterY;
@@ -35,6 +35,8 @@ public class Movement : MonoBehaviour
 
     public int terrain_sides = 5;
     public bool doubleJump = false;
+
+    public bool slow = false;
 
     //private GroundSpawner spawner;
 
@@ -87,7 +89,7 @@ public class Movement : MonoBehaviour
                 lastSide = m_SIDE;
             }
 
-            if (m_char.isGrounded)
+            if (m_char.isGrounded && !inSlide)
             {
                 m_Animator.Play("Jog Strafe Left");
             }
@@ -120,7 +122,7 @@ public class Movement : MonoBehaviour
                 lastSide = m_SIDE;
             }
 
-            if (m_char.isGrounded)
+            if (m_char.isGrounded && !inSlide)
             {
                 m_Animator.Play("Jog Strafe Right");
             }
@@ -130,6 +132,7 @@ public class Movement : MonoBehaviour
         m_char.Move(moveVector);
         Jump();
         Slide();
+        BulletTime();
         if (!(col.transform.tag == "Player"))
             OnCharacterColliderHit(col);
     }
@@ -343,5 +346,33 @@ public class Movement : MonoBehaviour
             Debug.Log("Pula");
             m_Animator.Play("Fall Flat");
         }
+    }
+
+    void BulletTime()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            if (slow)
+            {
+                Resume();
+            }
+            else
+            {
+                SlowDown();
+            }
+        }
+    }
+
+    void SlowDown()
+    {
+        Time.timeScale = 0.5f;
+        slow = true;
+    }
+
+    void Resume()
+    {
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = Time.timeScale * 0.01f;
+        slow = false;
     }
 }

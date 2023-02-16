@@ -913,6 +913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd1f123f3ac61e42b1ae1232586129b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: Endless
 --- !u!114 &1934895172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1154,6 +1155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd1f123f3ac61e42b1ae1232586129b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: Level 1
 --- !u!114 &2069868195
 MonoBehaviour:
   m_ObjectHideFlags: 0

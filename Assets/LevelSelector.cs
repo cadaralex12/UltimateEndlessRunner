@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelector : MonoBehaviour
 {
+    public string level;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +14,6 @@ public class LevelSelector : MonoBehaviour
 
     public void OpenScene()
     {
-        SceneManager.LoadScene("Level 1");
+        SceneManager.LoadScene(level);
     }
 }
