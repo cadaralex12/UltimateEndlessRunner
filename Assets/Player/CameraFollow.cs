@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Camera: MonoBehaviour
+public class CameraFollow: MonoBehaviour
 {
     public Transform target;
     private Vector3 offset;
     private float y;
     public float speedFollow = 5f;
+    private float fiveSideOffset = -20f;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +19,7 @@ public class Camera: MonoBehaviour
     void LateUpdate()
     {
         Vector3 followPos = target.position + offset;
+        //followPos.z += fiveSideOffset;
         RaycastHit hit;
         if (Physics.Raycast(target.position, Vector3.down, out hit, 2.5f))
         {

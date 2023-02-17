@@ -4,7 +4,7 @@ using UnityEngine;
 
 [System.Serializable]
 
-public enum SIDE { LEFTLEFT = -14, LEFT = -7, MID = 0, RIGHT = 7, RIGHTRIGHT = 14 };
+public enum SIDE { LEFTLEFT = -30, LEFT = -7, MID = 0, RIGHT = 7, RIGHTRIGHT = 30 };
 
 public enum HitX { Left, Mid, Right, None };
 public enum HitY { Up, Mid, Down, Low, None };
@@ -339,12 +339,14 @@ public class Movement : MonoBehaviour
         //}
     }
 
-    void OnPlayerCollisionEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("LowerEnemy"))
+        if (other.CompareTag("RampPeak"))
         {
             Debug.Log("Pula");
-            m_Animator.Play("Fall Flat");
+            y = jumpPower;
+            inJump = true;
+            m_Animator.CrossFadeInFixedTime("Jump", 0.1f);
         }
     }
 
