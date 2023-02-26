@@ -8,7 +8,7 @@ public class CameraFollow: MonoBehaviour
     private Vector3 offset;
     private float y;
     public float speedFollow = 5f;
-    private float fiveSideOffset = -20f;
+    //private float fiveSideOffset = -20f;
     // Start is called before the first frame update
     void Start()
     {

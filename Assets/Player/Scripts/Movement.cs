@@ -4,7 +4,7 @@ using UnityEngine;
 
 [System.Serializable]
 
-public enum SIDE { LEFTLEFT = -30, LEFT = -7, MID = 0, RIGHT = 7, RIGHTRIGHT = 30 };
+public enum SIDE { LEFTLEFT = -30, LEFT = -15, MID = 0, RIGHT = 15, RIGHTRIGHT = 30 };
 
 public enum HitX { Left, Mid, Right, None };
 public enum HitY { Up, Mid, Down, Low, None };
@@ -38,6 +38,43 @@ public class Movement : MonoBehaviour
 
     public bool slow = false;
 
+    public bool momentum = true;
+
+
+
+    private Vector2 startTouchPosition;
+    private Vector2 currentPosition;
+    private Vector2 endTouchPosition;
+    private bool stopTouch = false;
+
+    public float swipeRange;
+    public float tapRange;
+
+
+
+
+
+
+
+    public const float MAX_SWIPE_TIME = 0.5f;
+
+    // Factor of the screen width that we consider a swipe
+    // 0.17 works well for portrait mode 16:9 phone
+    public const float MIN_SWIPE_DISTANCE = 0.17f;
+
+    public static bool swipedRight = false;
+    public static bool swipedLeft = false;
+    public static bool swipedUp = false;
+    public static bool swipedDown = false;
+
+
+    public bool debugWithArrowKeys = true;
+
+    Vector2 startPos;
+    float startTime;
+
+
+
     //private GroundSpawner spawner;
 
     // Start is called before the first frame update
@@ -57,12 +94,137 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //terrain_sides = spawner.lastWidth;
-        swipeLeft = Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow);
-        swipeRight = Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow);
-        swipeUp = Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow);
-        swipeDown = Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow);
-        if (swipeLeft)
+        //swipeLeft = Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow);
+        //swipeRight = Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow);
+        //swipeUp = Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow);
+        //swipeDown = Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow);
+
+        swipeLeft = false;
+        swipeRight = false;
+        swipeUp = false;
+        swipeDown = false;
+
+
+        swipedRight = false;
+        swipedLeft = false;
+        swipedUp = false;
+        swipedDown = false;
+
+        if (Input.touches.Length > 0)
+        {
+            Touch t = Input.GetTouch(0);
+            if (t.phase == TouchPhase.Began)
+            {
+                startPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
+                startTime = Time.time;
+            }
+            if (t.phase == TouchPhase.Ended)
+            {
+                if (Time.time - startTime > MAX_SWIPE_TIME) // press too long
+                    return;
+
+                Vector2 endPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
+
+                Vector2 swipe = new Vector2(endPos.x - startPos.x, endPos.y - startPos.y);
+
+                if (swipe.magnitude < MIN_SWIPE_DISTANCE) // Too short swipe
+                    return;
+
+                if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
+                { // Horizontal swipe
+                    if (swipe.x > 0)
+                    {
+                        swipedRight = true;
+                    }
+                    else
+                    {
+                        swipedLeft = true;
+                    }
+                }
+                else
+                { // Vertical swipe
+                    if (swipe.y > 0)
+                    {
+                        swipedUp = true;
+                    }
+                    else
+                    {
+                        swipedDown = true;
+                    }
+                }
+            }
+        }
+
+        if (debugWithArrowKeys)
+        {
+            swipedDown = swipedDown || Input.GetKeyDown(KeyCode.DownArrow);
+            swipedUp = swipedUp || Input.GetKeyDown(KeyCode.UpArrow);
+            swipedRight = swipedRight || Input.GetKeyDown(KeyCode.RightArrow);
+            swipedLeft = swipedLeft || Input.GetKeyDown(KeyCode.LeftArrow);
+        }
+
+
+
+        /*if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            startTouchPosition = Input.GetTouch(0).position;
+        }
+
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+        {
+            currentPosition = Input.GetTouch(0).position;
+            Vector2 Distance = currentPosition - startTouchPosition;
+
+            if (!stopTouch)
+            {
+
+                if (Distance.x < -swipeRange)
+                {
+                    Debug.Log("Swipe left");
+                    stopTouch = true;
+                    swipeLeft = true;
+                    
+                }
+                else if (Distance.x > swipeRange)
+                {
+                    Debug.Log("Swipe Right");
+                    stopTouch = true;
+                    swipeRight = true;
+                }
+                else if (Distance.y > swipeRange)
+                {
+                    Debug.Log("Swipe Up");
+                    stopTouch = true;
+                    swipeUp = true;
+                }
+                else if (Distance.y < -swipeRange)
+                {
+                    Debug.Log("Swipe Down");
+                    stopTouch = true;
+                    swipeDown = true;
+                }
+
+            }
+
+        }
+
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+        {
+            stopTouch = false;
+
+            endTouchPosition = Input.GetTouch(0).position;
+
+            Vector2 Distance = endTouchPosition - startTouchPosition;
+
+            if (Mathf.Abs(Distance.x) < tapRange && Mathf.Abs(Distance.y) < tapRange)
+            {
+                Debug.Log("Tap");
+            }
+
+        }*/
+
+
+        if (swipedLeft)
         {
             if (m_SIDE == SIDE.MID)
             {
@@ -95,7 +257,7 @@ public class Movement : MonoBehaviour
             }
         }
 
-        if (swipeRight)
+        if (swipedRight)
         {
             if (m_SIDE == SIDE.MID)
             {
@@ -127,6 +289,8 @@ public class Movement : MonoBehaviour
                 m_Animator.Play("Jog Strafe Right");
             }
         }
+
+
         x = Mathf.Lerp(x, (int)m_SIDE, Time.deltaTime * speedDodge);
         Vector3 moveVector = new Vector3(x - transform.position.x, y * Time.deltaTime, fwdSpeed * Time.deltaTime);
         m_char.Move(moveVector);
@@ -142,12 +306,12 @@ public class Movement : MonoBehaviour
         if (m_char.isGrounded)
         {
             doubleJump = false;
-            if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Floating") || m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Backflip"))
+            if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Floating") || m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Backflip") || m_Animator.GetCurrentAnimatorStateInfo(0).IsName("PoseOne"))
             {
                 m_Animator.Play("Landing");
                 //inJump = false;
             }
-            if (swipeUp)
+            if (swipedUp)
             {
                 y = jumpPower;
                 inJump = true;
@@ -156,7 +320,7 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            if (swipeUp && doubleJump == false)
+            if (swipedUp && doubleJump == false)
             {
                 doubleJump = true;
                 y = jumpPower;
@@ -165,9 +329,15 @@ public class Movement : MonoBehaviour
             }
             else
             {
-                y -= jumpPower * 2 * Time.deltaTime;
-                //if (m_char.velocity.y < -0.1f)
-                    //m_Animator.Play("");
+                if (momentum == false)
+                {
+                    y = jumpPower / 2;
+                    momentum = true;
+                }
+                else
+                {
+                    y -= jumpPower * 2 * Time.deltaTime;
+                }
             }
         }
     }
@@ -184,12 +354,12 @@ public class Movement : MonoBehaviour
             m_char.center = new Vector3(0, colCenterY, 0);
             m_char.height = colHeight;
         }
-        if (swipeDown)
+        if (swipedDown)
         {
             if (!m_char.isGrounded)
             {
                 // fix to be able to double jump after stomp
-                if (swipeUp && doubleJump == false)
+                if (swipedUp && doubleJump == false)
                 {
                     doubleJump = true;
                     y += jumpPower;
@@ -333,10 +503,6 @@ public class Movement : MonoBehaviour
             Debug.Log("Fuck");
             y = jumpPower;
         }
-        //if (collision.gameObject.name == "Trambulin")
-        //{
-        //    GetComponent<Rigidbody>().AddForce(0, 750, 0);
-        //}
     }
 
     void OnTriggerEnter(Collider other)
@@ -344,9 +510,15 @@ public class Movement : MonoBehaviour
         if (other.CompareTag("RampPeak"))
         {
             Debug.Log("Pula");
-            y = jumpPower;
+            y = jumpPower/2;
             inJump = true;
             m_Animator.CrossFadeInFixedTime("Jump", 0.1f);
+        }
+        else if (other.CompareTag("JumpPad"))
+        {
+            y = 1.5f*jumpPower;
+            inJump = true;
+            m_Animator.CrossFadeInFixedTime("PoseOne", 0.3f);
         }
     }
 

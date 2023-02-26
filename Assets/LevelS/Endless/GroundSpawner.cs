@@ -8,10 +8,10 @@ public class GroundSpawner : MonoBehaviour
     public int lastWidth = 0;
     public int newWidth = 0;
     private Transform playerTransform;
-    private float spawnZ = 0.0f;
-    private float tileLength = 15.0f;
-    private int amnTilesOnScreen = 5000;
-    private float safeZone = 15.0f;
+    public float spawnZ = 0.0f;
+    private float tileLength = 85.0f;
+    private int amnTilesOnScreen = 10;
+    public float safeZone = 30.0f;
     private int lastPrefabIndex = 0;
 
     private List<GameObject> activeTiles;
@@ -39,10 +39,10 @@ public class GroundSpawner : MonoBehaviour
             }
             else
             {
-                SpawnTile(5);
+                SpawnTile(3);
+                DeleteTile();
             }
 
-            DeleteTile();
         }
     }
 
@@ -94,7 +94,7 @@ public class GroundSpawner : MonoBehaviour
             lastPrefabIndex = randomIndex;
             return randomIndex;
         }
-        else if (width == 3)
+        else if (width == 5)
         {
             if (tilePrefabs5.Length <= 1)
             {

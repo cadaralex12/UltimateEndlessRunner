@@ -9,9 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/LevelSelection.unity
     guid: 891a1ec4775fd4d4392d7910a8de48b1
   - enabled: 1
+    path: Assets/Scenes/Endless.unity
+    guid: c6c43d9c800b12749969f5788d10f922
+  - enabled: 1
     path: Assets/Scenes/Level 1.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/Endless.unity
-    guid: c6c43d9c800b12749969f5788d10f922
+    path: Assets/Scenes/Level 2.unity
+    guid: 02592104cdad58d4cb4556aa1486cb75
   m_configObjects: {}
