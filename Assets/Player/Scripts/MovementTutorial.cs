@@ -297,7 +297,6 @@ public class MovementTutorial : MonoBehaviour
             {
                 slideCounter = 1f;
                 inSlide = true;
-                Debug.Log("Ass");
                 m_Animator.Play("Roll");
                 m_char.center = new Vector3(0, colCenterY / 2f, 0);
                 m_char.height = colHeight / 30f;
@@ -326,13 +325,13 @@ public class MovementTutorial : MonoBehaviour
         {
             y = 1.5f*jumpPower;
             inJump = true;
-            m_Animator.CrossFadeInFixedTime("Jump", 0.1f);
+            m_Animator.CrossFadeInFixedTime("PoseOne", 0.3f);
         }
         else if (other.CompareTag("JumpPad"))
         {
             y = 0.5f*jumpPower;
             inJump = true;
-            m_Animator.CrossFadeInFixedTime("PoseOne", 0.3f);
+            m_Animator.CrossFadeInFixedTime("Jump", 0.1f);
         }
         else if (other.CompareTag("LowObstacle"))
         {

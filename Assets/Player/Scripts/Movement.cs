@@ -375,7 +375,6 @@ public class Movement : MonoBehaviour
             {
                 slideCounter = 1f;
                 inSlide = true;
-                Debug.Log("Ass");
                 //m_Animator.CrossFadeInFixedTime("Roll", 1f);
                 m_Animator.Play("Roll");
                 m_char.center = new Vector3(0, colCenterY / 2f, 0);
@@ -500,7 +499,6 @@ public class Movement : MonoBehaviour
     {
         if (collision.gameObject.tag == "Obstacle")
         {
-            Debug.Log("Fuck");
             y = jumpPower;
         }
         else if (collision.gameObject.tag == "LowObstacle")
@@ -519,13 +517,13 @@ public class Movement : MonoBehaviour
         {
             y = 1.5f*jumpPower;
             inJump = true;
-            m_Animator.CrossFadeInFixedTime("Jump", 0.1f);
+            m_Animator.CrossFadeInFixedTime("PoseOne", 0.3f);
         }
         else if (other.CompareTag("JumpPad"))
         {
             y = 0.5f*jumpPower;
             inJump = true;
-            m_Animator.CrossFadeInFixedTime("PoseOne", 0.3f);
+            m_Animator.CrossFadeInFixedTime("Jump", 0.1f);
         }
         else if (other.CompareTag("LowObstacle"))
         {
