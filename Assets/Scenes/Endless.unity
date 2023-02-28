@@ -1226,7 +1226,7 @@ MonoBehaviour:
   jumpPower: 100
   inJump: 0
   inSlide: 0
-  fwdSpeed: 80
+  fwdSpeed: 200
   hitX: 3
   hitY: 4
   hitZ: 3

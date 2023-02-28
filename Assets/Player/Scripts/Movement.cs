@@ -24,7 +24,7 @@ public class Movement : MonoBehaviour
     public bool inJump;
     public bool inSlide;
     private Animator m_Animator;
-    public float fwdSpeed = 25f;
+    public float fwdSpeed = 150f;
 
     private float colHeight;
     private float colCenterY;
@@ -368,7 +368,7 @@ public class Movement : MonoBehaviour
                 }
                 else
                 {
-                    y -= 30f;
+                    y -= 60f;
                 }
             }
             if (!inSlide && m_char.isGrounded)
@@ -503,22 +503,35 @@ public class Movement : MonoBehaviour
             Debug.Log("Fuck");
             y = jumpPower;
         }
+        else if (collision.gameObject.tag == "LowObstacle")
+        {
+            y = jumpPower / 4;
+            fwdSpeed = 0;
+            x -= 50f;
+            m_Animator.CrossFadeInFixedTime("LowTrip", 0.1f);
+            
+        }
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("RampPeak"))
         {
-            Debug.Log("Pula");
-            y = jumpPower/2;
+            y = 1.5f*jumpPower;
             inJump = true;
             m_Animator.CrossFadeInFixedTime("Jump", 0.1f);
         }
         else if (other.CompareTag("JumpPad"))
         {
-            y = 1.5f*jumpPower;
+            y = 0.5f*jumpPower;
             inJump = true;
             m_Animator.CrossFadeInFixedTime("PoseOne", 0.3f);
+        }
+        else if (other.CompareTag("LowObstacle"))
+        {
+            y = jumpPower/4;
+            fwdSpeed = 0;
+            m_Animator.CrossFadeInFixedTime("StumbleBack", 0.1f);
         }
     }
 

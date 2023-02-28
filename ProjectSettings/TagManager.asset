@@ -7,6 +7,10 @@ TagManager:
   - Obstacle
   - RampPeak
   - JumpPad
+  - LowObstacle
+  - 5WaySection
+  - 3WaySection
+  - DoubleJump
   layers:
   - Default
   - TransparentFX
