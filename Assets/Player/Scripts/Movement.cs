@@ -12,6 +12,13 @@ public enum HitZ { Forward, Mid, Backward, None };
 
 public class Movement : MonoBehaviour
 {
+    private float timer = 0;
+    private float lastUpdate = 0;
+    public int score = 0;
+    public float seconds = 0;
+    public float minutes = 0;
+    public float miliseconds = 0;
+    public bool isAlive = false;
     public SIDE m_SIDE = SIDE.MID;
     public SIDE lastSide;
     public bool swipeLeft, swipeRight, swipeUp, swipeDown;
@@ -80,6 +87,9 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        timer = 0;
+        lastUpdate = 0;
+        isAlive = true;
         //spawner = GetComponent<GroundSpawner>();
         //GameObject spawner = GameObject.FindGameObjectWithTag("GroundSpawner");
         col = GetComponent<Collider>();
@@ -94,10 +104,15 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //swipeLeft = Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow);
-        //swipeRight = Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow);
-        //swipeUp = Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow);
-        //swipeDown = Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow);
+        timer += Time.deltaTime;
+        minutes = Mathf.Floor(timer / 60);
+        seconds = timer % 60;
+
+        if (isAlive && (timer - lastUpdate > 0.25f))
+        {
+            score+=5;
+            lastUpdate += 0.25f;
+        }
 
         swipeLeft = false;
         swipeRight = false;
