@@ -11,6 +11,8 @@ TagManager:
   - 5WaySection
   - 3WaySection
   - DoubleJump
+  - 3DTo2D
+  - 2DTo3D
   layers:
   - Default
   - TransparentFX

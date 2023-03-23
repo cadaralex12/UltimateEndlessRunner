@@ -47,14 +47,8 @@ public class ScoreManager : MonoBehaviour
         {
             minutesText = minutes.ToString();
         }
-        if (seconds < 10)
-        {
-            secondsText = seconds.ToString("00.000");
-        }
-        else
-        {
-            secondsText = seconds.ToString();
-        }
+        secondsText = seconds.ToString("00.000");
+        
         timerText.text = minutesText + ":" + secondsText;
         highScoreText.text = "High Score: " + highScore.ToString() + " m";
 

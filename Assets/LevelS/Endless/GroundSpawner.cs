@@ -3,7 +3,9 @@ using System.Collections.Generic;
 
 public class GroundSpawner : MonoBehaviour
 {
-    public GameObject[] tilePrefabs3;
+    public GameObject[] tilePrefabsEasy;
+    public GameObject[] tilePrefabsMedium;
+    public GameObject[] tilePrefabsHard;
     public GameObject[] tilePrefabs5;
     public int lastWidth = 0;
     public int newWidth = 0;
@@ -13,18 +15,21 @@ public class GroundSpawner : MonoBehaviour
     private int amnTilesOnScreen = 10;
     public float safeZone = 30.0f;
     private int lastPrefabIndex = 0;
+    public int difficulty = 1;
 
     private List<GameObject> activeTiles;
 
     private void Start()
     {
+        //DeleteAllTiles();
         lastWidth = 0;
         newWidth = 0;
         activeTiles = new List<GameObject>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         for (int i = 0; i < amnTilesOnScreen; i++)
         {
-            SpawnTile();
+            SpawnTile(difficulty);
+            
         }
     }
 
@@ -33,39 +38,54 @@ public class GroundSpawner : MonoBehaviour
         if ((playerTransform.position.z - safeZone) > (spawnZ - amnTilesOnScreen * tileLength))
         {
             int ran = Random.Range(0, 10);
-            if (ran % 2 == 1)
+            /*if (ran % 2 == 1)
             {
-                SpawnTile();
+                SpawnTile(difficulty);
             }
             else
             {
                 SpawnTile(3);
                 DeleteTile();
+            }*/
+            SpawnTile(difficulty);
+            if (ran % 3 == 0)
+            {
+                DeleteTile();
             }
-
+            
         }
     }
 
-    public void SpawnTile(int width = 3, int prefabIndex = -1)
+    public void SpawnTile(int difficulty = 3, int prefabIndex = -1)
     {
         GameObject temp;
 
-        /*if (width == 3)
+        switch(difficulty)
         {
-            newWidth = 3;*/
-            temp = Instantiate(tilePrefabs3[RandomPreFabindex()]) as GameObject;
-        /*}
-        /*else if (width == 5)
-        {
-            newWidth = 5;
-            temp = Instantiate(tilePrefabs5[RandomPreFabindex()]) as GameObject;
-        }*/
-        /*else
-        {
-            return;
+            case 1:
+                {
+                    temp = Instantiate(tilePrefabsEasy[RandomPreFabindex()]) as GameObject;
+                    break;
+                }
+            case 2:
+                {
+                    temp = Instantiate(tilePrefabsMedium[RandomPreFabindex()]) as GameObject;
+                    break;
+                }
+            case 3:
+                {
+                    temp = Instantiate(tilePrefabsHard[RandomPreFabindex()]) as GameObject;
+                    break;
+                }
+            default:
+                {
+                    temp = Instantiate(tilePrefabsEasy[RandomPreFabindex()]) as GameObject;
+                    break;
+                }
+                
+                
         }
-    */
-        lastWidth = width;
+        //lastWidth = width;
         temp.transform.SetParent(transform);
         temp.transform.position = Vector3.forward * spawnZ;
         spawnZ += tileLength;
@@ -78,32 +98,56 @@ public class GroundSpawner : MonoBehaviour
         activeTiles.RemoveAt(0);
     }
 
-    public int RandomPreFabindex(int width = 3)
+    /*private void DeleteAllTiles()
     {
-        if (width == 3)
+        for (int i=0; i<=activeTiles.size(); i++)
         {
-            if (tilePrefabs3.Length <= 1)
+            Destroy(activeTiles[i]);
+            activeTiles.RemoveAt(i);
+        }
+        
+    }*/
+
+            public int RandomPreFabindex(int difficulty = 1)
+    {
+        if (difficulty == 1)
+        {
+            if (tilePrefabsEasy.Length <= 1)
             {
                 return 0;
             }
             int randomIndex = lastPrefabIndex;
             while (randomIndex == lastPrefabIndex)
             {
-                randomIndex = Random.Range(0, tilePrefabs3.Length);
+                randomIndex = Random.Range(0, tilePrefabsEasy.Length);
             }
             lastPrefabIndex = randomIndex;
             return randomIndex;
         }
-        else if (width == 5)
+        else if (difficulty == 2)
         {
-            if (tilePrefabs5.Length <= 1)
+            if (tilePrefabsMedium.Length <= 1)
             {
                 return 0;
             }
             int randomIndex = lastPrefabIndex;
             while (randomIndex == lastPrefabIndex)
             {
-                randomIndex = Random.Range(0, tilePrefabs5.Length);
+                randomIndex = Random.Range(0, tilePrefabsMedium.Length);
+            }
+            lastPrefabIndex = randomIndex;
+            return randomIndex;
+        }
+        else if (difficulty == 3)
+        {
+            if (tilePrefabsHard.Length <= 1)
+            {
+                return 0;
+            }
+            int randomIndex = lastPrefabIndex;
+            while (randomIndex == lastPrefabIndex)
+            {
+                randomIndex = Random.Range(0, tilePrefabsHard.Length);
             }
             lastPrefabIndex = randomIndex;
             return randomIndex;

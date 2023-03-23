@@ -12,8 +12,9 @@ public enum HitZ { Forward, Mid, Backward, None };
 
 public class Movement : MonoBehaviour
 {
-    private float timer = 0;
-    private float lastUpdate = 0;
+    public bool hasControl = true;
+    public float timer = 0;
+    public float lastUpdate = 0;
     public int score = 0;
     public float seconds = 0;
     public float minutes = 0;
@@ -22,15 +23,15 @@ public class Movement : MonoBehaviour
     public SIDE m_SIDE = SIDE.MID;
     public SIDE lastSide;
     public bool swipeLeft, swipeRight, swipeUp, swipeDown;
-    private CharacterController m_char;
-    private Collider col;
-    private float x;
+    public CharacterController m_char;
+    public Collider col;
+    public float x;
     public float speedDodge;
     public float jumpPower = 25f;
-    private float y;
+    public float y;
     public bool inJump;
     public bool inSlide;
-    private Animator m_Animator;
+    public Animator m_Animator;
     public float fwdSpeed = 150f;
 
     private float colHeight;
@@ -47,8 +48,6 @@ public class Movement : MonoBehaviour
 
     public bool momentum = true;
 
-
-
     private Vector2 startTouchPosition;
     private Vector2 currentPosition;
     private Vector2 endTouchPosition;
@@ -57,23 +56,14 @@ public class Movement : MonoBehaviour
     public float swipeRange;
     public float tapRange;
 
+    public const float MAX_SWIPE_TIME = 0.2f;
 
+    public const float MIN_SWIPE_DISTANCE = 0.01f;
 
-
-
-
-
-    public const float MAX_SWIPE_TIME = 0.5f;
-
-    // Factor of the screen width that we consider a swipe
-    // 0.17 works well for portrait mode 16:9 phone
-    public const float MIN_SWIPE_DISTANCE = 0.17f;
-
-    public static bool swipedRight = false;
-    public static bool swipedLeft = false;
-    public static bool swipedUp = false;
-    public static bool swipedDown = false;
-
+    public bool swipedRight = false;
+    public bool swipedLeft = false;
+    public bool swipedUp = false;
+    public bool swipedDown = false;
 
     public bool debugWithArrowKeys = true;
 
@@ -81,17 +71,11 @@ public class Movement : MonoBehaviour
     float startTime;
 
 
-
-    //private GroundSpawner spawner;
-
-    // Start is called before the first frame update
     void Start()
     {
         timer = 0;
         lastUpdate = 0;
         isAlive = true;
-        //spawner = GetComponent<GroundSpawner>();
-        //GameObject spawner = GameObject.FindGameObjectWithTag("GroundSpawner");
         col = GetComponent<Collider>();
         m_char = GetComponent<CharacterController>();
         m_Animator = GetComponent<Animator>();
@@ -101,7 +85,6 @@ public class Movement : MonoBehaviour
         transform.position = Vector3.zero;
     }
 
-    // Update is called once per frame
     void Update()
     {
         timer += Time.deltaTime;
@@ -135,18 +118,21 @@ public class Movement : MonoBehaviour
             }
             if (t.phase == TouchPhase.Ended)
             {
-                if (Time.time - startTime > MAX_SWIPE_TIME) // press too long
+                /*if (Time.time - startTime > MAX_SWIPE_TIME) // press too long
                     return;
+                Why would you want this?
+                */
 
                 Vector2 endPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
 
                 Vector2 swipe = new Vector2(endPos.x - startPos.x, endPos.y - startPos.y);
 
-                if (swipe.magnitude < MIN_SWIPE_DISTANCE) // Too short swipe
-                    return;
+                /*if (swipe.magnitude < MIN_SWIPE_DISTANCE) // Too short swipe
+                    return;*/
 
                 if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
-                { // Horizontal swipe
+                { 
+                    // Horizontal swipe
                     if (swipe.x > 0)
                     {
                         swipedRight = true;
@@ -157,7 +143,8 @@ public class Movement : MonoBehaviour
                     }
                 }
                 else
-                { // Vertical swipe
+                { 
+                    // Vertical swipe
                     if (swipe.y > 0)
                     {
                         swipedUp = true;
@@ -178,182 +165,80 @@ public class Movement : MonoBehaviour
             swipedLeft = swipedLeft || Input.GetKeyDown(KeyCode.LeftArrow);
         }
 
-
-
-        /*if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        if (hasControl == true)
         {
-            startTouchPosition = Input.GetTouch(0).position;
-        }
-
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
-        {
-            currentPosition = Input.GetTouch(0).position;
-            Vector2 Distance = currentPosition - startTouchPosition;
-
-            if (!stopTouch)
+            if (swipedLeft)
             {
-
-                if (Distance.x < -swipeRange)
+                if (m_SIDE == SIDE.MID)
                 {
-                    Debug.Log("Swipe left");
-                    stopTouch = true;
-                    swipeLeft = true;
-                    
+                    lastSide = m_SIDE;
+                    m_SIDE = SIDE.LEFT;
                 }
-                else if (Distance.x > swipeRange)
+                else if (m_SIDE == SIDE.RIGHT)
                 {
-                    Debug.Log("Swipe Right");
-                    stopTouch = true;
-                    swipeRight = true;
+                    lastSide = m_SIDE;
+                    m_SIDE = SIDE.MID;
                 }
-                else if (Distance.y > swipeRange)
+                else if (m_SIDE == SIDE.LEFT && terrain_sides == 5)
                 {
-                    Debug.Log("Swipe Up");
-                    stopTouch = true;
-                    swipeUp = true;
+                    lastSide = m_SIDE;
+                    m_SIDE = SIDE.LEFTLEFT;
                 }
-                else if (Distance.y < -swipeRange)
+                else if (m_SIDE == SIDE.RIGHTRIGHT)
                 {
-                    Debug.Log("Swipe Down");
-                    stopTouch = true;
-                    swipeDown = true;
-                }
-
-            }
-
-        }
-
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
-        {
-            stopTouch = false;
-
-            endTouchPosition = Input.GetTouch(0).position;
-
-            Vector2 Distance = endTouchPosition - startTouchPosition;
-
-            if (Mathf.Abs(Distance.x) < tapRange && Mathf.Abs(Distance.y) < tapRange)
-            {
-                Debug.Log("Tap");
-            }
-
-        }*/
-
-
-        if (swipedLeft)
-        {
-            if (m_SIDE == SIDE.MID)
-            {
-                lastSide = m_SIDE;
-                m_SIDE = SIDE.LEFT;
-            }
-            else if (m_SIDE == SIDE.RIGHT)
-            {
-                lastSide = m_SIDE;
-                m_SIDE = SIDE.MID;
-            }
-            else if (m_SIDE == SIDE.LEFT && terrain_sides == 5)
-            {
-                lastSide = m_SIDE;
-                m_SIDE = SIDE.LEFTLEFT;
-            }
-            else if (m_SIDE == SIDE.RIGHTRIGHT)
-            {
-                lastSide = m_SIDE;
-                m_SIDE = SIDE.RIGHT;
-            }
-            else
-            {
-                lastSide = m_SIDE;
-            }
-
-            if (m_char.isGrounded && !inSlide)
-            {
-                m_Animator.Play("Jog Strafe Left");
-            }
-        }
-
-        if (swipedRight)
-        {
-            if (m_SIDE == SIDE.MID)
-            {
-                lastSide = m_SIDE;
-                m_SIDE = SIDE.RIGHT;
-            }
-            else if (m_SIDE == SIDE.LEFT)
-            {
-                lastSide = m_SIDE;
-                m_SIDE = SIDE.MID;
-            }
-            else if (m_SIDE == SIDE.RIGHT && terrain_sides == 5)
-            {
-                lastSide = m_SIDE;
-                m_SIDE = SIDE.RIGHTRIGHT;
-            }
-            else if (m_SIDE == SIDE.LEFTLEFT)
-            {
-                lastSide = m_SIDE;
-                m_SIDE = SIDE.LEFT;
-            }
-            else
-            {
-                lastSide = m_SIDE;
-            }
-
-            if (m_char.isGrounded && !inSlide)
-            {
-                m_Animator.Play("Jog Strafe Right");
-            }
-        }
-
-
-        x = Mathf.Lerp(x, (int)m_SIDE, Time.deltaTime * speedDodge);
-        Vector3 moveVector = new Vector3(x - transform.position.x, y * Time.deltaTime, fwdSpeed * Time.deltaTime);
-        m_char.Move(moveVector);
-        Jump();
-        Slide();
-        BulletTime();
-        if (!(col.transform.tag == "Player"))
-            OnCharacterColliderHit(col);
-    }
-
-    public void Jump()
-    {
-        if (m_char.isGrounded)
-        {
-            doubleJump = false;
-            if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Floating") || m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Backflip") || m_Animator.GetCurrentAnimatorStateInfo(0).IsName("PoseOne"))
-            {
-                m_Animator.Play("Landing");
-                //inJump = false;
-            }
-            if (swipedUp)
-            {
-                y = jumpPower;
-                inJump = true;
-                m_Animator.CrossFadeInFixedTime("Jump", 0.1f);
-            }
-        }
-        else
-        {
-            if (swipedUp && doubleJump == false)
-            {
-                doubleJump = true;
-                y = jumpPower;
-                inJump = true;
-                m_Animator.CrossFadeInFixedTime("Backflip", 0.1f);
-            }
-            else
-            {
-                if (momentum == false)
-                {
-                    y = jumpPower / 2;
-                    momentum = true;
+                    lastSide = m_SIDE;
+                    m_SIDE = SIDE.RIGHT;
                 }
                 else
                 {
-                    y -= jumpPower * 2 * Time.deltaTime;
+                    lastSide = m_SIDE;
+                }
+
+                if (m_char.isGrounded && !inSlide)
+                {
+                    m_Animator.Play("Jog Strafe Left");
                 }
             }
+
+            if (swipedRight)
+            {
+                if (m_SIDE == SIDE.MID)
+                {
+                    lastSide = m_SIDE;
+                    m_SIDE = SIDE.RIGHT;
+                }
+                else if (m_SIDE == SIDE.LEFT)
+                {
+                    lastSide = m_SIDE;
+                    m_SIDE = SIDE.MID;
+                }
+                else if (m_SIDE == SIDE.RIGHT && terrain_sides == 5)
+                {
+                    lastSide = m_SIDE;
+                    m_SIDE = SIDE.RIGHTRIGHT;
+                }
+                else if (m_SIDE == SIDE.LEFTLEFT)
+                {
+                    lastSide = m_SIDE;
+                    m_SIDE = SIDE.LEFT;
+                }
+                else
+                {
+                    lastSide = m_SIDE;
+                }
+
+                if (m_char.isGrounded && !inSlide)
+                {
+                    m_Animator.Play("Jog Strafe Right");
+                }
+            }
+
+
+            x = Mathf.Lerp(x, (int)m_SIDE, Time.deltaTime * speedDodge);
+            Vector3 moveVector = new Vector3(x - transform.position.x, y * Time.deltaTime, fwdSpeed * Time.deltaTime);
+            m_char.Move(moveVector);
+            Slide();
+            BulletTime();
         }
     }
 
@@ -373,13 +258,11 @@ public class Movement : MonoBehaviour
         {
             if (!m_char.isGrounded)
             {
-                // fix to be able to double jump after stomp
                 if (swipedUp && doubleJump == false)
                 {
                     doubleJump = true;
                     y += jumpPower;
                     inJump = true;
-                    //m_Animator.CrossFadeInFixedTime("jump1", 0.1f);
                 }
                 else
                 {
@@ -407,6 +290,7 @@ public class Movement : MonoBehaviour
         {
             if (hitY == HitY.Low) // Stumble, -1 life
             {
+                Debug.Log("Damn");
                 //m_Animator.Play("stumbleLow");
             }
             else if (hitY == HitY.Down) // KnockBack, fall, -1 life
@@ -509,43 +393,6 @@ public class Movement : MonoBehaviour
         else
             hit = HitZ.Forward;
         return hit;
-    }
-    public void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Obstacle")
-        {
-            y = jumpPower;
-        }
-        else if (collision.gameObject.tag == "LowObstacle")
-        {
-            y = jumpPower / 4;
-            fwdSpeed = 0;
-            x -= 50f;
-            m_Animator.CrossFadeInFixedTime("LowTrip", 0.1f);
-            
-        }
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("RampPeak"))
-        {
-            y = 1.5f*jumpPower;
-            inJump = true;
-            m_Animator.CrossFadeInFixedTime("PoseOne", 0.3f);
-        }
-        else if (other.CompareTag("JumpPad"))
-        {
-            y = 0.5f*jumpPower;
-            inJump = true;
-            m_Animator.CrossFadeInFixedTime("Jump", 0.1f);
-        }
-        else if (other.CompareTag("LowObstacle"))
-        {
-            y = jumpPower/4;
-            fwdSpeed = 0;
-            m_Animator.CrossFadeInFixedTime("StumbleBack", 0.1f);
-        }
     }
 
     void BulletTime()

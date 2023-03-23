@@ -230,7 +230,7 @@ public class MovementTutorial : MonoBehaviour
         if (m_char.isGrounded)
         {
             doubleJump = false;
-            if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Floating") || m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Backflip") || m_Animator.GetCurrentAnimatorStateInfo(0).IsName("PoseOne"))
+            if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Falling") || m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Backflip") || m_Animator.GetCurrentAnimatorStateInfo(0).IsName("PoseOne"))
             {
                 m_Animator.Play("Landing");
                 //inJump = false;
