@@ -241,6 +241,10 @@ public class MovementTutorial : MonoBehaviour
                 inJump = true;
                 m_Animator.CrossFadeInFixedTime("Jump", 0.1f);
             }
+            else
+            {
+                y = -1;
+            }
         }
         else
         {
@@ -253,15 +257,7 @@ public class MovementTutorial : MonoBehaviour
             }
             else
             {
-                if (momentum == false)
-                {
-                    y = jumpPower / 2;
-                    momentum = true;
-                }
-                else
-                {
-                    y -= jumpPower * 2 * Time.deltaTime;
-                }
+                y -= jumpPower * 2 * Time.deltaTime;
             }
         }
     }

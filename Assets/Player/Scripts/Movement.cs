@@ -274,7 +274,7 @@ public class Movement : MonoBehaviour
             Slide();
             BulletTime();
         }
-        Debug.Log(Time.deltaTime);
+        //Debug.Log(Time.deltaTime);
     }
 
     internal float slideCounter;

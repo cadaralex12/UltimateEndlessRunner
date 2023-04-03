@@ -253,8 +253,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8364025646988235731}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9, y: 3.48, z: 7.44}
-  m_LocalScale: {x: 5, y: 6.666667, z: 1.6666667}
+  m_LocalPosition: {x: 7.5, y: 3.48, z: 7.44}
+  m_LocalScale: {x: 5, y: 6.666667, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4209393408770538732}
@@ -288,7 +288,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c34c9f8c39d71834497bafd070549007, type: 2}
+  - {fileID: 2100000, guid: 1229f65822adcf542b902eda6c5acaf9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -336,6 +336,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
+  babyMode: 1
+  timer: 0
+  seconds: 0
+  CutCascades: 3
+  ExplodeForce: 5
+  player: {fileID: 0}
 --- !u!1 &8759414514612976984
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,6 +440,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
+  babyMode: 3
+  timer: 0
+  seconds: 0
+  CutCascades: 1
+  ExplodeForce: 0
+  player: {fileID: 0}
 --- !u!65 &2283370757654433535
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -475,8 +487,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8922767722814202687}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.8, y: 3.4799995, z: 7.44}
-  m_LocalScale: {x: 5, y: 6.666667, z: 1.6666667}
+  m_LocalPosition: {x: -7.5, y: 3.4799995, z: 7.44}
+  m_LocalScale: {x: 5, y: 6.666667, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4209393408770538732}
@@ -510,7 +522,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c34c9f8c39d71834497bafd070549007, type: 2}
+  - {fileID: 2100000, guid: 1229f65822adcf542b902eda6c5acaf9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -558,3 +570,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
+  babyMode: 1
+  timer: 0
+  seconds: 0
+  CutCascades: 3
+  ExplodeForce: 5
+  player: {fileID: 0}

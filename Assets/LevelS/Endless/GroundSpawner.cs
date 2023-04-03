@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public class GroundSpawner : MonoBehaviour
 {
@@ -12,11 +13,12 @@ public class GroundSpawner : MonoBehaviour
     private Transform playerTransform;
     public float spawnZ = 0.0f;
     private float tileLength = 85.0f;
-    private int amnTilesOnScreen = 6;
+    private int amnTilesOnScreen = 10;
     public float safeZone = 30.0f;
     private int lastPrefabIndex = 0;
-    public int difficulty = 1;
+    public int difficulty = 2;
     private Quaternion spawnRotation;
+    private int firstFiveEmpty;
 
     private List<GameObject> activeTiles;
 
@@ -27,6 +29,7 @@ public class GroundSpawner : MonoBehaviour
         newWidth = 0;
         activeTiles = new List<GameObject>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        firstFiveEmpty = 5;
         for (int i = 0; i < amnTilesOnScreen; i++)
         {
             SpawnTile(difficulty);
@@ -49,7 +52,7 @@ public class GroundSpawner : MonoBehaviour
                 DeleteTile();
             }*/
             SpawnTile(difficulty);
-            if (ran % 3 == 0)
+            if (ran % 3 == 0 && firstFiveEmpty == 0)
             {
                 DeleteTile();
             }
@@ -65,22 +68,46 @@ public class GroundSpawner : MonoBehaviour
         {
             case 1:
                 {
+                    if (firstFiveEmpty > 0)
+                    {
+                        temp = Instantiate(tilePrefabsEasy[0]) as GameObject;
+                        firstFiveEmpty--;
+                        break;
+                    }
                     temp = Instantiate(tilePrefabsEasy[RandomPreFabindex()]) as GameObject;
                     break;
                 }
             case 2:
                 {
-                    temp = Instantiate(tilePrefabsMedium[RandomPreFabindex()]) as GameObject;
+                    if (firstFiveEmpty > 0)
+                    {
+                        temp = Instantiate(tilePrefabsMedium[0]) as GameObject;
+                        firstFiveEmpty--;
+                        break;
+                    }
+                    temp = Instantiate(tilePrefabsMedium[RandomPreFabindex(difficulty)]) as GameObject;
                     //temp = Instantiate(tilePrefabsMedium[RandomPreFabindex()], Vector3.forward * spawnZ, spawnRotation) as GameObject;
                     break;
                 }
             case 3:
                 {
+                    if (firstFiveEmpty > 0)
+                    {
+                        temp = Instantiate(tilePrefabsHard[0]) as GameObject;
+                        firstFiveEmpty--;
+                        break;
+                    }
                     temp = Instantiate(tilePrefabsHard[RandomPreFabindex()]) as GameObject;
                     break;
                 }
             default:
                 {
+                    if (firstFiveEmpty > 0)
+                    {
+                        temp = Instantiate(tilePrefabsEasy[0]) as GameObject;
+                        firstFiveEmpty--;
+                        break;
+                    }
                     temp = Instantiate(tilePrefabsEasy[RandomPreFabindex()]) as GameObject;
                     break;
                 }
@@ -114,8 +141,9 @@ public class GroundSpawner : MonoBehaviour
         
     }*/
 
-            public int RandomPreFabindex(int difficulty = 1)
+    public int RandomPreFabindex(int difficulty = 1)
     {
+        UnityEngine.Debug.Log("difficulty is :" + difficulty);
         if (difficulty == 1)
         {
             if (tilePrefabsEasy.Length <= 1)
@@ -140,6 +168,7 @@ public class GroundSpawner : MonoBehaviour
             while (randomIndex == lastPrefabIndex)
             {
                 randomIndex = Random.Range(0, tilePrefabsMedium.Length);
+                UnityEngine.Debug.Log(randomIndex);
             }
             lastPrefabIndex = randomIndex;
             return randomIndex;
