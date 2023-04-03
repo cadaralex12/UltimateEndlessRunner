@@ -12,10 +12,11 @@ public class GroundSpawner : MonoBehaviour
     private Transform playerTransform;
     public float spawnZ = 0.0f;
     private float tileLength = 85.0f;
-    private int amnTilesOnScreen = 10;
+    private int amnTilesOnScreen = 6;
     public float safeZone = 30.0f;
     private int lastPrefabIndex = 0;
     public int difficulty = 1;
+    private Quaternion spawnRotation;
 
     private List<GameObject> activeTiles;
 
@@ -70,6 +71,7 @@ public class GroundSpawner : MonoBehaviour
             case 2:
                 {
                     temp = Instantiate(tilePrefabsMedium[RandomPreFabindex()]) as GameObject;
+                    //temp = Instantiate(tilePrefabsMedium[RandomPreFabindex()], Vector3.forward * spawnZ, spawnRotation) as GameObject;
                     break;
                 }
             case 3:
@@ -88,6 +90,10 @@ public class GroundSpawner : MonoBehaviour
         //lastWidth = width;
         temp.transform.SetParent(transform);
         temp.transform.position = Vector3.forward * spawnZ;
+        
+        //temp.transform.position += Vector3.forward * tileLength;
+        //temp.transform.rotation = spawnRotation;
+        //spawnRotation = temp.transform.GetChild(0).GetChild(1).rotation;
         spawnZ += tileLength;
         activeTiles.Add(temp);
     }

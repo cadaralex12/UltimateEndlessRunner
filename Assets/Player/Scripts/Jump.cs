@@ -21,6 +21,7 @@ public class Jump : MonoBehaviour
     {
         if (player.m_char.isGrounded)
         {
+            player.inJump = false;
             player.doubleJump = false;
             if (player.m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Falling") ||
                 player.m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Backflip") ||

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Security.Cryptography;
 using UnityEngine;
 
 [System.Serializable]
@@ -12,6 +14,8 @@ public enum HitZ { Forward, Mid, Backward, None };
 
 public class Movement : MonoBehaviour
 {
+    public int direction = 0;
+    public float zPosition = 0;
     public bool hasControl = true;
     public float timer = 0;
     public float lastUpdate = 0;
@@ -65,6 +69,8 @@ public class Movement : MonoBehaviour
     public bool swipedUp = false;
     public bool swipedDown = false;
 
+    public bool rotateRight = false;
+
     public bool debugWithArrowKeys = true;
 
     Vector2 startPos;
@@ -107,6 +113,8 @@ public class Movement : MonoBehaviour
         swipedLeft = false;
         swipedUp = false;
         swipedDown = false;
+
+        rotateRight = false;
 
         if (Input.touches.Length > 0)
         {
@@ -163,6 +171,13 @@ public class Movement : MonoBehaviour
             swipedUp = swipedUp || Input.GetKeyDown(KeyCode.UpArrow);
             swipedRight = swipedRight || Input.GetKeyDown(KeyCode.RightArrow);
             swipedLeft = swipedLeft || Input.GetKeyDown(KeyCode.LeftArrow);
+            rotateRight = Input.GetKeyDown(KeyCode.R);
+        }
+
+        if (rotateRight) 
+        {
+            Vector3 rotation = new Vector3(0, 90, 0);
+            this.transform.Rotate(rotation);
         }
 
         if (hasControl == true)
@@ -237,9 +252,29 @@ public class Movement : MonoBehaviour
             x = Mathf.Lerp(x, (int)m_SIDE, Time.deltaTime * speedDodge);
             Vector3 moveVector = new Vector3(x - transform.position.x, y * Time.deltaTime, fwdSpeed * Time.deltaTime);
             m_char.Move(moveVector);
+
+            /*Vector3 moveVectorNormalX = new Vector3(x - transform.position.x, 0, 0);
+            Vector3 moveVectorNormalY = new Vector3(0, y * Time.deltaTime, 0);
+            Vector3 moveVectorNormalZ = new Vector3(0, y * 0, fwdSpeed * Time.deltaTime);
+            Vector3 moveVectorRotateRight = new Vector3(fwdSpeed * Time.deltaTime, y * Time.deltaTime, x - transform.position.z);
+            if( direction == 0)
+            {
+                m_char.Move(moveVectorNormalX);
+                m_char.Move(moveVectorNormalY);
+                m_char.Move(Vector3.forward * (fwdSpeed * Time.deltaTime));
+            }
+            else
+            {
+                
+                m_char.Move(moveVectorNormalX);
+                m_char.Move(moveVectorNormalY);
+                m_char.Move(moveVectorNormalZ);
+            }*/
+
             Slide();
             BulletTime();
         }
+        Debug.Log(Time.deltaTime);
     }
 
     internal float slideCounter;

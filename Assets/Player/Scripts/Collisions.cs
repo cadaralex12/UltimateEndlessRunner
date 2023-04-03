@@ -15,6 +15,7 @@ public class Collisions : MonoBehaviour
     public GameObject camera2;
     private Vector3 targetPosition;
     private Quaternion targetRotation;
+    public GameObject cart;
 
 
     // Start is called before the first frame update
@@ -69,8 +70,8 @@ public class Collisions : MonoBehaviour
             //camera1.transform.DORotate(targetRotation, 0.5f, RotateMode.LocalAxisAdd).SetLoops(1).SetEase(Ease.Linear);
             //camera1.trasnform.position = targetPosition;
             //camera1.transform.position = Vector3.Translate(camera1.transform.position, targetPosition, 1f * Time.deltaTime);
-            //camera2.SetActive(true);
-            //camera1.SetActive(false);
+            camera2.SetActive(true);
+            camera1.SetActive(false);
 
         }
         else if (other.CompareTag("2DTo3D"))
@@ -80,9 +81,47 @@ public class Collisions : MonoBehaviour
             //camera1.transform.DORotate(targetRotation, 0.5f, RotateMode.LocalAxisAdd).SetLoops(1).SetEase(Ease.Linear);
             //camera1.trasnform.position = targetPosition;
             
-            //camera1.SetActive(true);
-            //camera2.SetActive(false);
+            camera1.SetActive(true);
+            camera2.SetActive(false);
 
+        }
+        else if (other.CompareTag("SpawnCart"))
+        {
+            cart.SetActive(true);
+        }
+        else if (other.CompareTag("SplineCart"))
+        {
+            m_Animator.applyRootMotion = false;
+            player.transform.SetParent(other.gameObject.transform);
+            player.hasControl = false;
+        }
+        else if (other.CompareTag("Delete"))
+        {
+            //Quaternion NewRotation = player.transform.parent.transform.rotation;
+            m_Animator.applyRootMotion = true;
+            player.transform.SetParent(null);
+            player.transform.rotation = Quaternion.Euler(0, 0, 0);
+            //player.transform.rotation = NewRotation;
+            player.hasControl = true;
+            player.transform.position = other.transform.parent.transform.position;
+        }
+
+    }
+
+    /*void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("SplineCart"))
+        {
+            player.transform.position = other.transform.parent.transform.position;
+        }
+    }*/
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("SplineCart"))
+        {
+            m_Animator.applyRootMotion = true;
+            player.transform.SetParent(null);
         }
     }
 }

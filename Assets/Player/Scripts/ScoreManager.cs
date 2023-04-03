@@ -27,7 +27,7 @@ public class ScoreManager : MonoBehaviour
         highScore = PlayerPrefs.GetInt("endlessHighScore");
         minutes = 0;
         seconds = 0;
-        Debug.Log("Saved Highscore: " + PlayerPrefs.GetInt("endlessHighScore"));
+        //Debug.Log("Saved Highscore: " + PlayerPrefs.GetInt("endlessHighScore"));
         scoreText.text = "Score: " + score.ToString() + " m";
         highScoreText.text = "High Score: " + highScore.ToString() + " m";
     }
@@ -54,18 +54,18 @@ public class ScoreManager : MonoBehaviour
 
         if (PlayerPrefs.HasKey("endlessHighScore"))
         {
-            Debug.Log("HasKey");
+            //Debug.Log("HasKey");
             if (score >= PlayerPrefs.GetInt("endlessHighScore"))
             {
                 Debug.Log("Score is bigger");
                 highScore = score;
                 PlayerPrefs.SetInt("endlessHighScore", highScore);
                 PlayerPrefs.Save();
-                Debug.Log("Dick");
+                //Debug.Log("Dick");
             }
             else
             {
-                Debug.Log("Score not bigger");
+                //Debug.Log("Score not bigger");
             }
         }
         else
@@ -76,11 +76,11 @@ public class ScoreManager : MonoBehaviour
                 highScore = score;
                 PlayerPrefs.SetInt("endlessHighScore", highScore);
                 PlayerPrefs.Save();
-                Debug.Log("Dick");
+                //Debug.Log("Dick");
             }
             else
             {
-                Debug.Log("Score not bigger");
+                //Debug.Log("Score not bigger");
             }
         }
     }

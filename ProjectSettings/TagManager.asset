@@ -13,6 +13,9 @@ TagManager:
   - DoubleJump
   - 3DTo2D
   - 2DTo3D
+  - SplineCart
+  - Delete
+  - SpawnCart
   layers:
   - Default
   - TransparentFX
