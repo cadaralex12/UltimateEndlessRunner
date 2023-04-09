@@ -14,6 +14,8 @@ public enum HitZ { Forward, Mid, Backward, None };
 
 public class Movement : MonoBehaviour
 {
+    public GameObject ObtsacleDeleter;
+    public int lives;
     public int direction = 0;
     public float zPosition = 0;
     public bool hasControl = true;
@@ -80,6 +82,7 @@ public class Movement : MonoBehaviour
 
     void Start()
     {
+        lives = 3;
         timer = 0;
         lastUpdate = 0;
         isAlive = true;
@@ -90,6 +93,7 @@ public class Movement : MonoBehaviour
         colHeight = m_char.height;
         colCenterY = m_char.center.y;
         transform.position = new Vector3(0,0.5f,0);
+        ObtsacleDeleter.SetActive(false);
     }
 
     void Update()
@@ -256,6 +260,7 @@ public class Movement : MonoBehaviour
 
             Slide();
             BulletTime();
+            Hurt();
         }
     }
 
@@ -440,5 +445,25 @@ public class Movement : MonoBehaviour
         Time.timeScale = 1f;
         Time.fixedDeltaTime = Time.timeScale * 0.01f;
         slow = false;
+    }
+
+    public float hurtCounter = 0;
+
+    void Hurt()
+    {
+        hurtCounter -= Time.deltaTime;
+        if (hurtCounter > 0f)
+        {
+            ObtsacleDeleter.SetActive(true);
+            Time.timeScale = 0.2f;
+            
+        }
+        else
+        {
+            ObtsacleDeleter.SetActive(false);
+            Time.timeScale = 1f;
+        }
+
+        
     }
 }
