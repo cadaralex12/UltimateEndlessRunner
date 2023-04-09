@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 1.5190315, g: 0.3712505, b: 0.32184285, a: 1}
+  m_IndirectSpecularColor: {r: 0.796987, g: 0.2534031, b: 0.3028966, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -707,9 +707,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 64594322}
+  - component: {fileID: 64594329}
   - component: {fileID: 64594319}
   - component: {fileID: 64594323}
   - component: {fileID: 64594325}
+  - component: {fileID: 64594328}
+  - component: {fileID: 64594327}
   - component: {fileID: 64594326}
   m_Layer: 0
   m_Name: Amy
@@ -793,7 +796,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 64594318}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f212c373d4d22b4ca2e40b5290d416e, type: 3}
   m_Name: 
@@ -820,6 +823,90 @@ MonoBehaviour:
   swipeRange: 0
   tapRange: 0
   debugWithArrowKeys: 1
+--- !u!114 &64594327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64594318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b29aba68030dccb4fb0b43d402321437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 64594328}
+  respawn: 0
+  camera1: {fileID: 0}
+  camera2: {fileID: 0}
+  cart: {fileID: 0}
+--- !u!114 &64594328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64594318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98e950f4911d1094aad971b543405dbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: 0
+  zPosition: 0
+  hasControl: 1
+  timer: 0
+  lastUpdate: 0
+  score: 0
+  seconds: 0
+  minutes: 0
+  miliseconds: 0
+  isAlive: 0
+  m_SIDE: 0
+  lastSide: 0
+  swipeLeft: 0
+  swipeRight: 0
+  swipeUp: 0
+  swipeDown: 0
+  m_char: {fileID: 0}
+  col: {fileID: 0}
+  x: 0
+  speedDodge: 10
+  jumpPower: 100
+  y: 0
+  inJump: 0
+  inSlide: 0
+  inAirSlide: 0
+  m_Animator: {fileID: 0}
+  fwdSpeed: 150
+  hitX: 3
+  hitY: 4
+  hitZ: 3
+  terrain_sides: 5
+  doubleJump: 0
+  slow: 0
+  momentum: 1
+  swipeRange: 0
+  tapRange: 0
+  swipedRight: 0
+  swipedLeft: 0
+  swipedUp: 0
+  swipedDown: 0
+  rotateRight: 0
+  debugWithArrowKeys: 1
+--- !u!114 &64594329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64594318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e1be2c4167c3b04d86af7b4e19e845c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 64594328}
 --- !u!1 &75727373
 GameObject:
   m_ObjectHideFlags: 0
@@ -4867,6 +4954,8 @@ CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883659635}
   m_CullTransparentMesh: 1
 --- !u!1 &907358356
 GameObject:
