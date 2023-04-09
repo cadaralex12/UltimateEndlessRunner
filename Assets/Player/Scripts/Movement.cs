@@ -35,6 +35,7 @@ public class Movement : MonoBehaviour
     public float y;
     public bool inJump;
     public bool inSlide;
+    public bool inAirSlide;
     public Animator m_Animator;
     public float fwdSpeed = 150f;
 
@@ -88,7 +89,7 @@ public class Movement : MonoBehaviour
         m_SIDE = SIDE.MID;
         colHeight = m_char.height;
         colCenterY = m_char.center.y;
-        transform.position = Vector3.zero;
+        transform.position = new Vector3(0,0.5f,0);
     }
 
     void Update()
@@ -253,28 +254,9 @@ public class Movement : MonoBehaviour
             Vector3 moveVector = new Vector3(x - transform.position.x, y * Time.deltaTime, fwdSpeed * Time.deltaTime);
             m_char.Move(moveVector);
 
-            /*Vector3 moveVectorNormalX = new Vector3(x - transform.position.x, 0, 0);
-            Vector3 moveVectorNormalY = new Vector3(0, y * Time.deltaTime, 0);
-            Vector3 moveVectorNormalZ = new Vector3(0, y * 0, fwdSpeed * Time.deltaTime);
-            Vector3 moveVectorRotateRight = new Vector3(fwdSpeed * Time.deltaTime, y * Time.deltaTime, x - transform.position.z);
-            if( direction == 0)
-            {
-                m_char.Move(moveVectorNormalX);
-                m_char.Move(moveVectorNormalY);
-                m_char.Move(Vector3.forward * (fwdSpeed * Time.deltaTime));
-            }
-            else
-            {
-                
-                m_char.Move(moveVectorNormalX);
-                m_char.Move(moveVectorNormalY);
-                m_char.Move(moveVectorNormalZ);
-            }*/
-
             Slide();
             BulletTime();
         }
-        //Debug.Log(Time.deltaTime);
     }
 
     internal float slideCounter;
@@ -293,26 +275,28 @@ public class Movement : MonoBehaviour
         {
             if (!m_char.isGrounded)
             {
-                if (swipedUp && doubleJump == false)
-                {
-                    doubleJump = true;
-                    y += jumpPower;
-                    inJump = true;
-                }
-                else
-                {
-                    y -= 60f;
-                }
+                inAirSlide = true;
+                y -= 100f;
             }
             if (!inSlide && m_char.isGrounded)
             {
-                slideCounter = 1f;
+                slideCounter = 0.7f;
                 inSlide = true;
-                //m_Animator.CrossFadeInFixedTime("Roll", 1f);
                 m_Animator.Play("Roll");
                 m_char.center = new Vector3(0, colCenterY / 2f, 0);
-                m_char.height = colHeight / 30f;
+                m_char.height = colHeight / 10f;
             }
+        }
+        else if (inAirSlide && m_char.isGrounded)
+        {
+            
+            slideCounter = 0.7f;
+            inSlide = true;
+            
+            
+            m_char.center = new Vector3(0, colCenterY / 2f, 0);
+            m_char.height = colHeight / 10f;
+            inAirSlide = false;
         }
     }
     public void OnCharacterColliderHit(Collider col)

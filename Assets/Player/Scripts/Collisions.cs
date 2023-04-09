@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using System;
 
 public class Collisions : MonoBehaviour
 {
@@ -43,8 +44,31 @@ public class Collisions : MonoBehaviour
         {
             player.y = 1.5f * player.jumpPower;
             player.inJump = true;
-            m_Animator.CrossFadeInFixedTime("Pose1", 0.3f);
-            Vector3 rot = new Vector3(0, 360, 0);
+            int ran = UnityEngine.Random.Range(0, 10);
+            if (ran % 3 == 0)
+            {
+                m_Animator.CrossFadeInFixedTime("Pose1", 0.3f);
+            }
+            else if (ran % 3 == 1)
+            {
+                m_Animator.CrossFadeInFixedTime("Pose2", 0.3f);
+            }
+            else
+            {
+                m_Animator.CrossFadeInFixedTime("Pose3", 0.3f);
+            }
+
+            Vector3 rot;
+            ran = UnityEngine.Random.Range(0, 10);
+            if (ran % 2 == 0)
+            {
+                rot = new Vector3(0, 360, 0);
+            }
+            else
+            {
+                rot = new Vector3(0, -360, 0);
+            }
+
             transform.DORotate(rot, 1.5f, RotateMode.LocalAxisAdd).SetLoops(1).SetEase(Ease.Linear);
         }
         else if (other.CompareTag("JumpPad"))
@@ -116,7 +140,7 @@ public class Collisions : MonoBehaviour
         }
     }*/
 
-    void OnTriggerExit(Collider other)
+            void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("SplineCart"))
         {
