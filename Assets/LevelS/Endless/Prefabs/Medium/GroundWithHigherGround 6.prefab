@@ -698,6 +698,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
+  babyMode: 1
+  timer: 0
+  seconds: 0
+  CutCascades: 1
+  ExplodeForce: 0
+  player: {fileID: 0}
 --- !u!1 &7083852373153400611
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,7 +750,7 @@ GameObject:
   - component: {fileID: 2283370757654433535}
   m_Layer: 0
   m_Name: Cube (3)
-  m_TagString: Obstacle
+  m_TagString: Death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -827,6 +833,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
+  babyMode: 1
+  timer: 0
+  seconds: 0
+  CutCascades: 1
+  ExplodeForce: 0
+  player: {fileID: 0}
 --- !u!65 &2283370757654433535
 BoxCollider:
   m_ObjectHideFlags: 0

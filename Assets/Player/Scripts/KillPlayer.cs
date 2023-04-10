@@ -34,11 +34,17 @@ public class KillPlayer : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            if (this.CompareTag("Death"))
+            {
+                Invoke("reloadScene", 0);
+            }
             player = other.gameObject.GetComponent<Movement>();
             if (player.lives > 1)
             {
 
                 player.lives--;
+                player.y = player.jumpPower * 2/3;
+                player.m_Animator.Play("Floating");
                 player.hurtCounter = 1f;
                 this.gameObject.SetActive(false);
             }

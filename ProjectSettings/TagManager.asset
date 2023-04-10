@@ -17,6 +17,7 @@ TagManager:
   - Delete
   - SpawnCart
   - ObstacleDeleter
+  - Death
   layers:
   - Default
   - TransparentFX

@@ -35,7 +35,8 @@ public class Jump : MonoBehaviour
                 player.m_Animator.GetCurrentAnimatorStateInfo(0).IsName("PoseOne") ||
                 player.m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Pose1") ||
                 player.m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Pose2") ||
-                player.m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Pose3"))
+                player.m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Pose3") ||
+                player.m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Floating"))
             {
                 player.m_Animator.Play("Landing");
                 //inJump = false;

@@ -421,7 +421,7 @@ public class Movement : MonoBehaviour
 
     void BulletTime()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && Time.timeScale != 0f)
         {
             if (slow)
             {
@@ -449,6 +449,7 @@ public class Movement : MonoBehaviour
 
     public float hurtCounter = 0;
 
+
     void Hurt()
     {
         hurtCounter -= Time.deltaTime;
@@ -458,7 +459,7 @@ public class Movement : MonoBehaviour
             Time.timeScale = 0.2f;
             
         }
-        else
+        else if (Time.timeScale!=0f && Time.timeScale !=0.5f)
         {
             ObtsacleDeleter.SetActive(false);
             Time.timeScale = 1f;
