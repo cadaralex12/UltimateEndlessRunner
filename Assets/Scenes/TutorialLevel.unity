@@ -2066,8 +2066,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e950f4911d1094aad971b543405dbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  desiredFOV: 60
-  myCamera: {fileID: 963194227}
   ObtsacleDeleter: {fileID: 410886057}
   lives: 0
   direction: 0
@@ -2110,10 +2108,8 @@ MonoBehaviour:
   swipedLeft: 0
   swipedUp: 0
   swipedDown: 0
-  spacePressed: 0
   rotateRight: 0
   debugWithArrowKeys: 1
-  inBoost: 0
   hurtCounter: 0
 --- !u!114 &64594329
 MonoBehaviour:

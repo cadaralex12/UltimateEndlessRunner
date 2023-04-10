@@ -7,6 +7,17 @@ using UnityEngine.SceneManagement;
 public class KillPlayer : MonoBehaviour
 {
     public int respawn;
+    public int babyMode = 1;
+    public float timer = 0;
+    public float seconds = 0;
+
+    private bool edgeSet = false;
+    private Vector3 edgeVertex = Vector3.zero;
+    private Vector2 edgeUV = Vector2.zero;
+    private Plane edgePlane = new Plane();
+
+    public int CutCascades = 1;
+    public float ExplodeForce = 0;
 
     public Movement player;
 
@@ -21,52 +32,26 @@ public class KillPlayer : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        player = other.gameObject.GetComponent<Movement>();
         if (other.CompareTag("Player"))
         {
             if (this.CompareTag("Death"))
             {
-                if (player.inBoost == false)
-                {
-                    Invoke("reloadScene", 0);
-                }
-                else
-                {
-                    player.y = player.jumpPower;
-                }
+                Invoke("reloadScene", 0);
+            }
+            player = other.gameObject.GetComponent<Movement>();
+            if (player.lives > 1)
+            {
+
+                player.lives--;
+                player.y = player.jumpPower * 2/3;
+                player.m_Animator.Play("Floating");
+                player.hurtCounter = 1f;
+                this.gameObject.SetActive(false);
             }
             else
             {
-                if (player.inBoost == false)
-                {
-                    if (player.lives > 1)
-                    {
-                        if (player.inShield == true)
-                        {
-                            player.inShield = false;
-                            player.shield.SetActive(false);
-                        }
-                        else
-                        {
-                            player.lives--;
-                        }
-                        
-                        player.y = player.jumpPower * 2 / 3;
-                        player.m_Animator.Play("Floating");
-                        player.hurtCounter = 0.5f;
-                        this.gameObject.SetActive(false);
-                    }
-                    else
-                    {
-                        Invoke("reloadScene", 0);//this will happen after a delay of 1.5 seconds
-                    }
-                }
-                else
-                {
-                    this.gameObject.SetActive(false);
-                }
+                Invoke("reloadScene", 0);//this will happen after a delay of 1.5 seconds
             }
-            
         }
 
     }
