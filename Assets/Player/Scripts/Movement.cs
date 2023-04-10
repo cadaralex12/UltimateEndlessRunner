@@ -14,6 +14,11 @@ public enum HitZ { Forward, Mid, Backward, None };
 
 public class Movement : MonoBehaviour
 {
+    public GameObject shield;
+    public float desiredFOV = 60f;
+    public Camera myCamera;
+    public GameObject ObtsacleDeleter;
+    public int lives;
     public int direction = 0;
     public float zPosition = 0;
     public bool hasControl = true;
@@ -35,6 +40,7 @@ public class Movement : MonoBehaviour
     public float y;
     public bool inJump;
     public bool inSlide;
+    public bool inAirSlide;
     public Animator m_Animator;
     public float fwdSpeed = 150f;
 
@@ -68,6 +74,8 @@ public class Movement : MonoBehaviour
     public bool swipedLeft = false;
     public bool swipedUp = false;
     public bool swipedDown = false;
+    public bool boostPressed = false;
+    public bool shieldPressed = false;
 
     public bool rotateRight = false;
 
@@ -79,6 +87,7 @@ public class Movement : MonoBehaviour
 
     void Start()
     {
+        lives = 3;
         timer = 0;
         lastUpdate = 0;
         isAlive = true;
@@ -88,7 +97,9 @@ public class Movement : MonoBehaviour
         m_SIDE = SIDE.MID;
         colHeight = m_char.height;
         colCenterY = m_char.center.y;
-        transform.position = Vector3.zero;
+        transform.position = new Vector3(0,0.5f,0);
+        ObtsacleDeleter.SetActive(false);
+        shield.SetActive(false);
     }
 
     void Update()
@@ -113,6 +124,9 @@ public class Movement : MonoBehaviour
         swipedLeft = false;
         swipedUp = false;
         swipedDown = false;
+
+        boostPressed = false;
+        shieldPressed = false;
 
         rotateRight = false;
 
@@ -172,6 +186,8 @@ public class Movement : MonoBehaviour
             swipedRight = swipedRight || Input.GetKeyDown(KeyCode.RightArrow);
             swipedLeft = swipedLeft || Input.GetKeyDown(KeyCode.LeftArrow);
             rotateRight = Input.GetKeyDown(KeyCode.R);
+            boostPressed = Input.GetKeyDown(KeyCode.C);
+            shieldPressed = Input.GetKeyDown(KeyCode.X);
         }
 
         if (rotateRight) 
@@ -253,28 +269,13 @@ public class Movement : MonoBehaviour
             Vector3 moveVector = new Vector3(x - transform.position.x, y * Time.deltaTime, fwdSpeed * Time.deltaTime);
             m_char.Move(moveVector);
 
-            /*Vector3 moveVectorNormalX = new Vector3(x - transform.position.x, 0, 0);
-            Vector3 moveVectorNormalY = new Vector3(0, y * Time.deltaTime, 0);
-            Vector3 moveVectorNormalZ = new Vector3(0, y * 0, fwdSpeed * Time.deltaTime);
-            Vector3 moveVectorRotateRight = new Vector3(fwdSpeed * Time.deltaTime, y * Time.deltaTime, x - transform.position.z);
-            if( direction == 0)
-            {
-                m_char.Move(moveVectorNormalX);
-                m_char.Move(moveVectorNormalY);
-                m_char.Move(Vector3.forward * (fwdSpeed * Time.deltaTime));
-            }
-            else
-            {
-                
-                m_char.Move(moveVectorNormalX);
-                m_char.Move(moveVectorNormalY);
-                m_char.Move(moveVectorNormalZ);
-            }*/
-
             Slide();
             BulletTime();
+            Hurt();
+            Boost();
+            Shield();
+            myCamera.fieldOfView = Mathf.Lerp(myCamera.fieldOfView, desiredFOV, Time.deltaTime * speedDodge);
         }
-        //Debug.Log(Time.deltaTime);
     }
 
     internal float slideCounter;
@@ -293,29 +294,31 @@ public class Movement : MonoBehaviour
         {
             if (!m_char.isGrounded)
             {
-                if (swipedUp && doubleJump == false)
-                {
-                    doubleJump = true;
-                    y += jumpPower;
-                    inJump = true;
-                }
-                else
-                {
-                    y -= 60f;
-                }
+                inAirSlide = true;
+                y -= 100f;
             }
             if (!inSlide && m_char.isGrounded)
             {
-                slideCounter = 1f;
+                slideCounter = 0.7f;
                 inSlide = true;
-                //m_Animator.CrossFadeInFixedTime("Roll", 1f);
                 m_Animator.Play("Roll");
                 m_char.center = new Vector3(0, colCenterY / 2f, 0);
-                m_char.height = colHeight / 30f;
+                m_char.height = colHeight / 10f;
             }
         }
+        else if (inAirSlide && m_char.isGrounded)
+        {
+            
+            slideCounter = 0.7f;
+            inSlide = true;
+            
+            
+            m_char.center = new Vector3(0, colCenterY / 2f, 0);
+            m_char.height = colHeight / 10f;
+            inAirSlide = false;
+        }
     }
-    public void OnCharacterColliderHit(Collider col)
+    /*public void OnCharacterColliderHit(Collider col)
     {
         hitX = GetHitX(col);
         hitY = GetHitY(col);
@@ -428,11 +431,11 @@ public class Movement : MonoBehaviour
         else
             hit = HitZ.Forward;
         return hit;
-    }
+    }*/
 
     void BulletTime()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.Z) && Time.timeScale != 0f)
         {
             if (slow)
             {
@@ -448,13 +451,77 @@ public class Movement : MonoBehaviour
     void SlowDown()
     {
         Time.timeScale = 0.5f;
+        desiredFOV = 45f;
         slow = true;
     }
 
     void Resume()
     {
+        desiredFOV = 60f;
         Time.timeScale = 1f;
         Time.fixedDeltaTime = Time.timeScale * 0.01f;
         slow = false;
+    }
+
+    internal float boostCounter = 0f;
+    public bool inBoost = false;
+
+    public void Boost()
+    {
+        boostCounter -= Time.deltaTime;
+        if (inBoost == true)
+        {
+            if (boostCounter <= 0f)
+            {
+                inBoost = false;
+                boostCounter = 0f;
+                desiredFOV = 60f;
+                fwdSpeed = 150;
+            }
+        }
+        
+        if (boostPressed && inBoost == false)
+        {
+            desiredFOV = 90f;
+            inBoost = true;
+            boostCounter = 5f;
+            fwdSpeed = 220;
+            m_Animator.Play("Boost");
+        }
+    }
+
+    public bool inShield = false;
+
+    public void Shield()
+    {
+        if (shieldPressed)
+        {
+            inShield = true;
+            shield.SetActive(true);
+        }
+    }
+
+
+
+    public float hurtCounter = 0;
+
+    void Hurt()
+    {
+        hurtCounter -= Time.deltaTime;
+        if (hurtCounter > 0f)
+        {
+            ObtsacleDeleter.SetActive(true);
+            desiredFOV = 50f;
+            Time.timeScale = 0.2f;
+            
+        }
+        else if (Time.timeScale!=0f && Time.timeScale !=0.5f && inBoost == false)
+        {
+            ObtsacleDeleter.SetActive(false);
+            desiredFOV = 60f;
+            Time.timeScale = 1f;
+        }
+
+        
     }
 }

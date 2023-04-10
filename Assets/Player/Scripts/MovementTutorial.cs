@@ -286,7 +286,7 @@ public class MovementTutorial : MonoBehaviour
                 }
                 else
                 {
-                    y -= 60f;
+                    y = 0f;
                 }
             }
             if (!inSlide && m_char.isGrounded)
@@ -295,7 +295,7 @@ public class MovementTutorial : MonoBehaviour
                 inSlide = true;
                 m_Animator.Play("Roll");
                 m_char.center = new Vector3(0, colCenterY / 2f, 0);
-                m_char.height = colHeight / 30f;
+                m_char.height = colHeight / 10f;
             }
         }
     }

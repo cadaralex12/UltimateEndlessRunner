@@ -16,6 +16,8 @@ TagManager:
   - SplineCart
   - Delete
   - SpawnCart
+  - ObstacleDeleter
+  - Death
   layers:
   - Default
   - TransparentFX
