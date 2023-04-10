@@ -47,15 +47,15 @@ public class Collisions : MonoBehaviour
             int ran = UnityEngine.Random.Range(0, 10);
             if (ran % 3 == 0)
             {
-                m_Animator.CrossFadeInFixedTime("Pose1", 0.3f);
+                m_Animator.Play("Pose1");
             }
             else if (ran % 3 == 1)
             {
-                m_Animator.CrossFadeInFixedTime("Pose2", 0.3f);
+                m_Animator.Play("Pose2");
             }
             else
             {
-                m_Animator.CrossFadeInFixedTime("Pose3", 0.3f);
+                m_Animator.Play("Pose3");
             }
 
             Vector3 rot;
@@ -75,7 +75,7 @@ public class Collisions : MonoBehaviour
         {
             player.y = 0.5f * player.jumpPower;
             player.inJump = true;
-            m_Animator.CrossFadeInFixedTime("Jump", 0.1f);
+            m_Animator.Play("Jump");
         }
         else if (other.CompareTag("LowObstacle"))
         {
@@ -84,7 +84,7 @@ public class Collisions : MonoBehaviour
             player.hasControl = false;
             //Vector3 moveVector = new Vector3(player.x - player.transform.position.x, player.y * Time.deltaTime, player.m_char.transform.position.z - 50);
             //player.m_char.Move(moveVector);
-            m_Animator.CrossFadeInFixedTime("Big Blow", 0.1f);
+            m_Animator.Play("Big Blow");
             Invoke("reloadScene", 1.5f);//this will happen after a delay of 1.5 seconds
         }
         else if (other.CompareTag("3DTo2D"))

@@ -14,6 +14,7 @@ public enum HitZ { Forward, Mid, Backward, None };
 
 public class Movement : MonoBehaviour
 {
+    public GameObject shield;
     public float desiredFOV = 60f;
     public Camera myCamera;
     public GameObject ObtsacleDeleter;
@@ -73,7 +74,8 @@ public class Movement : MonoBehaviour
     public bool swipedLeft = false;
     public bool swipedUp = false;
     public bool swipedDown = false;
-    public bool spacePressed = false;
+    public bool boostPressed = false;
+    public bool shieldPressed = false;
 
     public bool rotateRight = false;
 
@@ -97,6 +99,7 @@ public class Movement : MonoBehaviour
         colCenterY = m_char.center.y;
         transform.position = new Vector3(0,0.5f,0);
         ObtsacleDeleter.SetActive(false);
+        shield.SetActive(false);
     }
 
     void Update()
@@ -122,7 +125,8 @@ public class Movement : MonoBehaviour
         swipedUp = false;
         swipedDown = false;
 
-        spacePressed = false;
+        boostPressed = false;
+        shieldPressed = false;
 
         rotateRight = false;
 
@@ -182,7 +186,8 @@ public class Movement : MonoBehaviour
             swipedRight = swipedRight || Input.GetKeyDown(KeyCode.RightArrow);
             swipedLeft = swipedLeft || Input.GetKeyDown(KeyCode.LeftArrow);
             rotateRight = Input.GetKeyDown(KeyCode.R);
-            spacePressed = Input.GetKeyDown(KeyCode.Space);
+            boostPressed = Input.GetKeyDown(KeyCode.C);
+            shieldPressed = Input.GetKeyDown(KeyCode.X);
         }
 
         if (rotateRight) 
@@ -268,7 +273,8 @@ public class Movement : MonoBehaviour
             BulletTime();
             Hurt();
             Boost();
-            myCamera.fieldOfView = Mathf.Lerp(myCamera.fieldOfView, desiredFOV, Time.deltaTime * speedDodge/10);
+            Shield();
+            myCamera.fieldOfView = Mathf.Lerp(myCamera.fieldOfView, desiredFOV, Time.deltaTime * speedDodge);
         }
     }
 
@@ -429,7 +435,7 @@ public class Movement : MonoBehaviour
 
     void BulletTime()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && Time.timeScale != 0f)
+        if (Input.GetKeyDown(KeyCode.Z) && Time.timeScale != 0f)
         {
             if (slow)
             {
@@ -463,20 +469,35 @@ public class Movement : MonoBehaviour
     public void Boost()
     {
         boostCounter -= Time.deltaTime;
-        if (boostCounter <= 0f)
+        if (inBoost == true)
         {
-            inBoost = false;
-            boostCounter = 0f;
-            desiredFOV = 60f;
-            fwdSpeed = 150;
+            if (boostCounter <= 0f)
+            {
+                inBoost = false;
+                boostCounter = 0f;
+                desiredFOV = 60f;
+                fwdSpeed = 150;
+            }
         }
-        if (spacePressed && inBoost == false)
+        
+        if (boostPressed && inBoost == false)
         {
+            desiredFOV = 90f;
             inBoost = true;
             boostCounter = 5f;
-            fwdSpeed = 250;
-            desiredFOV = 90f;
+            fwdSpeed = 220;
             m_Animator.Play("Boost");
+        }
+    }
+
+    public bool inShield = false;
+
+    public void Shield()
+    {
+        if (shieldPressed)
+        {
+            inShield = true;
+            shield.SetActive(true);
         }
     }
 
@@ -494,7 +515,7 @@ public class Movement : MonoBehaviour
             Time.timeScale = 0.2f;
             
         }
-        else if (Time.timeScale!=0f && Time.timeScale !=0.5f)
+        else if (Time.timeScale!=0f && Time.timeScale !=0.5f && inBoost == false)
         {
             ObtsacleDeleter.SetActive(false);
             desiredFOV = 60f;
