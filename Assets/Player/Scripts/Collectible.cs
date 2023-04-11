@@ -8,6 +8,8 @@ public class Collectible : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Movement player = other.gameObject.GetComponent<Movement>();
+            player.starsCounter++;
             this.gameObject.SetActive(false);
         }
     }

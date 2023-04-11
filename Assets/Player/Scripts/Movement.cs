@@ -14,6 +14,7 @@ public enum HitZ { Forward, Mid, Backward, None };
 
 public class Movement : MonoBehaviour
 {
+    public int starsCounter = 0;
     public GameObject shield;
     public float desiredFOV = 60f;
     public Camera myCamera;
@@ -455,6 +456,7 @@ public class Movement : MonoBehaviour
     void SlowDown()
     {
         Time.timeScale = 0.5f;
+        Time.fixedDeltaTime = Time.timeScale * 0.01f;
         desiredFOV = 45f;
         slow = true;
     }
@@ -518,14 +520,15 @@ public class Movement : MonoBehaviour
         {
             ObtsacleDeleter.SetActive(true);
             desiredFOV = 50f;
-            Time.timeScale = 0.2f;
-            
+            Time.timeScale = 0.4f;
+            Time.fixedDeltaTime = Time.timeScale * 0.01f;
         }
         else if (Time.timeScale!=0f && Time.timeScale !=0.5f && inBoost == false)
         {
             ObtsacleDeleter.SetActive(false);
             desiredFOV = 60f;
             Time.timeScale = 1f;
+            Time.fixedDeltaTime = Time.timeScale * 0.01f;
         }
 
         

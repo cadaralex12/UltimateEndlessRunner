@@ -37,7 +37,7 @@ public class KillPlayer : MonoBehaviour
             }
             else
             {
-                if (player.inBoost == false)
+                if (player.inBoost == false && player.hurtCounter < 0f)
                 {
                     if (player.lives > 1)
                     {
@@ -53,7 +53,7 @@ public class KillPlayer : MonoBehaviour
                         
                         player.y = player.jumpPower * 2 / 3;
                         player.m_Animator.Play("Floating");
-                        player.hurtCounter = 0.5f;
+                        player.hurtCounter = 0.8f;
                         this.gameObject.SetActive(false);
                     }
                     else
