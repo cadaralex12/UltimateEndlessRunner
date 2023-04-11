@@ -76,6 +76,7 @@ public class Movement : MonoBehaviour
     public bool swipedDown = false;
     public bool boostPressed = false;
     public bool shieldPressed = false;
+    public bool slowMoPressed = false;
 
     public bool rotateRight = false;
 
@@ -127,6 +128,7 @@ public class Movement : MonoBehaviour
 
         boostPressed = false;
         shieldPressed = false;
+        slowMoPressed = false;
 
         rotateRight = false;
 
@@ -188,6 +190,7 @@ public class Movement : MonoBehaviour
             rotateRight = Input.GetKeyDown(KeyCode.R);
             boostPressed = Input.GetKeyDown(KeyCode.C);
             shieldPressed = Input.GetKeyDown(KeyCode.X);
+            slowMoPressed = Input.GetKeyDown(KeyCode.Z);
         }
 
         if (rotateRight) 
@@ -433,10 +436,11 @@ public class Movement : MonoBehaviour
         return hit;
     }*/
 
-    void BulletTime()
+    public void BulletTime()
     {
-        if (Input.GetKeyDown(KeyCode.Z) && Time.timeScale != 0f)
+        if (slowMoPressed && Time.timeScale != 0f)
         {
+            slowMoPressed = false;
             if (slow)
             {
                 Resume();
@@ -482,6 +486,7 @@ public class Movement : MonoBehaviour
         
         if (boostPressed && inBoost == false)
         {
+            boostPressed = false;
             desiredFOV = 90f;
             inBoost = true;
             boostCounter = 5f;
@@ -496,6 +501,7 @@ public class Movement : MonoBehaviour
     {
         if (shieldPressed)
         {
+            shieldPressed = false;
             inShield = true;
             shield.SetActive(true);
         }

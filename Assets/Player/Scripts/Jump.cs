@@ -46,7 +46,7 @@ public class Jump : MonoBehaviour
                 player.slideCounter = 0;
                 player.y = player.jumpPower;
                 player.inJump = true;
-                player.m_Animator.CrossFadeInFixedTime("Jump", 0.1f);
+                player.m_Animator.Play("Jump");
             }
             /*else
             {
@@ -60,7 +60,7 @@ public class Jump : MonoBehaviour
                 player.doubleJump = true;
                 player.y = player.jumpPower;
                 player.inJump = true;
-                player.m_Animator.CrossFadeInFixedTime("Backflip", 0.1f);
+                player.m_Animator.Play("Backflip");
             }
             else
             {
