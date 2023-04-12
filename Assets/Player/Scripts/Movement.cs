@@ -437,19 +437,21 @@ public class Movement : MonoBehaviour
         return hit;
     }*/
 
+    internal float slowMoCounter = 0f;
+
     public void BulletTime()
     {
-        if (slowMoPressed && Time.timeScale != 0f)
+        slowMoCounter -= Time.deltaTime;
+        if (slowMoCounter <= 0f)
         {
+            Resume();
+        }
+        if (slowMoPressed && Time.timeScale != 0f && starsCounter >= 10)
+        {
+            starsCounter -= 10;
             slowMoPressed = false;
-            if (slow)
-            {
-                Resume();
-            }
-            else
-            {
-                SlowDown();
-            }
+            slowMoCounter = 3f;
+            SlowDown();
         }
     }
 
@@ -479,6 +481,7 @@ public class Movement : MonoBehaviour
         {
             if (boostCounter <= 0f)
             {
+                myCamera.transform.position -= new Vector3(0, 100f, 0);
                 inBoost = false;
                 boostCounter = 0f;
                 desiredFOV = 60f;
@@ -486,10 +489,12 @@ public class Movement : MonoBehaviour
             }
         }
         
-        if (boostPressed && inBoost == false)
+        if (boostPressed && inBoost == false && starsCounter >= 5 && hurtCounter <= 0f)
         {
+            starsCounter -= 5;
             boostPressed = false;
-            desiredFOV = 90f;
+            desiredFOV = 80f;
+            myCamera.transform.position += new Vector3(0, 100f, 0);
             inBoost = true;
             boostCounter = 5f;
             fwdSpeed = 220;
@@ -501,8 +506,9 @@ public class Movement : MonoBehaviour
 
     public void Shield()
     {
-        if (shieldPressed)
+        if (shieldPressed && starsCounter >= 10)
         {
+            starsCounter -= 10;
             shieldPressed = false;
             inShield = true;
             shield.SetActive(true);

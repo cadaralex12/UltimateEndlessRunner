@@ -186,11 +186,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &1872041
 BoxCollider:
@@ -605,11 +600,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &23659464
 BoxCollider:
@@ -2023,6 +2013,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!136 &64594325
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2066,6 +2057,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e950f4911d1094aad971b543405dbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  starsCounter: 0
+  shield: {fileID: 0}
   desiredFOV: 60
   myCamera: {fileID: 963194227}
   ObtsacleDeleter: {fileID: 410886057}
@@ -2110,10 +2103,13 @@ MonoBehaviour:
   swipedLeft: 0
   swipedUp: 0
   swipedDown: 0
-  spacePressed: 0
+  boostPressed: 0
+  shieldPressed: 0
+  slowMoPressed: 0
   rotateRight: 0
   debugWithArrowKeys: 1
   inBoost: 0
+  inShield: 0
   hurtCounter: 0
 --- !u!114 &64594329
 MonoBehaviour:
@@ -2458,11 +2454,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &75727375
 BoxCollider:
@@ -3639,11 +3630,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!95 &127771320
 Animator:
@@ -3665,6 +3651,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!64 &127771321
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6837,11 +6824,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &216667435
 BoxCollider:
@@ -12162,11 +12144,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &425267802
 BoxCollider:
@@ -12503,11 +12480,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &435487416
 BoxCollider:
@@ -12937,11 +12909,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &453250328
 BoxCollider:
@@ -20249,11 +20216,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &713904130
 BoxCollider:
@@ -21185,11 +21147,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &740691801
 BoxCollider:
@@ -22154,11 +22111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &786651509
 BoxCollider:
@@ -26421,11 +26373,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &919329817
 BoxCollider:
@@ -27271,11 +27218,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 4
-  ExplodeForce: 2
   player: {fileID: 0}
 --- !u!65 &947373396
 BoxCollider:
@@ -27672,7 +27614,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.1324025, y: -0, z: -0, w: 0.99119604}
-  m_LocalPosition: {x: 0, y: 28.17, z: -41.22}
+  m_LocalPosition: {x: 0, y: 33, z: -45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -27692,7 +27634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 64594322}
-  speedFollow: 5
+  speedFollow: 10
 --- !u!1 &963612691
 GameObject:
   m_ObjectHideFlags: 0
@@ -29876,6 +29818,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1049513783
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30455,11 +30398,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &1069026915
 BoxCollider:
@@ -30617,11 +30555,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &1073614565
 BoxCollider:
@@ -31725,11 +31658,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &1109761082
 BoxCollider:
@@ -32866,11 +32794,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &1150568000
 BoxCollider:
@@ -37823,11 +37746,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &1328847934
 BoxCollider:
@@ -40666,11 +40584,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &1422035070
 BoxCollider:
@@ -40902,11 +40815,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &1433747965
 BoxCollider:
@@ -41004,11 +40912,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &1439465667
 BoxCollider:
@@ -45025,11 +44928,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &1568021921
 BoxCollider:
@@ -49357,11 +49255,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &1741621223
 BoxCollider:
@@ -50946,11 +50839,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &1789462334
 BoxCollider:
@@ -53096,11 +52984,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &1856146824
 BoxCollider:
@@ -54143,11 +54026,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 4
-  ExplodeForce: 3
   player: {fileID: 0}
 --- !u!65 &1880531998
 BoxCollider:
@@ -55906,6 +55784,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &1930642118 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 4aa10f57f7e7e814d8755d34ba40f224, type: 3}
@@ -56369,11 +56248,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &1943979575
 BoxCollider:
@@ -58452,11 +58326,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &2047119186
 BoxCollider:
@@ -59639,11 +59508,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 4
-  ExplodeForce: 2
   player: {fileID: 0}
 --- !u!65 &2073852222
 BoxCollider:
@@ -61629,11 +61493,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &2135187948
 BoxCollider:
@@ -61985,11 +61844,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: 0
-  babyMode: 1
-  timer: 0
-  seconds: 0
-  CutCascades: 1
-  ExplodeForce: 0
   player: {fileID: 0}
 --- !u!65 &2147034995
 BoxCollider:

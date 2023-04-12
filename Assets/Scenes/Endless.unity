@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.0007336747, g: 0.0040365946, b: 0.019844197, a: 1}
+  m_IndirectSpecularColor: {r: 0.00089928973, g: 0.004303922, b: 0.019707026, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -733,7 +733,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Shield
+  m_Text: 'Shield
+
+    10 stars'
 --- !u!222 &361293244
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1020,9 +1022,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Slow
+  m_Text: 'SlowMo
 
-    Mo'
+    10 stars'
 --- !u!222 &579271288
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1606,7 +1608,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Boost
+  m_Text: 'Boost
+
+    5 stars'
 --- !u!222 &774216759
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1647,7 +1651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1800999435}
-  speedFollow: 5
+  speedFollow: 10
 --- !u!81 &886569056
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1707,7 +1711,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886569054}
   m_LocalRotation: {x: 0.1324025, y: -0, z: -0, w: 0.99119604}
-  m_LocalPosition: {x: 0, y: 28.17, z: -41.22}
+  m_LocalPosition: {x: 0, y: 32, z: -45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1942,6 +1946,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1151440246
 GameObject:
   m_ObjectHideFlags: 0
@@ -9328,6 +9333,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!143 &1800999433
 CharacterController:
   m_ObjectHideFlags: 0
@@ -9811,6 +9817,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1944778923
 GameObject:
   m_ObjectHideFlags: 0

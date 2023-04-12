@@ -8,7 +8,7 @@ public class BoostButton : MonoBehaviour
 
     public void ActivateBoost()
     {
-        player.boostPressed = true;
-        player.Boost();
+         player.boostPressed = true;
+         player.Boost();
     }
 }
