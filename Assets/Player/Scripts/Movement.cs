@@ -438,11 +438,12 @@ public class Movement : MonoBehaviour
     }*/
 
     internal float slowMoCounter = 0f;
+    public bool inSlowMo = false;
 
     public void BulletTime()
     {
         slowMoCounter -= Time.deltaTime;
-        if (slowMoCounter <= 0f)
+        if (slowMoCounter <= 0f && inSlowMo == true)
         {
             Resume();
         }
@@ -457,6 +458,7 @@ public class Movement : MonoBehaviour
 
     void SlowDown()
     {
+        inSlowMo = true;
         Time.timeScale = 0.5f;
         Time.fixedDeltaTime = Time.timeScale * 0.01f;
         desiredFOV = 45f;
@@ -515,7 +517,13 @@ public class Movement : MonoBehaviour
         }
     }
 
-
+    void Blink()
+    {
+        if (GetComponent<Renderer>().enabled == true)
+            GetComponent<Renderer>().enabled = false;
+        else
+            GetComponent<Renderer>().enabled = true;
+    }
 
     public float hurtCounter = 0;
 
@@ -526,11 +534,15 @@ public class Movement : MonoBehaviour
         {
             ObtsacleDeleter.SetActive(true);
             desiredFOV = 50f;
+            //InvokeRepeating("Blink", 0, 0.2f);
             Time.timeScale = 0.4f;
             Time.fixedDeltaTime = Time.timeScale * 0.01f;
         }
         else if (Time.timeScale!=0f && Time.timeScale !=0.5f && inBoost == false)
         {
+            /*CancelInvoke("Blink");
+            if (GetComponent<Renderer>().enabled == false)
+                GetComponent<Renderer>().enabled = true;*/
             ObtsacleDeleter.SetActive(false);
             desiredFOV = 60f;
             Time.timeScale = 1f;
