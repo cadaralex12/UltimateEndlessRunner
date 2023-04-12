@@ -20,6 +20,10 @@ public class GroundSpawner : MonoBehaviour
     private Quaternion spawnRotation;
     private int firstFiveEmpty;
 
+    private float deleteCounter = 0f;
+
+    public int starsSpawned = 0;
+
     private List<GameObject> activeTiles;
 
     private void Start()
@@ -42,17 +46,10 @@ public class GroundSpawner : MonoBehaviour
         if ((playerTransform.position.z - safeZone) > (spawnZ - amnTilesOnScreen * tileLength))
         {
             int ran = Random.Range(0, 10);
-            /*if (ran % 2 == 1)
-            {
-                SpawnTile(difficulty);
-            }
-            else
-            {
-                SpawnTile(3);
-                DeleteTile();
-            }*/
+
             SpawnTile(difficulty);
-            if (ran % 3 == 0 && firstFiveEmpty == 0)
+
+            if (activeTiles.Count >= 12 && firstFiveEmpty == 0)
             {
                 DeleteTile();
             }
@@ -127,6 +124,8 @@ public class GroundSpawner : MonoBehaviour
 
     private void DeleteTile()
     {
+        starsSpawned += activeTiles[3].gameObject.GetComponent<StarCounter>().coinsSpawned;
+        UnityEngine.Debug.Log(starsSpawned);
         Destroy(activeTiles[0]);
         activeTiles.RemoveAt(0);
     }
@@ -143,7 +142,6 @@ public class GroundSpawner : MonoBehaviour
 
     public int RandomPreFabindex(int difficulty = 1)
     {
-        UnityEngine.Debug.Log("difficulty is :" + difficulty);
         if (difficulty == 1)
         {
             if (tilePrefabsEasy.Length <= 1)
@@ -168,7 +166,6 @@ public class GroundSpawner : MonoBehaviour
             while (randomIndex == lastPrefabIndex)
             {
                 randomIndex = Random.Range(0, tilePrefabsMedium.Length);
-                UnityEngine.Debug.Log(randomIndex);
             }
             lastPrefabIndex = randomIndex;
             return randomIndex;

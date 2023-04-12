@@ -75,24 +75,14 @@ public class ScoreManager : MonoBehaviour
                 PlayerPrefs.Save();
                 //Debug.Log("Dick");
             }
-            else
-            {
-                //Debug.Log("Score not bigger");
-            }
         }
         else
         {
-            Debug.Log("HasNoKey");
             if (score > highScore)
             {
                 highScore = score;
                 PlayerPrefs.SetInt("endlessHighScore", highScore);
                 PlayerPrefs.Save();
-                //Debug.Log("Dick");
-            }
-            else
-            {
-                //Debug.Log("Score not bigger");
             }
         }
     }
