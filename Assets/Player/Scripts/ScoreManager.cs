@@ -11,9 +11,13 @@ public class ScoreManager : MonoBehaviour
     public TMP_Text scoreText;
     public TMP_Text highScoreText;
     public TMP_Text timerText;
+    public TMP_Text starsText;
+    public TMP_Text livesText;
     public string minutesText;
     public string secondsText;
-
+    
+    int starsCounter = 0;
+    int lives = 0;
     int score = 0;
     int highScore = 0;
     float minutes = 0;
@@ -30,6 +34,8 @@ public class ScoreManager : MonoBehaviour
         //Debug.Log("Saved Highscore: " + PlayerPrefs.GetInt("endlessHighScore"));
         scoreText.text = "Score: " + score.ToString() + " m";
         highScoreText.text = "High Score: " + highScore.ToString() + " m";
+        starsText.text = "Stars: " + starsCounter.ToString();
+        livesText.text = "Lives: " + lives.ToString();
     }
 
     // Update is called once per frame
@@ -38,6 +44,9 @@ public class ScoreManager : MonoBehaviour
         score = playerScript.score;
         minutes = playerScript.minutes;
         seconds = playerScript.seconds;
+        starsCounter = playerScript.starsCounter;
+        lives = playerScript.lives;
+
         scoreText.text = "Score: " + score.ToString() + " m";
         if (minutes < 10)
         {
@@ -52,6 +61,9 @@ public class ScoreManager : MonoBehaviour
         timerText.text = minutesText + ":" + secondsText;
         highScoreText.text = "High Score: " + highScore.ToString() + " m";
 
+        starsText.text = "Stars: " + starsCounter.ToString();
+        livesText.text = "Lives: " + lives.ToString();
+
         if (PlayerPrefs.HasKey("endlessHighScore"))
         {
             //Debug.Log("HasKey");
@@ -63,24 +75,14 @@ public class ScoreManager : MonoBehaviour
                 PlayerPrefs.Save();
                 //Debug.Log("Dick");
             }
-            else
-            {
-                //Debug.Log("Score not bigger");
-            }
         }
         else
         {
-            Debug.Log("HasNoKey");
             if (score > highScore)
             {
                 highScore = score;
                 PlayerPrefs.SetInt("endlessHighScore", highScore);
                 PlayerPrefs.Save();
-                //Debug.Log("Dick");
-            }
-            else
-            {
-                //Debug.Log("Score not bigger");
             }
         }
     }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System;
 
 public class GroundSpawner : MonoBehaviour
 {
@@ -20,11 +21,14 @@ public class GroundSpawner : MonoBehaviour
     private Quaternion spawnRotation;
     private int firstFiveEmpty;
 
+    private float deleteCounter = 0f;
+
+    public int starsSpawned = 0;
+
     private List<GameObject> activeTiles;
 
     private void Start()
     {
-        //DeleteAllTiles();
         lastWidth = 0;
         newWidth = 0;
         activeTiles = new List<GameObject>();
@@ -41,18 +45,9 @@ public class GroundSpawner : MonoBehaviour
     {
         if ((playerTransform.position.z - safeZone) > (spawnZ - amnTilesOnScreen * tileLength))
         {
-            int ran = Random.Range(0, 10);
-            /*if (ran % 2 == 1)
-            {
-                SpawnTile(difficulty);
-            }
-            else
-            {
-                SpawnTile(3);
-                DeleteTile();
-            }*/
             SpawnTile(difficulty);
-            if (ran % 3 == 0 && firstFiveEmpty == 0)
+
+            if (activeTiles.Count >= 14 && firstFiveEmpty == 0)
             {
                 DeleteTile();
             }
@@ -81,12 +76,30 @@ public class GroundSpawner : MonoBehaviour
                 {
                     if (firstFiveEmpty > 0)
                     {
-                        temp = Instantiate(tilePrefabsMedium[0]) as GameObject;
+                        temp = Instantiate(tilePrefabsHard[0]) as GameObject;
                         firstFiveEmpty--;
                         break;
                     }
-                    temp = Instantiate(tilePrefabsMedium[RandomPreFabindex(difficulty)]) as GameObject;
-                    //temp = Instantiate(tilePrefabsMedium[RandomPreFabindex()], Vector3.forward * spawnZ, spawnRotation) as GameObject;
+                    else
+                    {
+                        int random = UnityEngine.Random.Range(0, 100);
+                        UnityEngine.Debug.Log(random);
+                        if (random >= 95)
+                        {
+                            UnityEngine.Debug.Log("Bonus");
+                            temp = Instantiate(tilePrefabsEasy[RandomPreFabindex(1)]) as GameObject;
+                        }
+                        else if (random < 90)
+                        {
+                            UnityEngine.Debug.Log("Medium");
+                            temp = Instantiate(tilePrefabsMedium[RandomPreFabindex(2)]) as GameObject;
+                        }
+                        else
+                        {
+                            UnityEngine.Debug.Log("Empty");
+                            temp = Instantiate(tilePrefabsHard[RandomPreFabindex(3)]) as GameObject;
+                        }
+                    }
                     break;
                 }
             case 3:
@@ -102,13 +115,14 @@ public class GroundSpawner : MonoBehaviour
                 }
             default:
                 {
+                    UnityEngine.Debug.Log("Dicks");
                     if (firstFiveEmpty > 0)
                     {
-                        temp = Instantiate(tilePrefabsEasy[0]) as GameObject;
+                        temp = Instantiate(tilePrefabsHard[0]) as GameObject;
                         firstFiveEmpty--;
                         break;
                     }
-                    temp = Instantiate(tilePrefabsEasy[RandomPreFabindex()]) as GameObject;
+                    temp = Instantiate(tilePrefabsHard[RandomPreFabindex()]) as GameObject;
                     break;
                 }
                 
@@ -117,16 +131,15 @@ public class GroundSpawner : MonoBehaviour
         //lastWidth = width;
         temp.transform.SetParent(transform);
         temp.transform.position = Vector3.forward * spawnZ;
-        
-        //temp.transform.position += Vector3.forward * tileLength;
-        //temp.transform.rotation = spawnRotation;
-        //spawnRotation = temp.transform.GetChild(0).GetChild(1).rotation;
+        tileLength = temp.gameObject.GetComponent<PrefabInformation>().tileLength;
         spawnZ += tileLength;
         activeTiles.Add(temp);
     }
 
     private void DeleteTile()
     {
+        starsSpawned += activeTiles[5].gameObject.GetComponent<PrefabInformation>().coinsSpawned;
+        //UnityEngine.Debug.Log(starsSpawned);
         Destroy(activeTiles[0]);
         activeTiles.RemoveAt(0);
     }
@@ -141,10 +154,9 @@ public class GroundSpawner : MonoBehaviour
         
     }*/
 
-    public int RandomPreFabindex(int difficulty = 1)
+    public int RandomPreFabindex(int type = 1)
     {
-        UnityEngine.Debug.Log("difficulty is :" + difficulty);
-        if (difficulty == 1)
+        if (type == 1)
         {
             if (tilePrefabsEasy.Length <= 1)
             {
@@ -153,12 +165,12 @@ public class GroundSpawner : MonoBehaviour
             int randomIndex = lastPrefabIndex;
             while (randomIndex == lastPrefabIndex)
             {
-                randomIndex = Random.Range(0, tilePrefabsEasy.Length);
+                randomIndex = UnityEngine.Random.Range(0, tilePrefabsEasy.Length);
             }
             lastPrefabIndex = randomIndex;
             return randomIndex;
         }
-        else if (difficulty == 2)
+        else if (type == 2)
         {
             if (tilePrefabsMedium.Length <= 1)
             {
@@ -167,13 +179,12 @@ public class GroundSpawner : MonoBehaviour
             int randomIndex = lastPrefabIndex;
             while (randomIndex == lastPrefabIndex)
             {
-                randomIndex = Random.Range(0, tilePrefabsMedium.Length);
-                UnityEngine.Debug.Log(randomIndex);
+                randomIndex = UnityEngine.Random.Range(0, tilePrefabsMedium.Length);
             }
             lastPrefabIndex = randomIndex;
             return randomIndex;
         }
-        else if (difficulty == 3)
+        else if (type == 3)
         {
             if (tilePrefabsHard.Length <= 1)
             {
@@ -182,7 +193,7 @@ public class GroundSpawner : MonoBehaviour
             int randomIndex = lastPrefabIndex;
             while (randomIndex == lastPrefabIndex)
             {
-                randomIndex = Random.Range(0, tilePrefabsHard.Length);
+                randomIndex = UnityEngine.Random.Range(0, tilePrefabsHard.Length);
             }
             lastPrefabIndex = randomIndex;
             return randomIndex;
