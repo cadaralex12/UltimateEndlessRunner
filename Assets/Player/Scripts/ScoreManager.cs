@@ -34,7 +34,7 @@ public class ScoreManager : MonoBehaviour
         //Debug.Log("Saved Highscore: " + PlayerPrefs.GetInt("endlessHighScore"));
         scoreText.text = "Score: " + score.ToString() + " m";
         highScoreText.text = "High Score: " + highScore.ToString() + " m";
-        starsText.text = "Stars: " + starsCounter.ToString();
+        starsText.text = starsCounter.ToString();
         livesText.text = "Lives: " + lives.ToString();
     }
 
@@ -61,7 +61,7 @@ public class ScoreManager : MonoBehaviour
         timerText.text = minutesText + ":" + secondsText;
         highScoreText.text = "High Score: " + highScore.ToString() + " m";
 
-        starsText.text = "Stars: " + starsCounter.ToString();
+        starsText.text = starsCounter.ToString();
         livesText.text = "Lives: " + lives.ToString();
 
         if (PlayerPrefs.HasKey("endlessHighScore"))
