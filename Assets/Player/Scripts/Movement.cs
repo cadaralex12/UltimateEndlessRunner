@@ -14,6 +14,7 @@ public enum HitZ { Forward, Mid, Backward, None };
 
 public class Movement : MonoBehaviour
 {
+    public bool inPause = false;
     public int starsCounter = 0;
     public GameObject shield;
     public float desiredFOV = 60f;
@@ -443,11 +444,11 @@ public class Movement : MonoBehaviour
     public void BulletTime()
     {
         slowMoCounter -= Time.deltaTime;
-        if (slowMoCounter <= 0f && inSlowMo == true)
+        if (slowMoCounter <= 0f && inSlowMo == true )
         {
             Resume();
         }
-        if (slowMoPressed && Time.timeScale != 0f && starsCounter >= 10)
+        if (slowMoPressed && Time.timeScale != 0f && starsCounter >= 10 && inSlowMo == false)
         {
             starsCounter -= 10;
             slowMoPressed = false;
@@ -470,7 +471,7 @@ public class Movement : MonoBehaviour
         desiredFOV = 60f;
         Time.timeScale = 1f;
         Time.fixedDeltaTime = Time.timeScale * 0.01f;
-        slow = false;
+        inSlowMo = false;
     }
 
     internal float boostCounter = 0f;
@@ -478,29 +479,32 @@ public class Movement : MonoBehaviour
 
     public void Boost()
     {
-        boostCounter -= Time.deltaTime;
-        if (inBoost == true)
+        if (inPause == false)
         {
-            if (boostCounter <= 0f)
+            boostCounter -= Time.deltaTime;
+            if (inBoost == true)
             {
-                myCamera.transform.position -= new Vector3(0, 100f, 0);
-                inBoost = false;
-                boostCounter = 0f;
-                desiredFOV = 60f;
-                fwdSpeed = 150;
+                if (boostCounter <= 0f)
+                {
+                    myCamera.transform.position -= new Vector3(0, 100f, 0);
+                    inBoost = false;
+                    boostCounter = 0f;
+                    desiredFOV = 60f;
+                    fwdSpeed = 150;
+                }
             }
-        }
-        
-        if (boostPressed && inBoost == false && starsCounter >= 5 && hurtCounter <= 0f)
-        {
-            starsCounter -= 5;
-            boostPressed = false;
-            desiredFOV = 80f;
-            myCamera.transform.position += new Vector3(0, 100f, 0);
-            inBoost = true;
-            boostCounter = 5f;
-            fwdSpeed = 220;
-            m_Animator.Play("Boost");
+
+            if (boostPressed && inBoost == false && starsCounter >= 5 && hurtCounter <= 0f)
+            {
+                starsCounter -= 5;
+                boostPressed = false;
+                desiredFOV = 80f;
+                myCamera.transform.position += new Vector3(0, 100f, 0);
+                inBoost = true;
+                boostCounter = 5f;
+                fwdSpeed = 220;
+                m_Animator.Play("Boost");
+            }
         }
     }
 
@@ -529,24 +533,27 @@ public class Movement : MonoBehaviour
 
     void Hurt()
     {
-        hurtCounter -= Time.deltaTime;
-        if (hurtCounter > 0f)
-        {
-            ObtsacleDeleter.SetActive(true);
-            desiredFOV = 50f;
-            //InvokeRepeating("Blink", 0, 0.2f);
-            Time.timeScale = 0.4f;
-            Time.fixedDeltaTime = Time.timeScale * 0.01f;
-        }
-        else if (Time.timeScale!=0f && Time.timeScale !=0.5f && inBoost == false)
-        {
-            /*CancelInvoke("Blink");
-            if (GetComponent<Renderer>().enabled == false)
-                GetComponent<Renderer>().enabled = true;*/
-            ObtsacleDeleter.SetActive(false);
-            desiredFOV = 60f;
-            Time.timeScale = 1f;
-            Time.fixedDeltaTime = Time.timeScale * 0.01f;
+        if (inPause == false)
+        { 
+            hurtCounter -= Time.deltaTime;
+            if (hurtCounter > 0f)
+            {
+                ObtsacleDeleter.SetActive(true);
+                desiredFOV = 50f;
+                //InvokeRepeating("Blink", 0, 0.2f);
+                Time.timeScale = 0.4f;
+                Time.fixedDeltaTime = Time.timeScale * 0.01f;
+            }
+            else if (Time.timeScale != 0f && Time.timeScale != 0.5f && inBoost == false)
+            {
+                /*CancelInvoke("Blink");
+                if (GetComponent<Renderer>().enabled == false)
+                    GetComponent<Renderer>().enabled = true;*/
+                ObtsacleDeleter.SetActive(false);
+                desiredFOV = 60f;
+                Time.timeScale = 1f;
+                Time.fixedDeltaTime = Time.timeScale * 0.01f;
+            }
         }
 
         
