@@ -300,7 +300,7 @@ public class Movement : MonoBehaviour
             if (!m_char.isGrounded)
             {
                 inAirSlide = true;
-                y -= 100f;
+                y -= 150f;
             }
             if (!inSlide && m_char.isGrounded)
             {
@@ -486,6 +486,7 @@ public class Movement : MonoBehaviour
             {
                 if (boostCounter <= 0f)
                 {
+                    myCamera.transform.GetChild(0).gameObject.SetActive(false);
                     myCamera.transform.position -= new Vector3(0, 100f, 0);
                     inBoost = false;
                     boostCounter = 0f;
@@ -496,6 +497,7 @@ public class Movement : MonoBehaviour
 
             if (boostPressed && inBoost == false && starsCounter >= 5 && hurtCounter <= 0f)
             {
+                myCamera.transform.GetChild(0).gameObject.SetActive(true);
                 starsCounter -= 5;
                 boostPressed = false;
                 desiredFOV = 80f;
