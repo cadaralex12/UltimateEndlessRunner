@@ -39,7 +39,19 @@ public class Collisions : MonoBehaviour
         {
             player.y = 1.5f * player.jumpPower;
             player.inJump = true;
+
             int ran = UnityEngine.Random.Range(0, 10);
+            Vector3 rot;
+            if (ran % 2 == 0)
+            {
+                rot = new Vector3(0, 360, 0);
+            }
+            else
+            {
+                rot = new Vector3(0, -360, 0);
+            }
+
+            ran = UnityEngine.Random.Range(0, 10);
             if (ran % 3 == 0)
             {
                 m_Animator.Play("Pose1");
@@ -53,15 +65,9 @@ public class Collisions : MonoBehaviour
                 m_Animator.Play("Pose3");
             }
 
-            Vector3 rot;
-            ran = UnityEngine.Random.Range(0, 10);
-            if (ran % 2 == 0)
+            if (player.m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Roll"))
             {
-                rot = new Vector3(0, 360, 0);
-            }
-            else
-            {
-                rot = new Vector3(0, -360, 0);
+                m_Animator.Play("Pose2");
             }
 
             transform.DORotate(rot, 1.5f, RotateMode.LocalAxisAdd).SetLoops(1).SetEase(Ease.Linear);
