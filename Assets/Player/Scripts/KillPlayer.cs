@@ -28,8 +28,9 @@ public class KillPlayer : MonoBehaviour
             {
                 if (player.inBoost == false)
                 {
+                    PlayerPrefs.SetInt("StarsCounter", player.starsCounter);
                     PlayerPrefs.SetInt("totalCoins", PlayerPrefs.GetInt("totalCoins") + player.starsCounter);
-                    Invoke("reloadScene", 0);
+                    SceneManager.LoadScene("VictoryScene");
                 }
                 else
                 {
@@ -59,8 +60,9 @@ public class KillPlayer : MonoBehaviour
                     }
                     else
                     {
+                        PlayerPrefs.SetInt("StarsCounter", player.starsCounter);
                         PlayerPrefs.SetInt("totalCoins", PlayerPrefs.GetInt("totalCoins") + player.starsCounter);
-                        Invoke("reloadScene", 0);//this will happen after a delay of 1.5 seconds
+                        SceneManager.LoadScene("VictoryScene");
                     }
                 }
                 else
