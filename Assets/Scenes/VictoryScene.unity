@@ -414,8 +414,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -1.6632, y: 0}
+  m_SizeDelta: {x: 3.3263, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1358820904
 MonoBehaviour:
@@ -441,8 +441,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1e8f7996baa4a0042a5dcaf6034ca53c, type: 2}
+  m_sharedMaterial: {fileID: 5712590784125532648, guid: 1e8f7996baa4a0042a5dcaf6034ca53c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -502,7 +502,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -0.007797196, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -653,8 +653,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Stars
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 96246efc90d42ed43bd73702a4b092dc, type: 2}
-  m_sharedMaterial: {fileID: -1197671727135174121, guid: 96246efc90d42ed43bd73702a4b092dc, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1e8f7996baa4a0042a5dcaf6034ca53c, type: 2}
+  m_sharedMaterial: {fileID: 5712590784125532648, guid: 1e8f7996baa4a0042a5dcaf6034ca53c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1045,8 +1045,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: _
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 96246efc90d42ed43bd73702a4b092dc, type: 2}
-  m_sharedMaterial: {fileID: -1197671727135174121, guid: 96246efc90d42ed43bd73702a4b092dc, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1e8f7996baa4a0042a5dcaf6034ca53c, type: 2}
+  m_sharedMaterial: {fileID: 5712590784125532648, guid: 1e8f7996baa4a0042a5dcaf6034ca53c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1134,6 +1134,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textComponent: {fileID: 2103572605}
   letterDelay: 0.1
-  textToWrite: '>Experiment_status = "Completed" '
+  linesToWrite:
+  - '>Experiment_Status = "Completed"'
+  - '>Good Job, Amy'
+  - 
+  - 
+  - 
   underscoreCharacter: 95
   blinkInterval: 0.5
