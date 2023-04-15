@@ -83,20 +83,16 @@ public class GroundSpawner : MonoBehaviour
                     else
                     {
                         int random = UnityEngine.Random.Range(0, 100);
-                        UnityEngine.Debug.Log(random);
                         if (random >= 95)
                         {
-                            UnityEngine.Debug.Log("Bonus");
                             temp = Instantiate(tilePrefabsEasy[RandomPreFabindex(1)]) as GameObject;
                         }
                         else if (random < 90)
                         {
-                            UnityEngine.Debug.Log("Medium");
                             temp = Instantiate(tilePrefabsMedium[RandomPreFabindex(2)]) as GameObject;
                         }
                         else
                         {
-                            UnityEngine.Debug.Log("Empty");
                             temp = Instantiate(tilePrefabsHard[RandomPreFabindex(3)]) as GameObject;
                         }
                     }
@@ -115,7 +111,6 @@ public class GroundSpawner : MonoBehaviour
                 }
             default:
                 {
-                    UnityEngine.Debug.Log("Dicks");
                     if (firstFiveEmpty > 0)
                     {
                         temp = Instantiate(tilePrefabsHard[0]) as GameObject;
@@ -128,7 +123,6 @@ public class GroundSpawner : MonoBehaviour
                 
                 
         }
-        //lastWidth = width;
         temp.transform.SetParent(transform);
         temp.transform.position = Vector3.forward * spawnZ;
         tileLength = temp.gameObject.GetComponent<PrefabInformation>().tileLength;
@@ -139,20 +133,9 @@ public class GroundSpawner : MonoBehaviour
     private void DeleteTile()
     {
         starsSpawned += activeTiles[5].gameObject.GetComponent<PrefabInformation>().coinsSpawned;
-        //UnityEngine.Debug.Log(starsSpawned);
         Destroy(activeTiles[0]);
         activeTiles.RemoveAt(0);
     }
-
-    /*private void DeleteAllTiles()
-    {
-        for (int i=0; i<=activeTiles.size(); i++)
-        {
-            Destroy(activeTiles[i]);
-            activeTiles.RemoveAt(i);
-        }
-        
-    }*/
 
     public int RandomPreFabindex(int type = 1)
     {

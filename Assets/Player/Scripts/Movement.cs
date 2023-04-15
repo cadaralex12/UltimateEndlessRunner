@@ -14,6 +14,7 @@ public enum HitZ { Forward, Mid, Backward, None };
 
 public class Movement : MonoBehaviour
 {
+    public bool onRamp = false;
     public bool inPause = false;
     public int starsCounter = 0;
     public GameObject shield;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using DG.Tweening;
 using UnityEngine;
 
 public class Jump : MonoBehaviour
@@ -41,20 +42,61 @@ public class Jump : MonoBehaviour
                 player.m_Animator.Play("Landing");
                 //inJump = false;
             }
-            if (player.swipedUp)
+            if (player.swipedUp && player.onRamp == false)
             {
                 player.slideCounter = 0;
                 player.y = player.jumpPower;
                 player.inJump = true;
                 player.m_Animator.Play("Jump");
             }
-            /*else
+            else if(player.swipedUp && player.onRamp == true)
             {
-                player.y = -0.5f;
-            }*/
+                //m_Animator.enabled = false;
+                player.y = 1.5f * player.jumpPower;
+                player.inJump = true;
+
+                int ran = UnityEngine.Random.Range(0, 10);
+                Vector3 rot;
+                if (ran % 2 == 0)
+                {
+                    rot = new Vector3(0, 360, 0);
+                }
+                else
+                {
+                    rot = new Vector3(0, -360, 0);
+                }
+
+                ran = UnityEngine.Random.Range(0, 10);
+                if (ran % 3 == 0)
+                {
+
+                    //m_Animator.enabled = true;
+                    UnityEngine.Debug.Log("Pula 1");
+                    player.m_Animator.Play("Pose1");
+                }
+                else if (ran % 3 == 1)
+                {
+                    //m_Animator.enabled = true;
+                    UnityEngine.Debug.Log("Pula 2");
+                    player.m_Animator.Play("Pose2");
+                }
+                else
+                {
+                    //m_Animator.enabled = true;
+                    UnityEngine.Debug.Log("Pula 3");
+                    player.m_Animator.Play("Pose3");
+                }
+
+                transform.DORotate(rot, 1.5f, RotateMode.LocalAxisAdd).SetLoops(1).SetEase(Ease.Linear);
+            }
+            else
+            {
+                player.y = -0.2f;
+            }
         }
         else
         {
+            player.onRamp = false;
             if (player.swipedUp && player.doubleJump == false)
             {
                 player.doubleJump = true;

@@ -37,46 +37,7 @@ public class Collisions : MonoBehaviour
     {
         if (other.CompareTag("RampPeak"))
         {
-            player.y = 1.5f * player.jumpPower;
-            player.inJump = true;
-
-            int ran = UnityEngine.Random.Range(0, 10);
-            Vector3 rot;
-            if (ran % 2 == 0)
-            {
-                rot = new Vector3(0, 360, 0);
-            }
-            else
-            {
-                rot = new Vector3(0, -360, 0);
-            }
-
-            ran = UnityEngine.Random.Range(0, 10);
-            if (ran % 3 == 0)
-            {
-                m_Animator.enabled = false;
-                m_Animator.enabled = true;
-                m_Animator.Play("Pose1");
-            }
-            else if (ran % 3 == 1)
-            {
-                m_Animator.enabled = false;
-                m_Animator.enabled = true;
-                m_Animator.Play("Pose2");
-            }
-            else
-            {
-                m_Animator.enabled = false;
-                m_Animator.enabled = true;
-                m_Animator.Play("Pose3");
-            }
-
-            /*if (player.m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Roll"))
-            {
-                m_Animator.Play("Pose2");
-            }*/
-
-            transform.DORotate(rot, 1.5f, RotateMode.LocalAxisAdd).SetLoops(1).SetEase(Ease.Linear);
+            player.onRamp = true;
         }
         else if (other.CompareTag("JumpPad"))
         {
