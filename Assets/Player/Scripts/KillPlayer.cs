@@ -53,7 +53,7 @@ public class KillPlayer : MonoBehaviour
                             player.lives--;
                         }
                         
-                        player.y = player.jumpPower * 2 / 3;
+                        player.y = player.jumpPower*2;
                         player.m_Animator.Play("Floating");
                         player.hurtCounter = 0.8f;
                         this.gameObject.SetActive(false);
