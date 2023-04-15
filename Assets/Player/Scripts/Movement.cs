@@ -14,6 +14,7 @@ public enum HitZ { Forward, Mid, Backward, None };
 
 public class Movement : MonoBehaviour
 {
+    public float skybocRotation = 2f;
     public bool onRamp = false;
     public bool inPause = false;
     public int starsCounter = 0;
@@ -108,6 +109,7 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
+        RenderSettings.skybox.SetFloat("Rotation", Time.time * skybocRotation);
         timer += Time.deltaTime;
         minutes = Mathf.Floor(timer / 60);
         seconds = timer % 60;
