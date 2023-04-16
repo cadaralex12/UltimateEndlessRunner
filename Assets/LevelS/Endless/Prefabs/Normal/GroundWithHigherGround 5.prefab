@@ -404,7 +404,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3541686776504866660}
   m_LocalRotation: {x: 0.0019017411, y: -0.96589977, z: 0.2588121, w: 0.0070973933}
-  m_LocalPosition: {x: -15.05, y: 3.43, z: 4.77}
+  m_LocalPosition: {x: -15.06, y: 3.11, z: 4.21}
   m_LocalScale: {x: 4.376443, y: 0.9504838, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1016,7 +1016,7 @@ ParticleSystem:
     startRotationX:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: -0.34906584
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -1176,7 +1176,7 @@ ParticleSystem:
     maxNumParticles: 1000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
-    rotation3D: 0
+    rotation3D: 1
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
@@ -5458,7 +5458,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6035606478170486320}
   m_LocalRotation: {x: 0.0019017411, y: -0.96589977, z: 0.2588121, w: 0.0070973933}
-  m_LocalPosition: {x: 15, y: 3.23, z: 4.43}
+  m_LocalPosition: {x: 14.83, y: 3, z: 4.03}
   m_LocalScale: {x: 4.376443, y: 0.9504838, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6003,7 +6003,7 @@ ParticleSystem:
     startRotationX:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: -0.34906584
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -6163,7 +6163,7 @@ ParticleSystem:
     maxNumParticles: 1000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
-    rotation3D: 0
+    rotation3D: 1
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0

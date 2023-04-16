@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 [System.Serializable]
 
@@ -14,6 +15,8 @@ public enum HitZ { Forward, Mid, Backward, None };
 
 public class Movement : MonoBehaviour
 {
+    [SerializeField] private PostProcessVolume _postProcessVolume;
+    private ChromaticAberration _chromaticAberration;
     public float skybocRotation = 2f;
     public bool onRamp = false;
     public bool inPause = false;
@@ -105,6 +108,7 @@ public class Movement : MonoBehaviour
         transform.position = new Vector3(0,0.5f,0);
         ObtsacleDeleter.SetActive(false);
         shield.SetActive(false);
+        _postProcessVolume.profile.TryGetSettings(out _chromaticAberration);
     }
 
     void Update()
@@ -543,6 +547,8 @@ public class Movement : MonoBehaviour
             hurtCounter -= Time.deltaTime;
             if (hurtCounter > 0f)
             {
+                _chromaticAberration.active = true;
+
                 ObtsacleDeleter.SetActive(true);
                 desiredFOV = 50f;
                 //InvokeRepeating("Blink", 0, 0.2f);
@@ -554,6 +560,7 @@ public class Movement : MonoBehaviour
                 /*CancelInvoke("Blink");
                 if (GetComponent<Renderer>().enabled == false)
                     GetComponent<Renderer>().enabled = true;*/
+                _chromaticAberration.active = false;
                 ObtsacleDeleter.SetActive(false);
                 desiredFOV = 60f;
                 Time.timeScale = 1f;
