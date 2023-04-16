@@ -109,6 +109,17 @@ public class GroundSpawner : MonoBehaviour
                     temp = Instantiate(tilePrefabsHard[RandomPreFabindex()]) as GameObject;
                     break;
                 }
+            case 4:
+                {
+                    if (firstFiveEmpty > 0)
+                    {
+                        temp = Instantiate(tilePrefabsHard[0]) as GameObject;
+                        firstFiveEmpty--;
+                        break;
+                    }
+                    temp = Instantiate(tilePrefabsHard[RandomPreFabindex()]) as GameObject;
+                    break;
+                }
             default:
                 {
                     if (firstFiveEmpty > 0)

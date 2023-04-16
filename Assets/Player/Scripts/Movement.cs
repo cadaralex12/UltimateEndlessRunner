@@ -109,7 +109,7 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        RenderSettings.skybox.SetFloat("Rotation", Time.time * skybocRotation);
+        
         timer += Time.deltaTime;
         minutes = Mathf.Floor(timer / 60);
         seconds = timer % 60;

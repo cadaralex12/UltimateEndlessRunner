@@ -18,6 +18,8 @@ TagManager:
   - SpawnCart
   - ObstacleDeleter
   - Death
+  - Ground
+  - Laser
   layers:
   - Default
   - TransparentFX
@@ -25,7 +27,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Post Processing
   - 
   - 
   - 

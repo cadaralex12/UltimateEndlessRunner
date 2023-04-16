@@ -91,7 +91,7 @@ public class Jump : MonoBehaviour
             }
             else
             {
-                player.y = -20f;
+                player.y = -50f;
             }
         }
         else
