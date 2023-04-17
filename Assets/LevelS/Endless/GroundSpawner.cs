@@ -5,6 +5,7 @@ using System;
 
 public class GroundSpawner : MonoBehaviour
 {
+    public float difficultyCounter;
     public GameObject[] tilePrefabsBonus;
     public GameObject[] tilePrefabsNormal;
     public GameObject[] tilePrefabsHard;
@@ -31,6 +32,7 @@ public class GroundSpawner : MonoBehaviour
 
     private void Start()
     {
+        difficultyCounter = 30f;
         lastWidth = 0;
         newWidth = 0;
         activeTiles = new List<GameObject>();
@@ -40,12 +42,35 @@ public class GroundSpawner : MonoBehaviour
         for (int i = 0; i < amnTilesOnScreen; i++)
         {
             SpawnTile(difficulty);
-            
         }
     }
 
+    
+
     private void Update()
     {
+        difficultyCounter -= Time.deltaTime;
+
+        if (difficultyCounter <= 0f)
+        {
+            /*Destroy(activeTiles[13]);
+            activeTiles.RemoveAt(13);
+            Destroy(activeTiles[12]);
+            activeTiles.RemoveAt(12);
+            Destroy(activeTiles[11]);
+            activeTiles.RemoveAt(11);
+            Destroy(activeTiles[10]);
+            activeTiles.RemoveAt(10);
+            Destroy(activeTiles[9]);
+            activeTiles.RemoveAt(9);*/
+            if (difficulty < 5)
+            {
+                difficulty++;
+                difficultyCounter = 30f;
+                firstFiveEmpty = 5;
+            }
+        }
+
         if ((playerTransform.position.z - safeZone) > (spawnZ - amnTilesOnScreen * tileLength))
         {
             SpawnTile(difficulty);

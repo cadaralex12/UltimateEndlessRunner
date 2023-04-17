@@ -16049,7 +16049,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 4.9e-43, y: -1.8919999e-28, z: 4.9e-43, w: 0}
+  m_BoundingSphereOverride: {x: 0.000000004853848, y: NaN, z: 0, w: 3.2206333e+22}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -43838,6 +43838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d508007159ae6a044be1cebb35ca71bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  difficultyCounter: 0
   tilePrefabsBonus:
   - {fileID: 2695720095920953618, guid: c0f77f31f53eac84ba07cada4247384f, type: 3}
   - {fileID: 2695720095920953618, guid: f19e6b7ab7f77374b8c16c73a0f9a4a1, type: 3}
@@ -43869,7 +43870,7 @@ MonoBehaviour:
   player: {fileID: 0}
   spawnZ: 0
   safeZone: 50
-  difficulty: 5
+  difficulty: 1
   starsSpawned: 0
 --- !u!4 &1895314333
 Transform:
