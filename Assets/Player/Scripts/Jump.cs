@@ -7,6 +7,8 @@ using UnityEngine;
 public class Jump : MonoBehaviour
 {
     public Movement player;
+    public ParticleSystem jumpParticles;
+    public ParticleSystem trickParticles;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +20,7 @@ public class Jump : MonoBehaviour
     void Update()
     {
         JumpAction();
+        trickParticles.gameObject.transform.position = player.gameObject.transform.position;
     }
     public void JumpAction()
     {
@@ -47,6 +50,8 @@ public class Jump : MonoBehaviour
                 player.slideCounter = 0;
                 player.y = player.jumpPower;
                 player.inJump = true;
+                jumpParticles.gameObject.transform.position = player.gameObject.transform.position;
+                jumpParticles.Play();
                 player.m_Animator.Play("Jump");
             }
             else if(player.swipedUp && player.onRamp == true)
@@ -72,18 +77,21 @@ public class Jump : MonoBehaviour
 
                     //m_Animator.enabled = true;
                     UnityEngine.Debug.Log("Pula 1");
+                    trickParticles.Play();
                     player.m_Animator.Play("Pose1");
                 }
                 else if (ran % 3 == 1)
                 {
                     //m_Animator.enabled = true;
                     UnityEngine.Debug.Log("Pula 2");
+                    trickParticles.Play();
                     player.m_Animator.Play("Pose2");
                 }
                 else
                 {
                     //m_Animator.enabled = true;
                     UnityEngine.Debug.Log("Pula 3");
+                    trickParticles.Play();
                     player.m_Animator.Play("Pose3");
                 }
 
@@ -102,6 +110,8 @@ public class Jump : MonoBehaviour
                 player.doubleJump = true;
                 player.y = player.jumpPower;
                 player.inJump = true;
+                jumpParticles.gameObject.transform.position = player.gameObject.transform.position;
+                jumpParticles.Play();
                 player.m_Animator.Play("Backflip");
             }
             else

@@ -120,6 +120,45 @@ public class GroundSpawner : MonoBehaviour
                     temp = Instantiate(tilePrefabsHard[RandomPreFabindex()]) as GameObject;
                     break;
                 }
+            case 5:
+                {
+                    if (firstFiveEmpty > 0)
+                    {
+                        temp = Instantiate(tilePrefabsHard[0]) as GameObject;
+                        firstFiveEmpty--;
+                        break;
+                    }
+                    else
+                    {
+                        int random = UnityEngine.Random.Range(0, 100);
+                        if (random >= 95)
+                        {
+                            temp = Instantiate(tilePrefabsEasy[RandomPreFabindex(1)]) as GameObject;
+                        }
+                        else if (random < 90)
+                        {
+                            temp = Instantiate(tilePrefabsMedium[RandomPreFabindex(2)]) as GameObject;
+                        }
+                        else
+                        {
+                            temp = Instantiate(tilePrefabsHard[RandomPreFabindex(3)]) as GameObject;
+                        }
+                    }
+                    break;
+                }
+            case 6:
+                {
+                    {
+                        if (firstFiveEmpty > 0)
+                        {
+                            temp = Instantiate(tilePrefabsHard[0]) as GameObject;
+                            firstFiveEmpty--;
+                            break;
+                        }
+                        temp = Instantiate(tilePrefabsHard[RandomPreFabindex()]) as GameObject;
+                        break;
+                    }
+                }
             default:
                 {
                     if (firstFiveEmpty > 0)
