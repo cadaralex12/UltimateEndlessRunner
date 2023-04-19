@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.043137256, g: 0, b: 0.08627451, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: f531e09e2ad2fb440b4eed7605863143, type: 2}
   m_HaloStrength: 0.5
@@ -33,12 +33,12 @@ RenderSettings:
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
   m_DefaultReflectionMode: 0
-  m_DefaultReflectionResolution: 128
+  m_DefaultReflectionResolution: 16
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.00077867036, g: 0.0041233166, b: 0.019989327, a: 1}
+  m_IndirectSpecularColor: {r: 0.000698128, g: 0.0037312834, b: 0.018086728, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: b951ebdacf7de09468dd90bb4c6c35f8, type: 2}
+  m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 55349588}
   - component: {fileID: 55349590}
   - component: {fileID: 55349589}
-  m_Layer: 1
+  m_Layer: 5
   m_Name: _Waves_Billboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5368,7 +5368,7 @@ GameObject:
   - component: {fileID: 253751094}
   - component: {fileID: 253751096}
   - component: {fileID: 253751095}
-  m_Layer: 1
+  m_Layer: 5
   m_Name: _Waves_Horizontal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16279,7 +16279,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1800999435}
-  speedFollow: 10
+  speedFollow: 7
+  postProcessingGlobal: 0
+  postProcessVolume: {fileID: 0}
 --- !u!81 &886569056
 AudioListener:
   m_ObjectHideFlags: 0
@@ -16316,7 +16318,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -16326,7 +16328,7 @@ Camera:
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
+  m_AllowDynamicResolution: 1
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -16365,7 +16367,7 @@ MonoBehaviour:
     m_Bits: 64
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
-  antialiasingMode: 1
+  antialiasingMode: 0
   temporalAntialiasing:
     jitterSpread: 0.75
     sharpness: 0.25
@@ -16401,7 +16403,7 @@ MonoBehaviour:
       colorBlindnessType: 0
       colorBlindnessStrength: 1
   m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
-  m_ShowToolkit: 0
+  m_ShowToolkit: 1
   m_ShowCustomSorter: 1
   breakBeforeColorGrading: 0
   m_BeforeTransparentBundles: []
@@ -21665,7 +21667,7 @@ GameObject:
   - component: {fileID: 1277365290}
   - component: {fileID: 1277365292}
   - component: {fileID: 1277365291}
-  m_Layer: 1
+  m_Layer: 5
   m_Name: _DarkOrb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33727,7 +33729,7 @@ GameObject:
   - component: {fileID: 1659789484}
   - component: {fileID: 1659789483}
   - component: {fileID: 1659789485}
-  m_Layer: 1
+  m_Layer: 5
   m_Name: _MAIN
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33805,7 +33807,7 @@ ParticleSystemRenderer:
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_ShadowBias: 0
-  m_RenderAlignment: 0
+  m_RenderAlignment: 1
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
   m_UseCustomVertexStreams: 0
@@ -38781,7 +38783,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _postProcessVolume: {fileID: 886569060}
-  skybocRotation: 2
   onRamp: 0
   inPause: 0
   starsCounter: 0
@@ -38809,7 +38810,7 @@ MonoBehaviour:
   m_char: {fileID: 0}
   col: {fileID: 0}
   x: 0
-  speedDodge: 10
+  speedDodge: 5
   jumpPower: 100
   y: 0
   inJump: 0
@@ -39145,7 +39146,7 @@ MonoBehaviour:
   player: {fileID: 0}
   spawnZ: 0
   safeZone: 50
-  difficulty: 5
+  difficulty: 1
   starsSpawned: 0
 --- !u!4 &1895314333
 Transform:

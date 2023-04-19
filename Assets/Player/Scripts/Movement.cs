@@ -17,7 +17,6 @@ public class Movement : MonoBehaviour
 {
     [SerializeField] private PostProcessVolume _postProcessVolume;
     private ChromaticAberration _chromaticAberration;
-    public float skybocRotation = 2f;
     public bool onRamp = false;
     public bool inPause = false;
     public int starsCounter = 0;
@@ -151,40 +150,40 @@ public class Movement : MonoBehaviour
             }
             if (t.phase == TouchPhase.Ended)
             {
-                /*if (Time.time - startTime > MAX_SWIPE_TIME) // press too long
-                    return;
-                Why would you want this?
-                */
 
                 Vector2 endPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
 
                 Vector2 swipe = new Vector2(endPos.x - startPos.x, endPos.y - startPos.y);
 
                 if (swipe.magnitude < MIN_SWIPE_DISTANCE) // Too short swipe
-                    return;
-
-                if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
-                { 
-                    // Horizontal swipe
-                    if (swipe.x > 0)
-                    {
-                        swipedRight = true;
-                    }
-                    else
-                    {
-                        swipedLeft = true;
-                    }
+                {
+                    //Don't register
                 }
                 else
-                { 
-                    // Vertical swipe
-                    if (swipe.y > 0)
+                {
+                    if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
                     {
-                        swipedUp = true;
+                        // Horizontal swipe
+                        if (swipe.x > 0)
+                        {
+                            swipedRight = true;
+                        }
+                        else
+                        {
+                            swipedLeft = true;
+                        }
                     }
                     else
                     {
-                        swipedDown = true;
+                        // Vertical swipe
+                        if (swipe.y > 0)
+                        {
+                            swipedUp = true;
+                        }
+                        else
+                        {
+                            swipedDown = true;
+                        }
                     }
                 }
             }
@@ -309,7 +308,7 @@ public class Movement : MonoBehaviour
                 inAirSlide = true;
                 y -= 150f;
             }
-            if (!inSlide && m_char.isGrounded)
+            if (m_char.isGrounded)
             {
                 slideCounter = 0.7f;
                 inSlide = true;

@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class InitiateEverything : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public TMP_Text postProcessingSettingText;
+    public static int postProcessingGlobal = 1;
+
     void Start()
     {
         if (!PlayerPrefs.HasKey("totalCoins"))
@@ -12,11 +15,40 @@ public class InitiateEverything : MonoBehaviour
             PlayerPrefs.SetInt("totalCoins", 0);
             PlayerPrefs.Save();
         }
+
+        if (!PlayerPrefs.HasKey("PostProcessingSetting"))
+        {
+            PlayerPrefs.SetInt("PostProcessingSetting", 1);
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            postProcessingGlobal = PlayerPrefs.GetInt("PostProcessingSetting");
+
+            if (postProcessingGlobal == 1)
+            {
+                postProcessingSettingText.text = "Post Processing: ON";
+            }
+            else
+            {
+                postProcessingSettingText.text = "Post Processing: OFF";
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void TogglePostProcessing()
     {
-        
+        if (postProcessingGlobal == 1)
+        {
+            postProcessingGlobal = 0;
+            postProcessingSettingText.text = "Post Processing: OFF";
+        }
+        else
+        {
+            postProcessingGlobal = 1;
+            postProcessingSettingText.text = "Post Processing: ON";
+        }
+        PlayerPrefs.SetInt("PostProcessingSetting", postProcessingGlobal);
     }
+    
 }

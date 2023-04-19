@@ -41,36 +41,44 @@ public class Swipe : MonoBehaviour
 			if (t.phase == TouchPhase.Ended)
 			{
 				if (Time.time - startTime > MAX_SWIPE_TIME) // press too long
-					return;
+				{
 
-				Vector2 endPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
-
-				Vector2 swipe = new Vector2(endPos.x - startPos.x, endPos.y - startPos.y);
-
-				if (swipe.magnitude < MIN_SWIPE_DISTANCE) // Too short swipe
-					return;
-
-				if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
-				{ // Horizontal swipe
-					if (swipe.x > 0)
-					{
-						swipedRight = true;
-						Debug.Log("Fuck");
-					}
-					else
-					{
-						swipedLeft = true;
-					}
 				}
 				else
-				{ // Vertical swipe
-					if (swipe.y > 0)
+				{
+					Vector2 endPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
+
+					Vector2 swipe = new Vector2(endPos.x - startPos.x, endPos.y - startPos.y);
+
+					if (swipe.magnitude < MIN_SWIPE_DISTANCE) // Too short swipe
 					{
-						swipedUp = true;
+
 					}
 					else
 					{
-						swipedDown = true;
+						if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
+						{ // Horizontal swipe
+							if (swipe.x > 0)
+							{
+								swipedRight = true;
+								Debug.Log("Fuck");
+							}
+							else
+							{
+								swipedLeft = true;
+							}
+						}
+						else
+						{ // Vertical swipe
+							if (swipe.y > 0)
+							{
+								swipedUp = true;
+							}
+							else
+							{
+								swipedDown = true;
+							}
+						}
 					}
 				}
 			}

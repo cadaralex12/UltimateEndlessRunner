@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class CameraFollow: MonoBehaviour
 {
@@ -8,11 +9,25 @@ public class CameraFollow: MonoBehaviour
     private Vector3 offset;
     private float y;
     public float speedFollow = 5f;
+    public int postProcessingGlobal;
+    public PostProcessVolume postProcessVolume;
     //private float fiveSideOffset = -20f;
     // Start is called before the first frame update
     void Start()
     {
         offset = transform.position;
+
+        postProcessingGlobal = PlayerPrefs.GetInt("PostProcessingSetting");
+        postProcessVolume = GetComponent<PostProcessVolume>();
+        
+        if (postProcessingGlobal == 1)
+        {
+            postProcessVolume.weight = 1;
+        }
+        else
+        {
+            postProcessVolume.weight = 0;
+        }
     }
 
     // Update is called once per frame
