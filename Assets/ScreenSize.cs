@@ -7,7 +7,7 @@ public class ScreenSize : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Screen.SetResolution(Screen.height*9/16, Screen.height, false);
+        //Screen.SetResolution(Screen.height*9/16, Screen.height, false);
     }
 
     // Update is called once per frame

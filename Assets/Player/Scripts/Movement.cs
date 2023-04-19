@@ -75,7 +75,7 @@ public class Movement : MonoBehaviour
 
     public const float MAX_SWIPE_TIME = 0.2f;
 
-    public const float MIN_SWIPE_DISTANCE = 0.01f;
+    public const float MIN_SWIPE_DISTANCE = 0.17f;
 
     public bool swipedRight = false;
     public bool swipedLeft = false;
@@ -160,8 +160,8 @@ public class Movement : MonoBehaviour
 
                 Vector2 swipe = new Vector2(endPos.x - startPos.x, endPos.y - startPos.y);
 
-                /*if (swipe.magnitude < MIN_SWIPE_DISTANCE) // Too short swipe
-                    return;*/
+                if (swipe.magnitude < MIN_SWIPE_DISTANCE) // Too short swipe
+                    return;
 
                 if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
                 { 
