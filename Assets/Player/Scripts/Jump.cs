@@ -95,7 +95,8 @@ public class Jump : MonoBehaviour
                     player.m_Animator.Play("Pose3");
                 }
 
-                transform.DORotate(rot, 1.5f, RotateMode.LocalAxisAdd).SetLoops(1).SetEase(Ease.Linear);
+                transform.DORotate(rot, 0.8f, RotateMode.LocalAxisAdd).SetLoops(1).SetEase(Ease.Linear);
+                //player.m_Animator.Play("Pose3");
             }
             else
             {
