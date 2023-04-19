@@ -15,6 +15,9 @@ public class ScoreManager : MonoBehaviour
     public TMP_Text livesText;
     public string minutesText;
     public string secondsText;
+    public GameObject life1;
+    public GameObject life2;
+    public GameObject life3;
     
     int starsCounter = 0;
     int lives = 0;
@@ -35,7 +38,7 @@ public class ScoreManager : MonoBehaviour
         scoreText.text = "Score: " + score.ToString() + " m";
         highScoreText.text = "High Score: " + highScore.ToString() + " m";
         starsText.text = starsCounter.ToString();
-        livesText.text = "Lives: " + lives.ToString();
+        //livesText.text = "Lives: " + lives.ToString();
     }
 
     // Update is called once per frame
@@ -62,7 +65,7 @@ public class ScoreManager : MonoBehaviour
         highScoreText.text = "High Score: " + highScore.ToString() + " m";
 
         starsText.text = starsCounter.ToString();
-        livesText.text = "Lives: " + lives.ToString();
+        //livesText.text = "Lives: " + lives.ToString();
 
         if (PlayerPrefs.HasKey("endlessHighScore"))
         {
@@ -84,6 +87,13 @@ public class ScoreManager : MonoBehaviour
                 PlayerPrefs.SetInt("endlessHighScore", highScore);
                 PlayerPrefs.Save();
             }
+        }
+        if(playerScript.lives == 2){
+            life3.gameObject.SetActive(false);
+        }
+         if(playerScript.lives == 1){
+            life3.gameObject.SetActive(false);
+            life2.gameObject.SetActive(false);
         }
     }
     
