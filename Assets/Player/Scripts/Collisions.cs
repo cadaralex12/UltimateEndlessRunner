@@ -72,7 +72,7 @@ public class Collisions : MonoBehaviour
             targetRotation = camera2.transform.rotation;
             //camera1.transform.DORotate(targetRotation, 0.5f, RotateMode.LocalAxisAdd).SetLoops(1).SetEase(Ease.Linear);
             //camera1.trasnform.position = targetPosition;
-            
+
             camera1.SetActive(true);
             camera2.SetActive(false);
 
@@ -97,12 +97,16 @@ public class Collisions : MonoBehaviour
             player.hasControl = true;
             player.transform.position = other.transform.parent.transform.position;
         }
-        else if(other.GetComponent<Collectible>())
+        else if (other.GetComponent<Collectible>())
         {
             if (UI)
             {
                 UI.SpawnMoveStar();
             }
+        }
+        else if (other.CompareTag("ObstacleRight") || other.CompareTag("ObstacleLeft"))
+        {
+            player.m_SIDE = player.lastSide;
         }
 
     }

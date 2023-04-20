@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 
@@ -15,6 +17,7 @@ public enum HitZ { Forward, Mid, Backward, None };
 
 public class Movement : MonoBehaviour
 {
+    public float lastFwdSpeed = 0f;
     [SerializeField] private PostProcessVolume _postProcessVolume;
     private ChromaticAberration _chromaticAberration;
     public bool onRamp = false;
@@ -285,7 +288,16 @@ public class Movement : MonoBehaviour
             Hurt();
             Boost();
             Shield();
+            IsUnderStage();
             myCamera.fieldOfView = Mathf.Lerp(myCamera.fieldOfView, desiredFOV, Time.deltaTime * speedDodge);
+        }
+    }
+
+    public void IsUnderStage()
+    {
+        if (transform.position.y < -50)
+        {
+            SceneManager.LoadScene("VictoryScene");
         }
     }
 
@@ -329,120 +341,66 @@ public class Movement : MonoBehaviour
             inAirSlide = false;
         }
     }
-    /*public void OnCharacterColliderHit(Collider col)
+    
+    /*public void OnCollisionEnter(Collision col)
     {
-        hitX = GetHitX(col);
-        hitY = GetHitY(col);
-        hitZ = GetHitZ(col);
+        UnityEngine.Debug.Log("Shit");
+        if(col.transform.position.y >= transform.position.y)
+        {
+            hitX = GetHitX(col);
 
-        if (hitZ == HitZ.Forward && hitX == HitX.Mid)
-        {
-            if (hitY == HitY.Low) // Stumble, -1 life
-            {
-                Debug.Log("Damn");
-                //m_Animator.Play("stumbleLow");
-            }
-            else if (hitY == HitY.Down) // KnockBack, fall, -1 life
-            {
-                //m_Animator.Play("knockback");
-            }
-            else if (hitY == HitY.Mid)
-            {
-                if (col.tag != "Ramp") //KnockBack, -1 life
-                {
-                    //m_Animator.Play("Bounce back");
-                }
-            }
-            else if (hitY == HitY.Low && !inSlide)
-            {
-                //m_Animator.Play("stumbleLow");
-            }
-        }
-        else if (hitZ == HitZ.Mid)
-        {
-            if (hitX == HitX.Right)
-            {
-                //m_Animator.Play("stumbleRight");
-            }
-            else if (hitX == HitX.Left)
-            {
-                //m_Animator.Play("stumbleLeft");
-            }
-        }
-        else
-        {
             if (hitX == HitX.Right)
             {
                 //m_Animator.Play("StumblecornerRight");
                 m_SIDE = lastSide;
+                UnityEngine.Debug.Log("Curva dreapta");
             }
             else if (hitX == HitX.Left)
             {
                 //m_Animator.Play("StumbleCornerLeft");
                 m_SIDE = lastSide;
+                UnityEngine.Debug.Log("Curva stanga");
             }
         }
+        
     }
 
-    private void ResetCollision()
+    public HitX GetHitX(Collision col)
     {
-        hitX = HitX.None;
-        hitY = HitY.None;
-        hitZ = HitZ.None;
-    }
-
-    public HitX GetHitX(Collider col)
-    {
-        Bounds char_bounds = m_char.bounds;
+        UnityEngine.Debug.Log("Fuck");
+        HitX hit;
+        if (col.transform.position.x > transform.position.x)
+        {
+            hit = HitX.Right;
+            UnityEngine.Debug.Log("Fuck Right");
+        }
+        else
+        {
+            hit = HitX.Left;
+            UnityEngine.Debug.Log("Fuck Left");
+        }
+        /*Bounds char_bounds = m_char.bounds;
         Bounds col_bounds = col.bounds;
         float min_x = Mathf.Max(col_bounds.min.x, char_bounds.min.x);
         float max_x = Mathf.Max(col_bounds.max.x, char_bounds.max.x);
         float average = (min_x + max_x) / 2f - -col_bounds.min.x;
-        HitX hit;
+        HitX hit = HitX.Right;
         if (average > col_bounds.size.x - 0.33f)
+        {
             hit = HitX.Right;
+            UnityEngine.Debug.Log("Right");
+        }
         else if (average < 0.33f)
+        {
             hit = HitX.Left;
+        }
         else
+        {
             hit = HitX.Mid;
-        return hit;
-    }
-
-    public HitY GetHitY(Collider col)
-    {
-        Bounds char_bounds = m_char.bounds;
-        Bounds col_bounds = col.bounds;
-        float min_y = Mathf.Max(col_bounds.min.y, char_bounds.min.y);
-        float max_y = Mathf.Max(col_bounds.max.y, char_bounds.max.y);
-        float average = ((min_y + max_y) / 2f - char_bounds.min.y) / char_bounds.size.y;
-        HitY hit;
-        if (average < 0.17f)
-            hit = HitY.Low;
-        else if (average < 0.33f)
-            hit = HitY.Down;
-        else if (average < 0.66f)
-            hit = HitY.Mid;
-        else
-            hit = HitY.Up;
-        return hit;
-    }
-
-    public HitZ GetHitZ(Collider col)
-    {
-        Bounds char_bounds = m_char.bounds;
-        Bounds col_bounds = col.bounds;
-        float min_z = Mathf.Max(col_bounds.min.z, char_bounds.min.z);
-        float max_z = Mathf.Max(col_bounds.max.z, char_bounds.max.z);
-        float average = ((min_z + max_z) / 2f - char_bounds.min.z) / char_bounds.size.z;
-        HitZ hit;
-        if (average < 0.33f)
-            hit = HitZ.Backward;
-        else if (average < 0.66f)
-            hit = HitZ.Mid;
-        else
-            hit = HitZ.Forward;
+        }
         return hit;
     }*/
+
 
     internal float slowMoCounter = 0f;
     public bool inSlowMo = false;
@@ -454,7 +412,7 @@ public class Movement : MonoBehaviour
         {
             Resume();
         }
-        if (slowMoPressed && Time.timeScale != 0f && starsCounter >= 10 && inSlowMo == false)
+        if (slowMoPressed && Time.timeScale != 0f && starsCounter >= 10 && inSlowMo == false && inBoost == false)
         {
             starsCounter -= 10;
             slowMoPressed = false;
@@ -497,12 +455,13 @@ public class Movement : MonoBehaviour
                     inBoost = false;
                     boostCounter = 0f;
                     desiredFOV = 60f;
-                    fwdSpeed = 150;
+                    fwdSpeed = lastFwdSpeed;
                 }
             }
 
-            if (boostPressed && inBoost == false && starsCounter >= 5 && hurtCounter <= 0f)
+            if (boostPressed && inBoost == false && starsCounter >= 5 && hurtCounter <= 0f && inSlowMo == false)
             {
+                lastFwdSpeed = fwdSpeed;
                 myCamera.transform.GetChild(0).gameObject.SetActive(true);
                 starsCounter -= 5;
                 boostPressed = false;
@@ -510,7 +469,7 @@ public class Movement : MonoBehaviour
                 myCamera.transform.position += new Vector3(0, 100f, 0);
                 inBoost = true;
                 boostCounter = 5f;
-                fwdSpeed = 220;
+                fwdSpeed = lastFwdSpeed + 50;
                 m_Animator.Play("Boost");
             }
         }
@@ -542,7 +501,7 @@ public class Movement : MonoBehaviour
     void Hurt()
     {
         if (inPause == false)
-        { 
+        {
             hurtCounter -= Time.deltaTime;
             if (hurtCounter > 0f)
             {

@@ -83,29 +83,38 @@ public class GroundSpawner : MonoBehaviour
         }
     }
 
+    public void SetSpeed(int speed = 0)
+    {
+        player.lastFwdSpeed = speed;
+        if (!player.inBoost)
+        {
+            player.fwdSpeed = speed;
+        }
+    }
+
     public void SpawnTile(int difficulty = 3, int prefabIndex = -1)
     {
         GameObject temp;
 
         switch(difficulty)
         {
-            //Graphics test
+            //Graphics Debug
             case 0:
                 {
-                    player.fwdSpeed = 90;
+                    SetSpeed(90);
                     if (firstFiveEmpty > 0)
                     {
                         temp = Instantiate(tilePrefabsBonus[0]) as GameObject;
                         firstFiveEmpty--;
                         break;
                     }
-                    temp = Instantiate(tilePrefabsEmpty[RandomPreFabindex()]) as GameObject;
+                    temp = Instantiate(tilePrefabsHard[RandomPreFabindex()]) as GameObject;
                     break;
                 }
             // Easy 1: 120 speed, many bonuses, few normals
             case 1:
                 {
-                    player.fwdSpeed = 90;
+                    SetSpeed(90);
                     if (firstFiveEmpty > 0)
                     {
                         temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
@@ -129,7 +138,7 @@ public class GroundSpawner : MonoBehaviour
             // Easy 2: 120 speed, half bonuses, few normals, few hards 
             case 2:
                 {
-                    player.fwdSpeed = 110;
+                    SetSpeed(110);
                     if (firstFiveEmpty > 0)
                     {
                         temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
@@ -161,7 +170,7 @@ public class GroundSpawner : MonoBehaviour
             // Medium 1: 120 speed, 20% bonuses, 10% empty 40% normals, 30%  hards 
             case 3:
                 {
-                    player.fwdSpeed = 110;
+                    SetSpeed(110);
                     if (firstFiveEmpty > 0)
                     {
                         temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
@@ -193,7 +202,7 @@ public class GroundSpawner : MonoBehaviour
             // Medium 2:  20% bonuses, 10% empty 40% normals, 30%  hards, 150 fwdSpeed
             case 4:
                 {
-                    player.fwdSpeed = 120;
+                    SetSpeed(110);
                     if (firstFiveEmpty > 0)
                     {
                         temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
@@ -225,7 +234,7 @@ public class GroundSpawner : MonoBehaviour
             // Medium 2: 120 speed, 10% bonuses, 5% empty 45% normals, 40%  hards, 150 fwdSpeed
             case 5:
                 {
-                    player.fwdSpeed = 130;
+                    SetSpeed(130);
                     if (firstFiveEmpty > 0)
                     {
                         temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
@@ -256,6 +265,7 @@ public class GroundSpawner : MonoBehaviour
                 }
             default:
                 {
+                    SetSpeed(90);
                     if (firstFiveEmpty > 0)
                     {
                         temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
@@ -272,7 +282,10 @@ public class GroundSpawner : MonoBehaviour
         temp.transform.position = Vector3.forward * spawnZ;
         tileLength = temp.gameObject.GetComponent<PrefabInformation>().tileLength;
         spawnZ += tileLength;
-        activeTiles.Add(temp);
+        if(firstFiveEmpty < 0)
+        {
+            activeTiles.Add(temp);
+        }
     }
 
     private void DeleteTile()

@@ -34,6 +34,18 @@ public class PauseMenu : MonoBehaviour
 
     public float lastTimeScale = 1f;
 
+    public void onPauseButtonPress()
+    {
+        if (GameIsPaused)
+        {
+            Resume();
+        }
+        else
+        {
+            Pause();
+        }
+    }
+
     public void Resume()
     {
         PauseMenuUI.SetActive(false);
