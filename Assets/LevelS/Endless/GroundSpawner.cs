@@ -26,6 +26,8 @@ public class GroundSpawner : MonoBehaviour
     private Quaternion spawnRotation;
     public int firstFiveEmpty;
 
+    public GameObject DebugParticles;
+
     private float deleteCounter = 0f;
 
     public int starsSpawned = 0;
@@ -66,16 +68,26 @@ public class GroundSpawner : MonoBehaviour
                     player.stylePoints = 0;
                 }
             }
-            else
+            else if (player.stylePoints < 0.25f * possibleStylePoints)
             {
                 possibleStylePoints = 0;
                 player.stylePoints = 0;
                 difficultyCounter = 30f;
             }
+            else
+            {
+                if (difficulty > 1)
+                {
+                    difficulty--;
+                    difficultyCounter = 30f;
+                    possibleStylePoints = 0;
+                    player.stylePoints = 0;
+                }
+            }
         }
 
-
-        if ((playerTransform.position.z - safeZone) > (spawnZ - amnTilesOnScreen * tileLength))
+        float firstLength = activeTiles[0].GetComponent<PrefabInformation>().tileLength;
+        if ((playerTransform.position.z - firstLength) > activeTiles[0].transform.position.z)
         {
             SpawnTile(difficulty);
             if (activeTiles.Count > 15 && firstFiveEmpty == 0)
@@ -293,10 +305,11 @@ public class GroundSpawner : MonoBehaviour
 
     private void DeleteTile()
     {
-        possibleStylePoints += activeTiles[INDEX].gameObject.GetComponent<PrefabInformation>().possibleStylePoints;
-        possibleStylePoints += activeTiles[INDEX].gameObject.GetComponent<PrefabInformation>().coinsSpawned;
-        activeTiles[INDEX].GetComponent<MeshRenderer>().enabled = false;
+        possibleStylePoints += activeTiles[0].gameObject.GetComponent<PrefabInformation>().possibleStylePoints;
+        possibleStylePoints += activeTiles[0].gameObject.GetComponent<PrefabInformation>().coinsSpawned;
+        DebugParticles.transform.position = activeTiles[1].transform.position;
         Destroy(activeTiles[0]);
+
         activeTiles.RemoveAt(0);
     }
 
