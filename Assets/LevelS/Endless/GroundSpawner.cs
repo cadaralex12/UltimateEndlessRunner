@@ -11,6 +11,7 @@ public class GroundSpawner : MonoBehaviour
     public GameObject[] tilePrefabsBonus;
     public GameObject[] tilePrefabsNormal;
     public GameObject[] tilePrefabsHard;
+    public GameObject[] tilePrefabsVeryHard;
     public GameObject[] tilePrefabsEmpty;
     public GameObject[] tilePrefabs5;
     public int lastWidth = 0;
@@ -37,7 +38,7 @@ public class GroundSpawner : MonoBehaviour
     private void Start()
     {
         possibleStylePoints = 0;
-        difficultyCounter = 30f;
+        difficultyCounter = 15f;
         lastWidth = 0;
         newWidth = 0;
         activeTiles = new List<GameObject>();
@@ -58,9 +59,9 @@ public class GroundSpawner : MonoBehaviour
 
         if (difficultyCounter <= 0f)
         {
-            if(player.stylePoints > 0.75f * possibleStylePoints)
+            if(player.stylePoints > 0.50f * possibleStylePoints)
             {
-                if (difficulty < 5)
+                if (difficulty < 6)
                 {
                     difficulty++;
                     difficultyCounter = 30f;
@@ -68,7 +69,7 @@ public class GroundSpawner : MonoBehaviour
                     player.stylePoints = 0;
                 }
             }
-            else if (player.stylePoints < 0.25f * possibleStylePoints)
+            else if (player.stylePoints < 0.10f * possibleStylePoints)
             {
                 possibleStylePoints = 0;
                 player.stylePoints = 0;
@@ -122,11 +123,11 @@ public class GroundSpawner : MonoBehaviour
                     SetSpeed(110);
                     if (firstFiveEmpty > 0)
                     {
-                        temp = Instantiate(tilePrefabsBonus[0]) as GameObject;
+                        temp = Instantiate(tilePrefabsVeryHard[RandomPreFabindex(6)]) as GameObject;
                         firstFiveEmpty--;
                         break;
                     }
-                    temp = Instantiate(tilePrefabsHard[RandomPreFabindex()]) as GameObject;
+                    temp = Instantiate(tilePrefabsVeryHard[RandomPreFabindex(6)]) as GameObject;
                     break;
                 }
             // Easy 1: 120 speed, many bonuses, few normals
@@ -266,10 +267,6 @@ public class GroundSpawner : MonoBehaviour
                         {
                             temp = Instantiate(tilePrefabsBonus[RandomPreFabindex(1)]) as GameObject;
                         }
-                        /*else if (random > 3 && random <= 5)
-                        {
-                            temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
-                        }*/
                         else if (random > 1 && random <= 95)
                         {
                             temp = Instantiate(tilePrefabsNormal[RandomPreFabindex(2)]) as GameObject;
@@ -277,6 +274,38 @@ public class GroundSpawner : MonoBehaviour
                         else
                         {
                             temp = Instantiate(tilePrefabsHard[RandomPreFabindex(4)]) as GameObject;
+                        }
+                    }
+                    break;
+                }
+            //Hard 1: Fuck you.
+            case 6:
+                {
+                    SetSpeed(150);
+                    if (firstFiveEmpty > 0)
+                    {
+                        temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
+                        firstFiveEmpty--;
+                        break;
+                    }
+                    else
+                    {
+                        int random = UnityEngine.Random.Range(0, 100);
+                        if (random <= 10)
+                        {
+                            temp = Instantiate(tilePrefabsBonus[RandomPreFabindex(1)]) as GameObject;
+                        }
+                        else if (random > 10 && random <= 50)
+                        {
+                            temp = Instantiate(tilePrefabsNormal[RandomPreFabindex(2)]) as GameObject;
+                        }
+                        else if (random > 50 && random <= 75)
+                        {
+                            temp = Instantiate(tilePrefabsVeryHard[RandomPreFabindex(6)]) as GameObject;
+                        }
+                        else
+                        {
+                            temp = Instantiate(tilePrefabsVeryHard[RandomPreFabindex(6)]) as GameObject;
                         }
                     }
                     break;
@@ -305,9 +334,9 @@ public class GroundSpawner : MonoBehaviour
 
     private void DeleteTile()
     {
-        possibleStylePoints += activeTiles[0].gameObject.GetComponent<PrefabInformation>().possibleStylePoints;
-        possibleStylePoints += activeTiles[0].gameObject.GetComponent<PrefabInformation>().coinsSpawned;
-        DebugParticles.transform.position = activeTiles[1].transform.position;
+        possibleStylePoints += activeTiles[1].gameObject.GetComponent<PrefabInformation>().possibleStylePoints;
+        possibleStylePoints += activeTiles[1].gameObject.GetComponent<PrefabInformation>().coinsSpawned;
+        DebugParticles.transform.position = activeTiles[2].transform.position;
         Destroy(activeTiles[0]);
 
         activeTiles.RemoveAt(0);
@@ -362,6 +391,20 @@ public class GroundSpawner : MonoBehaviour
             while (randomIndex == lastPrefabIndex)
             {
                 randomIndex = UnityEngine.Random.Range(0, tilePrefabsHard.Length);
+            }
+            lastPrefabIndex = randomIndex;
+            return randomIndex;
+        }
+        else if (type == 6)
+        {
+            if (tilePrefabsVeryHard.Length <= 1)
+            {
+                return 0;
+            }
+            int randomIndex = lastPrefabIndex;
+            while (randomIndex == lastPrefabIndex)
+            {
+                randomIndex = UnityEngine.Random.Range(0, tilePrefabsVeryHard.Length);
             }
             lastPrefabIndex = randomIndex;
             return randomIndex;
