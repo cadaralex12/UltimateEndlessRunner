@@ -50,6 +50,7 @@ public class KillPlayer : MonoBehaviour
                         }
                         else
                         {
+                            player.stylePoints-=5;
                             player.lives--;
                         }
                         

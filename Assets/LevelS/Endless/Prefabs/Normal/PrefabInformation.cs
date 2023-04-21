@@ -6,4 +6,5 @@ public class PrefabInformation : MonoBehaviour
 {
     public int coinsSpawned = 0;
     public float tileLength = 87.0f;
+    public int possibleStylePoints = 0;
 }

@@ -5,6 +5,8 @@ using System;
 
 public class GroundSpawner : MonoBehaviour
 {
+    public int INDEX = 8;
+    public float possibleStylePoints = 0f;
     public float difficultyCounter;
     public GameObject[] tilePrefabsBonus;
     public GameObject[] tilePrefabsNormal;
@@ -17,12 +19,12 @@ public class GroundSpawner : MonoBehaviour
     private Transform playerTransform;
     public float spawnZ = 0.0f;
     private float tileLength = 85.0f;
-    private int amnTilesOnScreen = 10;
-    public float safeZone = 30.0f;
+    private int amnTilesOnScreen = 15;
+    public float safeZone = 15f;
     private int lastPrefabIndex = 0;
     public int difficulty = 2;
     private Quaternion spawnRotation;
-    private int firstFiveEmpty;
+    public int firstFiveEmpty;
 
     private float deleteCounter = 0f;
 
@@ -32,13 +34,14 @@ public class GroundSpawner : MonoBehaviour
 
     private void Start()
     {
+        possibleStylePoints = 0;
         difficultyCounter = 30f;
         lastWidth = 0;
         newWidth = 0;
         activeTiles = new List<GameObject>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Movement>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        firstFiveEmpty = 5;
+        firstFiveEmpty = 10;
         for (int i = 0; i < amnTilesOnScreen; i++)
         {
             SpawnTile(difficulty);
@@ -53,34 +56,37 @@ public class GroundSpawner : MonoBehaviour
 
         if (difficultyCounter <= 0f)
         {
-            /*Destroy(activeTiles[13]);
-            activeTiles.RemoveAt(13);
-            Destroy(activeTiles[12]);
-            activeTiles.RemoveAt(12);
-            Destroy(activeTiles[11]);
-            activeTiles.RemoveAt(11);
-            Destroy(activeTiles[10]);
-            activeTiles.RemoveAt(10);
-            Destroy(activeTiles[9]);
-            activeTiles.RemoveAt(9);*/
-            if (difficulty < 5)
+            if(player.stylePoints > 0.75f * possibleStylePoints)
             {
-                difficulty++;
+                if (difficulty < 5)
+                {
+                    difficulty++;
+                    difficultyCounter = 30f;
+                    possibleStylePoints = 0;
+                    player.stylePoints = 0;
+                }
+            }
+            else
+            {
+                possibleStylePoints = 0;
+                player.stylePoints = 0;
                 difficultyCounter = 30f;
-                firstFiveEmpty = 5;
             }
         }
+
 
         if ((playerTransform.position.z - safeZone) > (spawnZ - amnTilesOnScreen * tileLength))
         {
             SpawnTile(difficulty);
-
-            if (activeTiles.Count >= 14 && firstFiveEmpty == 0)
+            if (activeTiles.Count > 15 && firstFiveEmpty == 0)
             {
                 DeleteTile();
             }
-            
         }
+        /*(else
+        {
+            SpawnTile(difficulty);
+        }*/
     }
 
     public void SetSpeed(int speed = 0)
@@ -101,7 +107,7 @@ public class GroundSpawner : MonoBehaviour
             //Graphics Debug
             case 0:
                 {
-                    SetSpeed(90);
+                    SetSpeed(110);
                     if (firstFiveEmpty > 0)
                     {
                         temp = Instantiate(tilePrefabsBonus[0]) as GameObject;
@@ -114,7 +120,7 @@ public class GroundSpawner : MonoBehaviour
             // Easy 1: 120 speed, many bonuses, few normals
             case 1:
                 {
-                    SetSpeed(90);
+                    SetSpeed(110);
                     if (firstFiveEmpty > 0)
                     {
                         temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
@@ -138,7 +144,7 @@ public class GroundSpawner : MonoBehaviour
             // Easy 2: 120 speed, half bonuses, few normals, few hards 
             case 2:
                 {
-                    SetSpeed(110);
+                    SetSpeed(130);
                     if (firstFiveEmpty > 0)
                     {
                         temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
@@ -170,7 +176,7 @@ public class GroundSpawner : MonoBehaviour
             // Medium 1: 120 speed, 20% bonuses, 10% empty 40% normals, 30%  hards 
             case 3:
                 {
-                    SetSpeed(110);
+                    SetSpeed(130);
                     if (firstFiveEmpty > 0)
                     {
                         temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
@@ -202,7 +208,7 @@ public class GroundSpawner : MonoBehaviour
             // Medium 2:  20% bonuses, 10% empty 40% normals, 30%  hards, 150 fwdSpeed
             case 4:
                 {
-                    SetSpeed(110);
+                    SetSpeed(140);
                     if (firstFiveEmpty > 0)
                     {
                         temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
@@ -282,15 +288,14 @@ public class GroundSpawner : MonoBehaviour
         temp.transform.position = Vector3.forward * spawnZ;
         tileLength = temp.gameObject.GetComponent<PrefabInformation>().tileLength;
         spawnZ += tileLength;
-        if(firstFiveEmpty < 0)
-        {
-            activeTiles.Add(temp);
-        }
+        activeTiles.Add(temp);
     }
 
     private void DeleteTile()
     {
-        starsSpawned += activeTiles[5].gameObject.GetComponent<PrefabInformation>().coinsSpawned;
+        possibleStylePoints += activeTiles[INDEX].gameObject.GetComponent<PrefabInformation>().possibleStylePoints;
+        possibleStylePoints += activeTiles[INDEX].gameObject.GetComponent<PrefabInformation>().coinsSpawned;
+        activeTiles[INDEX].GetComponent<MeshRenderer>().enabled = false;
         Destroy(activeTiles[0]);
         activeTiles.RemoveAt(0);
     }

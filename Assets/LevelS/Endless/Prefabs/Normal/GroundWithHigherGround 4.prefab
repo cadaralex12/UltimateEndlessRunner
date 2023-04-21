@@ -300,6 +300,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinsSpawned: 2
   tileLength: 87
+  possibleStylePoints: 6
 --- !u!1 &2840736019829330781
 GameObject:
   m_ObjectHideFlags: 0

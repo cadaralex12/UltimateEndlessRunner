@@ -96,7 +96,7 @@ public class Jump : MonoBehaviour
                 }
 
                 transform.DORotate(rot, 0.8f, RotateMode.LocalAxisAdd).SetLoops(1).SetEase(Ease.Linear);
-                //player.m_Animator.Play("Pose3");
+                player.stylePoints += 10;
             }
             else
             {

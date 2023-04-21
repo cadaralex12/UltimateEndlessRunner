@@ -10,6 +10,7 @@ public class Collectible : MonoBehaviour
         {
             Movement player = other.gameObject.GetComponent<Movement>();
             player.starsCounter++;
+            player.stylePoints++;
             this.gameObject.SetActive(false);
         }
     }

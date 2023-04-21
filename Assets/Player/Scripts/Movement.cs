@@ -17,6 +17,7 @@ public enum HitZ { Forward, Mid, Backward, None };
 
 public class Movement : MonoBehaviour
 {
+    public int stylePoints = 0;
     public float lastFwdSpeed = 0f;
     [SerializeField] private PostProcessVolume _postProcessVolume;
     private ChromaticAberration _chromaticAberration;
@@ -115,7 +116,6 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        
         timer += Time.deltaTime;
         minutes = Mathf.Floor(timer / 60);
         seconds = timer % 60;

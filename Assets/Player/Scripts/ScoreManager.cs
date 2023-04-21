@@ -18,6 +18,8 @@ public class ScoreManager : MonoBehaviour
     public GameObject life1;
     public GameObject life2;
     public GameObject life3;
+
+    public GroundSpawner groundSpawner;
     
     int starsCounter = 0;
     int lives = 0;
@@ -36,7 +38,7 @@ public class ScoreManager : MonoBehaviour
         seconds = 0;
         //Debug.Log("Saved Highscore: " + PlayerPrefs.GetInt("endlessHighScore"));
         scoreText.text = "Score: " + score.ToString() + " m";
-        highScoreText.text = "High Score: " + highScore.ToString() + " m";
+        highScoreText.text = "0/0";
         starsText.text = starsCounter.ToString();
         //livesText.text = "Lives: " + lives.ToString();
     }
@@ -62,7 +64,7 @@ public class ScoreManager : MonoBehaviour
         secondsText = seconds.ToString("00.000");
         
         timerText.text = minutesText + ":" + secondsText;
-        highScoreText.text = "High Score: " + highScore.ToString() + " m";
+        highScoreText.text = playerScript.stylePoints.ToString() + " / " + groundSpawner.possibleStylePoints.ToString();
 
         starsText.text = starsCounter.ToString();
         //livesText.text = "Lives: " + lives.ToString();
