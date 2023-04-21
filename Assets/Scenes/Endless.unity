@@ -43943,7 +43943,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.113618456
-  m_Height: 1.25
+  m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.73644894, z: -0.036353964}
 --- !u!95 &1800999432
@@ -43978,7 +43978,7 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.2
+  m_Height: 1.9
   m_Radius: 0.2
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -44375,7 +44375,7 @@ MonoBehaviour:
   player: {fileID: 0}
   spawnZ: 0
   safeZone: 50
-  difficulty: 1
+  difficulty: 5
   firstFiveEmpty: 10
   DebugParticles: {fileID: 757247199}
   starsSpawned: 0
