@@ -60,9 +60,17 @@ public class KillPlayer : MonoBehaviour
                     }
                     else
                     {
-                        PlayerPrefs.SetInt("StarsCounter", player.starsCounter);
-                        PlayerPrefs.SetInt("totalCoins", PlayerPrefs.GetInt("totalCoins") + player.starsCounter);
-                        SceneManager.LoadScene("VictoryScene");
+                        if (player.inShield == true)
+                        {
+                            player.inShield = false;
+                            player.shield.SetActive(false);
+                        }
+                        else
+                        {
+                            PlayerPrefs.SetInt("StarsCounter", player.starsCounter);
+                            PlayerPrefs.SetInt("totalCoins", PlayerPrefs.GetInt("totalCoins") + player.starsCounter);
+                            SceneManager.LoadScene("VictoryScene");
+                        }
                     }
                 }
                 else

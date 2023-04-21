@@ -298,7 +298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afdd154ec55c6b4489b9b89b800e2b1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinsSpawned: 6
+  coinsSpawned: 2
   tileLength: 87
 --- !u!1 &2840736019829330781
 GameObject:

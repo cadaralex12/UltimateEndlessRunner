@@ -234,7 +234,7 @@ public class GroundSpawner : MonoBehaviour
             // Medium 2: 120 speed, 10% bonuses, 5% empty 45% normals, 40%  hards, 150 fwdSpeed
             case 5:
                 {
-                    SetSpeed(130);
+                    SetSpeed(150);
                     if (firstFiveEmpty > 0)
                     {
                         temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
@@ -244,15 +244,15 @@ public class GroundSpawner : MonoBehaviour
                     else
                     {
                         int random = UnityEngine.Random.Range(0, 100);
-                        if (random <= 3)
+                        if (random <= 1)
                         {
                             temp = Instantiate(tilePrefabsBonus[RandomPreFabindex(1)]) as GameObject;
                         }
-                        else if (random > 3 && random <= 5)
+                        /*else if (random > 3 && random <= 5)
                         {
                             temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
-                        }
-                        else if (random > 5 && random <= 80)
+                        }*/
+                        else if (random > 1 && random <= 95)
                         {
                             temp = Instantiate(tilePrefabsNormal[RandomPreFabindex(2)]) as GameObject;
                         }
