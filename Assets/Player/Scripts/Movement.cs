@@ -17,6 +17,7 @@ public enum HitZ { Forward, Mid, Backward, None };
 
 public class Movement : MonoBehaviour
 {
+    public float touchCoolDown = 0.5f;
     public GameObject continueCanvas;
     public bool isDead = false;
     public int respawnCost = 100;
@@ -81,7 +82,7 @@ public class Movement : MonoBehaviour
 
     public const float MAX_SWIPE_TIME = 0.2f;
 
-    public const float MIN_SWIPE_DISTANCE = 0.17f;
+    public const float MIN_SWIPE_DISTANCE = 0.01f;
 
     public bool swipedRight = false;
     public bool swipedLeft = false;
@@ -119,6 +120,7 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
+        touchCoolDown -= Time.deltaTime;
         if (isDead)
         {
             this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
@@ -163,41 +165,51 @@ public class Movement : MonoBehaviour
                     startPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
                     startTime = Time.time;
                 }
-                if (t.phase == TouchPhase.Ended)
+                else if (t.phase == TouchPhase.Ended)
                 {
-
-                    Vector2 endPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
-
-                    Vector2 swipe = new Vector2(endPos.x - startPos.x, endPos.y - startPos.y);
-
-                    if (swipe.magnitude < MIN_SWIPE_DISTANCE) // Too short swipe
+                    touchCoolDown = -0.1f;
+                }
+                else if (t.phase == TouchPhase.Moved)
+                {
+                    if(touchCoolDown < 0f)
                     {
-                        //Don't register
-                    }
-                    else
-                    {
-                        if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
+                        Vector2 endPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
+
+                        Vector2 swipe = new Vector2(endPos.x - startPos.x, endPos.y - startPos.y);
+
+                        if (swipe.magnitude < MIN_SWIPE_DISTANCE) // Too short swipe
                         {
-                            // Horizontal swipe
-                            if (swipe.x > 0)
-                            {
-                                swipedRight = true;
-                            }
-                            else
-                            {
-                                swipedLeft = true;
-                            }
+                            //Don't register
                         }
                         else
                         {
-                            // Vertical swipe
-                            if (swipe.y > 0)
+                            if (swipe.magnitude > MIN_SWIPE_DISTANCE)
                             {
-                                swipedUp = true;
-                            }
-                            else
-                            {
-                                swipedDown = true;
+                                if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
+                                {
+                                    // Horizontal swipe
+                                    if (swipe.x > 0)
+                                    {
+                                        swipedRight = true;
+                                    }
+                                    else
+                                    {
+                                        swipedLeft = true;
+                                    }
+                                }
+                                else
+                                {
+                                    // Vertical swipe
+                                    if (swipe.y > 0)
+                                    {
+                                        swipedUp = true;
+                                    }
+                                    else
+                                    {
+                                        swipedDown = true;
+                                    }
+                                }
+                                touchCoolDown = 0.5f;
                             }
                         }
                     }
