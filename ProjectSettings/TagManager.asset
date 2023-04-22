@@ -22,6 +22,8 @@ TagManager:
   - Laser
   - ObstacleRight
   - ObstacleLeft
+  - ContinueCanvas
+  - DeathScreen
   layers:
   - Default
   - TransparentFX

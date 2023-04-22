@@ -8,13 +8,15 @@ public class KillPlayer : MonoBehaviour
 {
     public int respawn;
 
+    //public GameObject continueCanvas;
+
     public Movement player;
 
     void reloadScene()
     {
         SceneManager.LoadScene(respawn);
     }
-
+    
     void Update()
     {
     }
@@ -30,7 +32,10 @@ public class KillPlayer : MonoBehaviour
                 {
                     PlayerPrefs.SetInt("StarsCounter", player.starsCounter);
                     PlayerPrefs.SetInt("totalCoins", PlayerPrefs.GetInt("totalCoins") + player.starsCounter);
-                    SceneManager.LoadScene("VictoryScene");
+                    player.isDead = true;
+                    //continueCanvas.SetActive(true);
+                    //Time.timeScale = 0f;
+                    //SceneManager.LoadScene("VictoryScene");
                 }
                 else
                 {
@@ -50,7 +55,6 @@ public class KillPlayer : MonoBehaviour
                         }
                         else
                         {
-                            player.stylePoints-=5;
                             player.lives--;
                         }
                         
@@ -61,17 +65,10 @@ public class KillPlayer : MonoBehaviour
                     }
                     else
                     {
-                        if (player.inShield == true)
-                        {
-                            player.inShield = false;
-                            player.shield.SetActive(false);
-                        }
-                        else
-                        {
-                            PlayerPrefs.SetInt("StarsCounter", player.starsCounter);
-                            PlayerPrefs.SetInt("totalCoins", PlayerPrefs.GetInt("totalCoins") + player.starsCounter);
-                            SceneManager.LoadScene("VictoryScene");
-                        }
+                        PlayerPrefs.SetInt("StarsCounter", player.starsCounter);
+                        PlayerPrefs.SetInt("totalCoins", PlayerPrefs.GetInt("totalCoins") + player.starsCounter);
+                        player.isDead = true;
+                        //SceneManager.LoadScene("VictoryScene");
                     }
                 }
                 else

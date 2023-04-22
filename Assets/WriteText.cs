@@ -13,6 +13,7 @@ public class TextWriter : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1f;
         StartCoroutine(WriteText());
     }
 
