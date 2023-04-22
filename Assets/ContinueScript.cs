@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class ContinueScript : MonoBehaviour
 {
+    public TMP_Text RespawnCost;
     public Movement player;
     public GameObject yesBtn;
     void Start(){
+         RespawnCost.text = player.respawnCost.ToString() + " Stars to Continue";
         if(player.starsCounter < player.respawnCost){
             yesBtn.SetActive(false);
         }
