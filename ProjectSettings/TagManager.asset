@@ -24,6 +24,7 @@ TagManager:
   - ObstacleLeft
   - ContinueCanvas
   - DeathScreen
+  - Star
   layers:
   - Default
   - TransparentFX

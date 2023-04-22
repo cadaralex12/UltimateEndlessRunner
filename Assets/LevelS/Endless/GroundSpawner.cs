@@ -27,8 +27,6 @@ public class GroundSpawner : MonoBehaviour
     private Quaternion spawnRotation;
     public int firstFiveEmpty;
 
-    public GameObject DebugParticles;
-
     private float deleteCounter = 0f;
 
     public int starsSpawned = 0;
@@ -88,7 +86,7 @@ public class GroundSpawner : MonoBehaviour
         }
 
         float firstLength = activeTiles[0].GetComponent<PrefabInformation>().tileLength;
-        if ((playerTransform.position.z - firstLength) > activeTiles[0].transform.position.z)
+        if ((playerTransform.position.z - firstLength - 30f) > activeTiles[0].transform.position.z)
         {
             SpawnTile(difficulty);
             if (activeTiles.Count > 15 && firstFiveEmpty == 0)
@@ -336,7 +334,6 @@ public class GroundSpawner : MonoBehaviour
     {
         possibleStylePoints += activeTiles[1].gameObject.GetComponent<PrefabInformation>().possibleStylePoints;
         possibleStylePoints += activeTiles[1].gameObject.GetComponent<PrefabInformation>().coinsSpawned;
-        DebugParticles.transform.position = activeTiles[2].transform.position;
         Destroy(activeTiles[0]);
 
         activeTiles.RemoveAt(0);

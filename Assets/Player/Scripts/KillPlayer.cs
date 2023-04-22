@@ -28,17 +28,20 @@ public class KillPlayer : MonoBehaviour
         {
             if (this.CompareTag("Death"))
             {
-                if (player.inBoost == false)
+                if (player.inBoost == false && player.inShield == false)
                 {
                     PlayerPrefs.SetInt("StarsCounter", player.starsCounter);
                     PlayerPrefs.SetInt("totalCoins", PlayerPrefs.GetInt("totalCoins") + player.starsCounter);
                     player.isDead = true;
-                    //continueCanvas.SetActive(true);
-                    //Time.timeScale = 0f;
-                    //SceneManager.LoadScene("VictoryScene");
                 }
                 else
                 {
+                    if (player.inShield == true)
+                    {
+                        player.inShield = false;
+                        player.shield.SetActive(false);
+                    }
+                    player.m_Animator.Play("Floating");
                     player.y = player.jumpPower;
                 }
             }
@@ -46,19 +49,21 @@ public class KillPlayer : MonoBehaviour
             {
                 if (player.inBoost == false && player.hurtCounter < 0f)
                 {
+                    player.y = player.jumpPower * 2;
                     if (player.lives > 1)
                     {
                         if (player.inShield == true)
                         {
                             player.inShield = false;
                             player.shield.SetActive(false);
+                            player.m_Animator.Play("Floating");
+                            player.hurtCounter = 0.8f;
                         }
                         else
                         {
                             player.lives--;
                         }
                         
-                        player.y = player.jumpPower*2;
                         player.m_Animator.Play("Floating");
                         player.hurtCounter = 0.8f;
                         this.gameObject.SetActive(false);

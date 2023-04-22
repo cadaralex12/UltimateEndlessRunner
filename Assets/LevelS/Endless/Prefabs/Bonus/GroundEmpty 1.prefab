@@ -264,6 +264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinsSpawned: 3
   tileLength: 435
+  possibleStylePoints: 0
 --- !u!1 &1150256153250744464
 GameObject:
   m_ObjectHideFlags: 0
@@ -682,6 +683,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinsSpawned: 15
   tileLength: 435
+  possibleStylePoints: 0
 --- !u!1 &3076432053477436511
 GameObject:
   m_ObjectHideFlags: 0
