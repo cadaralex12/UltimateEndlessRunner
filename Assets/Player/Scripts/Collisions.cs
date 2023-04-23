@@ -30,6 +30,8 @@ public class Collisions : MonoBehaviour
         if(starSoundCounter < 2 && starSoundTimer < 0f)
         {
             ding3.Stop();
+            ding2.Stop();
+            ding1.Stop();
         }
 
     }
