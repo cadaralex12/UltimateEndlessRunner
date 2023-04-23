@@ -6,6 +6,7 @@ using System.Collections.Specialized;
 
 public class GroundSpawner : MonoBehaviour
 {
+    public AudioSource bass, drum1, drum2; 
     public int INDEX = 8;
     public float possibleStylePoints = 0f;
     public float difficultyCounter;
@@ -50,10 +51,46 @@ public class GroundSpawner : MonoBehaviour
         }
     }
 
-    
+    private void changeMusic()
+    {
+        switch (difficulty){
+            case 1:{
+                bass.volume = 0f;
+                drum1.volume = 0f;
+                drum2.volume = 0f;
+                break;
+            }
+            case 2:{
+                bass.volume = 0.1f;
+                drum1.volume = 0f;
+                drum2.volume = 0f;
+                break;
+            }
+            case 3:{
+                bass.volume = 0.1f;
+                drum1.volume = 0.1f;
+                drum2.volume = 0f;
+                break;
+            }
+             case 4:{
+                bass.volume = 0.1f;
+                drum1.volume = 0f;
+                drum2.volume = 0.1f;
+                break;
+            }
+            default:{
+                bass.volume = 0.1f;
+                drum1.volume = 0f;
+                drum2.volume = 0.1f;
+                break;
+            }
+        }
+
+    }
 
     private void Update()
     {
+        changeMusic();
         difficultyCounter -= Time.deltaTime;
 
         if (difficultyCounter <= 0f)

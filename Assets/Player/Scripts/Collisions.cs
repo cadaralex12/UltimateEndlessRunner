@@ -9,6 +9,9 @@ using System;
 
 public class Collisions : MonoBehaviour
 {
+    public AudioSource ding1, ding2, ding3;
+    public float starSoundTimer = 0f;
+    public int starSoundCounter = 0;
     private Animator m_Animator;
     public Movement player;
     public int respawn = 0;
@@ -21,12 +24,30 @@ public class Collisions : MonoBehaviour
 
 
     // Start is called before the first frame update
+
+    void PlayMultipleSounds()
+    {
+        if(starSoundCounter < 2 && starSoundTimer < 0f)
+        {
+            ding3.Stop();
+        }
+
+    }
+    
+    void Update()
+    {
+        starSoundTimer -= Time.deltaTime;
+        if(starSoundTimer < 0f){
+            starSoundCounter = 0;
+        }
+        PlayMultipleSounds();
+    }
+
     void Start()
     {
         m_Animator = GetComponent<Animator>();
         UI = FindObjectOfType<StarUIMovement>();
     }
-
 
     void reloadScene()
     {
@@ -103,6 +124,26 @@ public class Collisions : MonoBehaviour
             {
                 UI.SpawnMoveStar();
             }
+
+            if(starSoundTimer > 0f){
+                if (starSoundCounter == 1){
+                    ding2.Play();
+                    starSoundTimer = 0.5f;
+                    starSoundCounter++;
+                }
+                else if (starSoundCounter >= 2){
+                    starSoundTimer = 0.5f;
+                    starSoundCounter++;
+                    ding3.Play();
+                }
+                
+            }  
+            else {
+                ding1.Play();
+                starSoundTimer = 0.5f;
+                starSoundCounter++;
+            }
+
         }
         else if (other.CompareTag("ObstacleRight") || other.CompareTag("ObstacleLeft"))
         {
