@@ -39,7 +39,7 @@ private void Update()
             timerBar.rectTransform.sizeDelta = new Vector2(barWidth - barFill, timerBar.rectTransform.sizeDelta.y);
 
             float r = 120;
-            float g = barColor.g;
+            float g = barColor.g*t;
             float b = 0;
             timerBar.color = new Color(r, g, b);
         }

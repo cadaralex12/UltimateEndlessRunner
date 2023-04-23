@@ -9,7 +9,7 @@ public class ContinueScript : MonoBehaviour
     public TMP_Text RespawnCost;
     public Movement player;
     public GameObject yesBtn;
-    void Start(){
+    void Update(){
          RespawnCost.text = player.respawnCost.ToString() + " Stars to Continue";
         if(player.starsCounter < player.respawnCost){
             yesBtn.SetActive(false);
