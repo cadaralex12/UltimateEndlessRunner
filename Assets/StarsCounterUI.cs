@@ -26,7 +26,7 @@ public class StarsCounterUI : MonoBehaviour
         while (currentStars < maxStars)
         {
             currentStars++;
-            starsText.text = currentStars.ToString() + "*";
+            starsText.text = currentStars.ToString();
             yield return new WaitForSeconds(1 / countingSpeed);
         }
     }
