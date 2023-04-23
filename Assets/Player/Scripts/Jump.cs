@@ -74,23 +74,16 @@ public class Jump : MonoBehaviour
                 ran = UnityEngine.Random.Range(0, 10);
                 if (ran % 3 == 0)
                 {
-
-                    //m_Animator.enabled = true;
-                    UnityEngine.Debug.Log("Pula 1");
                     trickParticles.Play();
                     player.m_Animator.Play("Pose1");
                 }
                 else if (ran % 3 == 1)
                 {
-                    //m_Animator.enabled = true;
-                    UnityEngine.Debug.Log("Pula 2");
                     trickParticles.Play();
                     player.m_Animator.Play("Pose2");
                 }
                 else
                 {
-                    //m_Animator.enabled = true;
-                    UnityEngine.Debug.Log("Pula 3");
                     trickParticles.Play();
                     player.m_Animator.Play("Pose3");
                 }

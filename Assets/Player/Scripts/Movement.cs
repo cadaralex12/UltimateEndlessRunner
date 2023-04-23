@@ -371,66 +371,6 @@ public class Movement : MonoBehaviour
             inAirSlide = false;
         }
     }
-    
-    /*public void OnCollisionEnter(Collision col)
-    {
-        UnityEngine.Debug.Log("Shit");
-        if(col.transform.position.y >= transform.position.y)
-        {
-            hitX = GetHitX(col);
-
-            if (hitX == HitX.Right)
-            {
-                //m_Animator.Play("StumblecornerRight");
-                m_SIDE = lastSide;
-                UnityEngine.Debug.Log("Curva dreapta");
-            }
-            else if (hitX == HitX.Left)
-            {
-                //m_Animator.Play("StumbleCornerLeft");
-                m_SIDE = lastSide;
-                UnityEngine.Debug.Log("Curva stanga");
-            }
-        }
-        
-    }
-
-    public HitX GetHitX(Collision col)
-    {
-        UnityEngine.Debug.Log("Fuck");
-        HitX hit;
-        if (col.transform.position.x > transform.position.x)
-        {
-            hit = HitX.Right;
-            UnityEngine.Debug.Log("Fuck Right");
-        }
-        else
-        {
-            hit = HitX.Left;
-            UnityEngine.Debug.Log("Fuck Left");
-        }
-        /*Bounds char_bounds = m_char.bounds;
-        Bounds col_bounds = col.bounds;
-        float min_x = Mathf.Max(col_bounds.min.x, char_bounds.min.x);
-        float max_x = Mathf.Max(col_bounds.max.x, char_bounds.max.x);
-        float average = (min_x + max_x) / 2f - -col_bounds.min.x;
-        HitX hit = HitX.Right;
-        if (average > col_bounds.size.x - 0.33f)
-        {
-            hit = HitX.Right;
-            UnityEngine.Debug.Log("Right");
-        }
-        else if (average < 0.33f)
-        {
-            hit = HitX.Left;
-        }
-        else
-        {
-            hit = HitX.Mid;
-        }
-        return hit;
-    }*/
-
 
     internal float slowMoCounter = 0f;
     public bool inSlowMo = false;
@@ -503,7 +443,7 @@ public class Movement : MonoBehaviour
                 inBoost = true;
                 boostCounter = 5f;
                 fwdSpeed = lastFwdSpeed + 50;
-                m_Animator.Play("Boost");
+                //m_Animator.Play("Boost");
             }
         }
     }
