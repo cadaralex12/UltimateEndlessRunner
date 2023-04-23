@@ -110,6 +110,10 @@ public class Jump : MonoBehaviour
                 {
                     player.m_Animator.CrossFadeInFixedTime("Backflip", 0.3f);
                 }
+                else
+                {
+                    player.m_Animator.Play("Backflip");
+                }
             }
             else
             {
