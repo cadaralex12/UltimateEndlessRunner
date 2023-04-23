@@ -106,7 +106,7 @@ public class Jump : MonoBehaviour
                 player.inJump = true;
                 jumpParticles.gameObject.transform.position = player.gameObject.transform.position;
                 jumpParticles.Play();
-                player.m_Animator.Play("Backflip");
+                player.m_Animator.CrossFadeInFixedTime("Backflip", 0.3f);
             }
             else
             {
