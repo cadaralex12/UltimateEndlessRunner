@@ -17,6 +17,7 @@ public enum HitZ { Forward, Mid, Backward, None };
 
 public class Movement : MonoBehaviour
 {
+    public GameObject boostParticles;
     public float touchCoolDown = 0.5f;
     public GameObject continueCanvas;
     public bool isDead = false;
@@ -31,7 +32,6 @@ public class Movement : MonoBehaviour
     public GameObject shield;
     public float desiredFOV = 60f;
     public Camera myCamera;
-    public GameObject ObtsacleDeleter;
     public int lives;
     public int direction = 0;
     public float zPosition = 0;
@@ -113,7 +113,6 @@ public class Movement : MonoBehaviour
         colHeight = m_char.height;
         colCenterY = m_char.center.y;
         transform.position = new Vector3(0,0.5f,0);
-        ObtsacleDeleter.SetActive(false);
         shield.SetActive(false);
         _postProcessVolume.profile.TryGetSettings(out _chromaticAberration);
     }
@@ -203,6 +202,7 @@ public class Movement : MonoBehaviour
                                     if (swipe.y > 0)
                                     {
                                         swipedUp = true;
+                                        slideCounter = 0f;
                                     }
                                     else
                                     {
@@ -238,6 +238,7 @@ public class Movement : MonoBehaviour
             {
                 if (swipedLeft)
                 {
+                    //slideCounter = 0f;
                     if (m_SIDE == SIDE.MID)
                     {
                         lastSide = m_SIDE;
@@ -271,6 +272,7 @@ public class Movement : MonoBehaviour
 
                 if (swipedRight)
                 {
+                    //slideCounter = 0f;
                     if (m_SIDE == SIDE.MID)
                     {
                         lastSide = m_SIDE;
@@ -345,11 +347,13 @@ public class Movement : MonoBehaviour
                 inAirSlide = true;
                 y -= 150f;
             }
-            if (m_char.isGrounded)
+            if (m_char.isGrounded && slideCounter <= 0.45f)
             {
                 slideCounter = 0.7f;
                 inSlide = true;
-                m_Animator.Play("Roll");
+                m_Animator.enabled = false;
+                m_Animator.enabled = true;
+                m_Animator.Play("Roll", -1, 0f);
                 m_char.center = new Vector3(0, colCenterY / 2f, 0);
                 m_char.height = colHeight / 10f;
             }
@@ -468,6 +472,7 @@ public class Movement : MonoBehaviour
 
     public void Boost()
     {
+        boostParticles.transform.position = transform.position;
         if (inPause == false)
         {
             boostCounter -= Time.deltaTime;
@@ -475,6 +480,7 @@ public class Movement : MonoBehaviour
             {
                 if (boostCounter <= 0f)
                 {
+                    boostParticles.SetActive(false);
                     myCamera.transform.GetChild(0).gameObject.SetActive(false);
                     myCamera.transform.position -= new Vector3(0, 100f, 0);
                     inBoost = false;
@@ -486,6 +492,7 @@ public class Movement : MonoBehaviour
 
             if (boostPressed && inBoost == false && starsCounter >= 5 && hurtCounter <= 0f && inSlowMo == false)
             {
+                boostParticles.SetActive(true);
                 lastFwdSpeed = fwdSpeed;
                 myCamera.transform.GetChild(0).gameObject.SetActive(true);
                 starsCounter -= 5;
@@ -532,7 +539,6 @@ public class Movement : MonoBehaviour
             {
                 _chromaticAberration.active = true;
 
-                ObtsacleDeleter.SetActive(true);
                 desiredFOV = 50f;
                 //InvokeRepeating("Blink", 0, 0.2f);
                 Time.timeScale = 0.4f;
@@ -544,7 +550,6 @@ public class Movement : MonoBehaviour
                 if (GetComponent<Renderer>().enabled == false)
                     GetComponent<Renderer>().enabled = true;*/
                 _chromaticAberration.active = false;
-                ObtsacleDeleter.SetActive(false);
                 desiredFOV = 60f;
                 Time.timeScale = 1f;
                 Time.fixedDeltaTime = Time.timeScale * 0.01f;

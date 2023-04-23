@@ -12,6 +12,11 @@ public class KillPlayer : MonoBehaviour
 
     public Movement player;
 
+    void Start()
+    {
+        player = FindObjectsOfType<Movement>()[0];
+    }
+
     void reloadScene()
     {
         SceneManager.LoadScene(respawn);
@@ -19,6 +24,10 @@ public class KillPlayer : MonoBehaviour
     
     void Update()
     {
+        if(player.hurtCounter > 0f && Vector3.Distance(transform.position, player.transform.position) < 300f)
+        {
+            this.gameObject.SetActive(false);
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -43,6 +52,7 @@ public class KillPlayer : MonoBehaviour
                     }
                     player.m_Animator.Play("Floating");
                     player.y = player.jumpPower;
+                    player.doubleJump = false;
                 }
             }
             else
@@ -70,10 +80,20 @@ public class KillPlayer : MonoBehaviour
                     }
                     else
                     {
-                        PlayerPrefs.SetInt("StarsCounter", player.starsCounter);
-                        PlayerPrefs.SetInt("totalCoins", PlayerPrefs.GetInt("totalCoins") + player.starsCounter);
-                        player.isDead = true;
-                        //SceneManager.LoadScene("VictoryScene");
+                        if (player.inShield == true)
+                        {
+                            player.inShield = false;
+                            player.shield.SetActive(false);
+                            player.m_Animator.Play("Floating");
+                            player.hurtCounter = 0.8f;
+                        }
+                        else
+                        {
+                            PlayerPrefs.SetInt("StarsCounter", player.starsCounter);
+                            PlayerPrefs.SetInt("totalCoins", PlayerPrefs.GetInt("totalCoins") + player.starsCounter);
+                            player.isDead = true;
+                            //SceneManager.LoadScene("VictoryScene");
+                        }
                     }
                 }
                 else

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System;
+using System.Collections.Specialized;
 
 public class GroundSpawner : MonoBehaviour
 {
@@ -36,7 +37,7 @@ public class GroundSpawner : MonoBehaviour
     private void Start()
     {
         possibleStylePoints = 0;
-        difficultyCounter = 15f;
+        difficultyCounter = 20f;
         lastWidth = 0;
         newWidth = 0;
         activeTiles = new List<GameObject>();
@@ -62,27 +63,40 @@ public class GroundSpawner : MonoBehaviour
                 if (difficulty < 6)
                 {
                     difficulty++;
-                    difficultyCounter = 30f;
-                    possibleStylePoints = 0;
-                    player.stylePoints = 0;
                 }
             }
             else if (player.stylePoints < 0.10f * possibleStylePoints)
             {
-                possibleStylePoints = 0;
-                player.stylePoints = 0;
-                difficultyCounter = 30f;
+                difficultyCounter = 5f;
             }
             else
             {
                 if (difficulty > 1)
                 {
                     difficulty--;
-                    difficultyCounter = 30f;
-                    possibleStylePoints = 0;
-                    player.stylePoints = 0;
                 }
             }
+
+            difficultyCounter = 20f * difficulty;
+            possibleStylePoints = 0;
+            player.stylePoints = 0;
+            /*player.hasControl = false;
+            spawnZ = spawnZ - player.transform.position.z;
+            
+            for (int i = 0; i < activeTiles.Count; i++)
+            {
+                //SpawnTile(difficulty);
+                activeTiles[i].transform.parent = null;
+                activeTiles[i].transform.parent = player.transform;
+                //activeTiles[i].transform.position = new Vector3(0, 0, spawnZ);
+                //spawnZ += activeTiles[i].GetComponent<PrefabInformation>().tileLength;
+            }
+            player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, 0);
+            for (int i = 0; i < activeTiles.Count; i++)
+            {
+                activeTiles[i].transform.parent = this.gameObject.transform;
+            }
+            player.hasControl = true;*/
         }
 
         float firstLength = activeTiles[0].GetComponent<PrefabInformation>().tileLength;
@@ -121,17 +135,17 @@ public class GroundSpawner : MonoBehaviour
                     SetSpeed(110);
                     if (firstFiveEmpty > 0)
                     {
-                        temp = Instantiate(tilePrefabsVeryHard[RandomPreFabindex(6)]) as GameObject;
+                        temp = Instantiate(tilePrefabsBonus[RandomPreFabindex(1)]) as GameObject;
                         firstFiveEmpty--;
                         break;
                     }
-                    temp = Instantiate(tilePrefabsVeryHard[RandomPreFabindex(6)]) as GameObject;
+                    temp = Instantiate(tilePrefabsBonus[RandomPreFabindex(1)]) as GameObject;
                     break;
                 }
             // Easy 1: 120 speed, many bonuses, few normals
             case 1:
                 {
-                    SetSpeed(110);
+                    SetSpeed(120);
                     if (firstFiveEmpty > 0)
                     {
                         temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;

@@ -22,7 +22,8 @@ public class Collectible : MonoBehaviour
 
     void Update()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) < 100f)
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, 250f * Time.deltaTime);
+        if(player.inBoost == true)
+            if (Vector3.Distance(transform.position, player.transform.position) < 100f)
+                transform.position = Vector3.MoveTowards(transform.position, player.transform.position, 250f * Time.deltaTime);
     }
 }
