@@ -125,6 +125,7 @@ public class Movement : MonoBehaviour
             this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
             continueCanvas.SetActive(true);
             Time.timeScale = 0f;
+            //respawnCost *= 2;
         }
         else
         {
