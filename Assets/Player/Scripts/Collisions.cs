@@ -155,19 +155,17 @@ public class Collisions : MonoBehaviour
         {
             player.y = player.jumpPower;
             m_Animator.Play("Floating");
+            player.doubleJump = false;
+        }
+        else if (other.CompareTag("FrontWallFuckYou"))
+        {
+            player.m_SIDE = SIDE.MID;
+            player.lastSide = SIDE.MID;
         }
 
     }
 
-    /*void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("SplineCart"))
-        {
-            player.transform.position = other.transform.parent.transform.position;
-        }
-    }*/
-
-            void OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("SplineCart"))
         {
