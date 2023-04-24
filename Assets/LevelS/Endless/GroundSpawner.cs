@@ -391,7 +391,7 @@ public class GroundSpawner : MonoBehaviour
             SetSpeed(110);
             if (firstFiveEmpty > 0)
             {
-                temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
+                temp = Instantiate(tutorialTilePrefabs[0]) as GameObject;
                 firstFiveEmpty--;
                 temp.transform.SetParent(transform);
                 temp.transform.position = Vector3.forward * spawnZ;

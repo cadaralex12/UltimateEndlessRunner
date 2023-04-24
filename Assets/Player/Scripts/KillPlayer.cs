@@ -24,7 +24,7 @@ public class KillPlayer : MonoBehaviour
     
     void Update()
     {
-        if(player.hurtCounter > 0f && Vector3.Distance(transform.position, player.transform.position) < 300f)
+        if(player.hurtCounter > 0f && Vector3.Distance(transform.position, player.transform.position) < 150f)
         {
             this.gameObject.SetActive(false);
         }
