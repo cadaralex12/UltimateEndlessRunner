@@ -22,6 +22,9 @@ public class SlowMotionButton : MonoBehaviour
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Z) && player.starsCounter>=50){
+            ActivateSlowMotion();
+        }
         if (slowMotionActive)
         {
             timeRemaining -= Time.deltaTime;

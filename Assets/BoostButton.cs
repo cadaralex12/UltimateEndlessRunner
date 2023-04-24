@@ -21,6 +21,9 @@ private void Awake()
 
 private void Update()
 {
+    if(Input.GetKeyDown(KeyCode.C) && player.starsCounter>=150){
+        ActivateBoost();
+    }
     if (boostActive)
     {
         timeRemaining -= Time.deltaTime;
