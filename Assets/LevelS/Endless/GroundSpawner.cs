@@ -6,7 +6,7 @@ using System.Collections.Specialized;
 
 public class GroundSpawner : MonoBehaviour
 {
-    public AudioSource bass, drum1, drum2; 
+    public AudioSource mainMusic, bass, drum1, drum2, laughSound; 
     public int INDEX = 8;
     public float possibleStylePoints = 0f;
     public float difficultyCounter;
@@ -57,6 +57,8 @@ public class GroundSpawner : MonoBehaviour
 
     private void changeMusic()
     {
+        mainMusic.volume = 0.1f;
+
         if(onTutorial == false)
         {
             switch (difficulty)
@@ -84,6 +86,27 @@ public class GroundSpawner : MonoBehaviour
                     }
                 case 4:
                     {
+                        bass.volume = 0.1f;
+                        drum1.volume = 0f;
+                        drum2.volume = 0.1f;
+                        break;
+                    }
+                case 5:
+                    {                       
+                        laughSound.Play();
+                        mainMusic.pitch = 1.05f;
+                        bass.pitch = 1.05f;
+                        drum2.pitch = 1.05f;
+                        bass.volume = 0.05f;
+                        drum1.volume = 0f;
+                        drum2.volume = 0.1f;
+                        break;
+                    }
+                case 6:
+                    {
+                        mainMusic.pitch = 1.15f;
+                        bass.pitch = 1.15f;
+                        drum2.pitch = 1.15f;
                         bass.volume = 0.1f;
                         drum1.volume = 0f;
                         drum2.volume = 0.1f;
