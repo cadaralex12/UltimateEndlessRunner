@@ -856,9 +856,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "       Credits\n\n\n>CBT TEAM Members:\n\n    Tatucu Andrei\n\n   Cadar
-    Alexandru\n\n    Busila Adrian\n\n>Assets Used:\n\n...\n\n...\n\n...\n\n...\n\n>Music
-    and VFX\n\n...\n\n>Testers:\n...\n...\n\n\n\n\n\n\n>And Thank YOU for playing
-    our game :)\n"
+    Alexandru\n\n    Busila Adrian\n\n>Asset Authors:\n\nSirenix Technologies\n\nDigital
+    Ruby\r\n\nAQUAS\n\nFinal IK\n\n>Music and VFX\n\nCosmic Beats\n\nArtur Andreevich\n\n>Testers:\n\nFriends
+    And Family\n\n\n\n\n>And Thank YOU for playing our game :)\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1e8f7996baa4a0042a5dcaf6034ca53c, type: 2}
   m_sharedMaterial: {fileID: 5712590784125532648, guid: 1e8f7996baa4a0042a5dcaf6034ca53c, type: 2}
