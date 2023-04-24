@@ -151,6 +151,11 @@ public class Collisions : MonoBehaviour
         {
             player.m_SIDE = player.lastSide;
         }
+        else if (other.CompareTag("FrontPlatform"))
+        {
+            player.y = player.jumpPower;
+            m_Animator.Play("Floating");
+        }
 
     }
 

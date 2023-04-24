@@ -382,9 +382,9 @@ public class Movement : MonoBehaviour
         {
             Resume();
         }
-        if (slowMoPressed && Time.timeScale != 0f && starsCounter >= 50 && inSlowMo == false && inBoost == false)
+        if (slowMoPressed && Time.timeScale != 0f && starsCounter >= 10 && inSlowMo == false && inBoost == false)
         {
-            starsCounter -= 50;
+            starsCounter -= 10;
             slowMoPressed = false;
             slowMoCounter = 3f;
             SlowDown();
@@ -431,12 +431,12 @@ public class Movement : MonoBehaviour
                 }
             }
 
-            if (boostPressed && inBoost == false && starsCounter >= 150 && hurtCounter <= 0f && inSlowMo == false)
+            if (boostPressed && inBoost == false && starsCounter >= 5 && hurtCounter <= 0f && inSlowMo == false)
             {
                 boostParticles.SetActive(true);
                 lastFwdSpeed = fwdSpeed;
                 myCamera.transform.GetChild(0).gameObject.SetActive(true);
-                starsCounter -= 150;
+                starsCounter -= 5;
                 boostPressed = false;
                 desiredFOV = 80f;
                 myCamera.transform.position += new Vector3(0, 100f, 0);
@@ -452,9 +452,9 @@ public class Movement : MonoBehaviour
 
     public void Shield()
     {
-        if (shieldPressed && starsCounter >= 100)
+        if (shieldPressed && starsCounter >= 10)
         {
-            starsCounter -= 100;
+            starsCounter -= 10;
             shieldPressed = false;
             inShield = true;
             shield.SetActive(true);

@@ -25,6 +25,7 @@ TagManager:
   - ContinueCanvas
   - DeathScreen
   - Star
+  - FrontPlatform
   layers:
   - Default
   - TransparentFX
