@@ -127,7 +127,7 @@ public class Collisions : MonoBehaviour
                 UI.SpawnMoveStar();
             }
 
-            if(starSoundTimer > 0f){
+            /*if(starSoundTimer > 0f){
                 if (starSoundCounter == 1){
                     ding2.Play();
                     starSoundTimer = 0.5f;
@@ -144,7 +144,7 @@ public class Collisions : MonoBehaviour
                 ding1.Play();
                 starSoundTimer = 0.5f;
                 starSoundCounter++;
-            }
+            }*/
 
         }
         else if (other.CompareTag("ObstacleRight") || other.CompareTag("ObstacleLeft"))
