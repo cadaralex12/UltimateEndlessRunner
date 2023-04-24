@@ -35,6 +35,7 @@ public class KillPlayer : MonoBehaviour
         player = other.gameObject.GetComponent<Movement>();
         if (other.CompareTag("Player"))
         {
+            player.stylePoints -= 500;
             if (this.CompareTag("Death"))
             {
                 if (player.inBoost == false && player.inShield == false)
@@ -57,6 +58,7 @@ public class KillPlayer : MonoBehaviour
             }
             else
             {
+
                 if (player.inBoost == false && player.hurtCounter < 0f)
                 {
                     player.y = player.jumpPower * 2;

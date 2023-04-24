@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.0007787092, g: 0.0041236565, b: 0.019990839, a: 1}
+  m_IndirectSpecularColor: {r: 0.00077867036, g: 0.0041233166, b: 0.019989327, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -51056,6 +51056,7 @@ MonoBehaviour:
   tilePrefabsBonus:
   - {fileID: 2695720095920953618, guid: c0f77f31f53eac84ba07cada4247384f, type: 3}
   - {fileID: 2695720095920953618, guid: f19e6b7ab7f77374b8c16c73a0f9a4a1, type: 3}
+  - {fileID: 2695720095920953618, guid: fbe9cd32c0f2ad048894670a35c5a6ea, type: 3}
   tilePrefabsNormal:
   - {fileID: 2695720095920953618, guid: 45f4db5e06c125446ad682feb4204b28, type: 3}
   - {fileID: 2695720095920953618, guid: 804b5387b123ae64088547359424e074, type: 3}
@@ -51071,18 +51072,27 @@ MonoBehaviour:
   - {fileID: 2695720095920953618, guid: b66d55c11be09474981f08bb40a20f3b, type: 3}
   - {fileID: 2695720095920953618, guid: b61d09caf331cab44babc92e61e8cd63, type: 3}
   - {fileID: 2695720095920953618, guid: 3fedfd298faa4694193192cb712bcb54, type: 3}
+  - {fileID: 2695720095920953618, guid: 5db7db2b788dcbe419b7c3624db79e70, type: 3}
+  - {fileID: 2695720095920953618, guid: f04c89dcb6a2b5b469e060ef288738f9, type: 3}
+  - {fileID: 2695720095920953618, guid: 686b161011ff21f478732738c96ed1e7, type: 3}
+  - {fileID: 2695720095920953618, guid: 8cf634c18636677458a9d11215f906d9, type: 3}
   tilePrefabsHard:
-  - {fileID: 2695720095920953618, guid: fbe9cd32c0f2ad048894670a35c5a6ea, type: 3}
   - {fileID: 2695720095920953618, guid: ba07f788cf00de6409f4d98c5dcb25de, type: 3}
   - {fileID: 2695720095920953618, guid: 74105bdc27186434a9e7b24d31066b61, type: 3}
   - {fileID: 2695720095920953618, guid: 82f9305a23b233541ac7f8d08fdd6a13, type: 3}
   - {fileID: 2695720095920953618, guid: d22a378762742194baebadc6a31bc060, type: 3}
-  - {fileID: 2695720095920953618, guid: 8ecc101b27393fe4dadbedabf285ddae, type: 3}
+  - {fileID: 2695720095920953618, guid: 45f4db5e06c125446ad682feb4204b28, type: 3}
+  - {fileID: 2695720095920953618, guid: 5db7db2b788dcbe419b7c3624db79e70, type: 3}
+  - {fileID: 2695720095920953618, guid: f04c89dcb6a2b5b469e060ef288738f9, type: 3}
+  - {fileID: 2695720095920953618, guid: 686b161011ff21f478732738c96ed1e7, type: 3}
   tilePrefabsVeryHard:
   - {fileID: 2695720095920953618, guid: c40a4f00e8e373e499f4ac13f91bb528, type: 3}
   - {fileID: 2695720095920953618, guid: 7308f11534c64b643a1e95928b62c53c, type: 3}
   - {fileID: 2695720095920953618, guid: 8f4a8394c26bce94aa7ef8f54c47776d, type: 3}
   - {fileID: 2695720095920953618, guid: ab21a35b3d1aad549adb93121f5fdb90, type: 3}
+  - {fileID: 2695720095920953618, guid: 5db7db2b788dcbe419b7c3624db79e70, type: 3}
+  - {fileID: 2695720095920953618, guid: f04c89dcb6a2b5b469e060ef288738f9, type: 3}
+  - {fileID: 2695720095920953618, guid: 686b161011ff21f478732738c96ed1e7, type: 3}
   tilePrefabsEmpty:
   - {fileID: 2695720095920953618, guid: d76def9da74fee745a2a573f7c0672d0, type: 3}
   - {fileID: 2695720095920953618, guid: c0cb9664a61fe344e90c7450c8854f89, type: 3}

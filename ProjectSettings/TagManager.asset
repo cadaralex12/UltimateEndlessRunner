@@ -26,6 +26,7 @@ TagManager:
   - DeathScreen
   - Star
   - FrontPlatform
+  - FrontWallFuckYou
   layers:
   - Default
   - TransparentFX
