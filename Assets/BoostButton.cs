@@ -53,14 +53,16 @@ public void ActivateBoost()
 {
     if (!boostActive)
     {
-        boostActive = true;
-        player.boostPressed = true;
-        player.Boost();
+        
 
         timeRemaining = duration;
         timerBar.gameObject.SetActive(true);
         timerBar.rectTransform.sizeDelta = new Vector2(barWidth, timerBar.rectTransform.sizeDelta.y);
         timerBar.color = barColor;
+
+        boostActive = true;
+        player.boostPressed = true;
+        player.Boost();
     }
 }
 }

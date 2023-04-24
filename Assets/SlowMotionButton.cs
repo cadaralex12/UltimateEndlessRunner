@@ -23,7 +23,9 @@ public class SlowMotionButton : MonoBehaviour
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Z) && player.starsCounter>=50){
-            ActivateSlowMotion();
+            ActivateSlowMotion(); 
+            timerBar.gameObject.SetActive(true);
+
         }
         if (slowMotionActive)
         {
