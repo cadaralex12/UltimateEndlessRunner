@@ -50937,7 +50937,19 @@ MonoBehaviour:
   starsSpawned: 0
   onTutorial: 1
   tutorialTilePrefabs:
-  - {fileID: 2695720095920953618, guid: b61d09caf331cab44babc92e61e8cd63, type: 3}
+  - {fileID: 2695720095920953618, guid: ee21aa4fba974b546840660d9523ee5d, type: 3}
+  - {fileID: 2695720095920953618, guid: ee21aa4fba974b546840660d9523ee5d, type: 3}
+  - {fileID: 2695720095920953618, guid: fa74af495e263a0429bbb0ce84dcd88e, type: 3}
+  - {fileID: 2695720095920953618, guid: ee21aa4fba974b546840660d9523ee5d, type: 3}
+  - {fileID: 2695720095920953618, guid: ee21aa4fba974b546840660d9523ee5d, type: 3}
+  - {fileID: 2695720095920953618, guid: ee21aa4fba974b546840660d9523ee5d, type: 3}
+  - {fileID: 2695720095920953618, guid: ee21aa4fba974b546840660d9523ee5d, type: 3}
+  - {fileID: 2695720095920953618, guid: 4cc7a56c76d9ef544859e9d0176130b5, type: 3}
+  - {fileID: 2695720095920953618, guid: ee21aa4fba974b546840660d9523ee5d, type: 3}
+  - {fileID: 2695720095920953618, guid: ee21aa4fba974b546840660d9523ee5d, type: 3}
+  - {fileID: 2695720095920953618, guid: ee21aa4fba974b546840660d9523ee5d, type: 3}
+  - {fileID: 2695720095920953618, guid: 4cc7a56c76d9ef544859e9d0176130b5, type: 3}
+  - {fileID: 2695720095920953618, guid: ee21aa4fba974b546840660d9523ee5d, type: 3}
   tutorialIndex: 0
 --- !u!4 &1895314333
 Transform:

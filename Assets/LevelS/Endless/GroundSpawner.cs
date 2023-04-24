@@ -143,6 +143,18 @@ public class GroundSpawner : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            float firstLength = activeTiles[0].GetComponent<PrefabInformation>().tileLength;
+            if ((playerTransform.position.z - firstLength - 30f) > activeTiles[0].transform.position.z)
+            {
+                SpawnTile(difficulty);
+                if (activeTiles.Count > 15 && firstFiveEmpty == 0)
+                {
+                    DeleteTile();
+                }
+            }
+        }
     }
 
     public void SetSpeed(int speed = 0)
@@ -376,7 +388,6 @@ public class GroundSpawner : MonoBehaviour
         }
         else
         {
-            bool isDone = true;
             SetSpeed(110);
             if (firstFiveEmpty > 0)
             {
