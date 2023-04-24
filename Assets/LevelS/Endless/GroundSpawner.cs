@@ -15,7 +15,6 @@ public class GroundSpawner : MonoBehaviour
     public GameObject[] tilePrefabsHard;
     public GameObject[] tilePrefabsVeryHard;
     public GameObject[] tilePrefabsEmpty;
-    public GameObject[] tilePrefabs5;
     public int lastWidth = 0;
     public int newWidth = 0;
     public Movement player;
@@ -35,6 +34,11 @@ public class GroundSpawner : MonoBehaviour
 
     private List<GameObject> activeTiles;
 
+    public bool onTutorial = false;
+
+    public GameObject[] tutorialTilePrefabs;
+    public int tutorialIndex = 0;
+
     private void Start()
     {
         possibleStylePoints = 0;
@@ -53,39 +57,47 @@ public class GroundSpawner : MonoBehaviour
 
     private void changeMusic()
     {
-        switch (difficulty){
-            case 1:{
-                bass.volume = 0f;
-                drum1.volume = 0f;
-                drum2.volume = 0f;
-                break;
-            }
-            case 2:{
-                bass.volume = 0.1f;
-                drum1.volume = 0f;
-                drum2.volume = 0f;
-                break;
-            }
-            case 3:{
-                bass.volume = 0.1f;
-                drum1.volume = 0.1f;
-                drum2.volume = 0f;
-                break;
-            }
-             case 4:{
-                bass.volume = 0.1f;
-                drum1.volume = 0f;
-                drum2.volume = 0.1f;
-                break;
-            }
-            default:{
-                bass.volume = 0.1f;
-                drum1.volume = 0f;
-                drum2.volume = 0.1f;
-                break;
+        if(onTutorial == false)
+        {
+            switch (difficulty)
+            {
+                case 1:
+                    {
+                        bass.volume = 0f;
+                        drum1.volume = 0f;
+                        drum2.volume = 0f;
+                        break;
+                    }
+                case 2:
+                    {
+                        bass.volume = 0.1f;
+                        drum1.volume = 0f;
+                        drum2.volume = 0f;
+                        break;
+                    }
+                case 3:
+                    {
+                        bass.volume = 0.1f;
+                        drum1.volume = 0.1f;
+                        drum2.volume = 0f;
+                        break;
+                    }
+                case 4:
+                    {
+                        bass.volume = 0.1f;
+                        drum1.volume = 0f;
+                        drum2.volume = 0.1f;
+                        break;
+                    }
+                default:
+                    {
+                        bass.volume = 0.1f;
+                        drum1.volume = 0f;
+                        drum2.volume = 0.1f;
+                        break;
+                    }
             }
         }
-
     }
 
     private void Update()
@@ -93,62 +105,44 @@ public class GroundSpawner : MonoBehaviour
         changeMusic();
         difficultyCounter -= Time.deltaTime;
 
-        if (difficultyCounter <= 0f)
+        if (onTutorial == false)
         {
-            if(player.stylePoints > 0.50f * possibleStylePoints)
+            if (difficultyCounter <= 0f)
             {
-                if (difficulty < 6)
+                if (player.stylePoints > 0.50f * possibleStylePoints)
                 {
-                    difficulty++;
+                    if (difficulty < 6)
+                    {
+                        difficulty++;
+                    }
                 }
-            }
-            else if (player.stylePoints < 0.10f * possibleStylePoints)
-            {
-                difficultyCounter = 5f;
-            }
-            else
-            {
-                if (difficulty > 1)
+                else if (player.stylePoints < 0.10f * possibleStylePoints)
                 {
-                    difficulty--;
+                    difficultyCounter = 5f;
                 }
+                else
+                {
+                    if (difficulty > 1)
+                    {
+                        difficulty--;
+                    }
+                }
+
+                difficultyCounter = 20f * difficulty;
+                possibleStylePoints = 0;
+                player.stylePoints = 0;
             }
 
-            difficultyCounter = 20f * difficulty;
-            possibleStylePoints = 0;
-            player.stylePoints = 0;
-            /*player.hasControl = false;
-            spawnZ = spawnZ - player.transform.position.z;
-            
-            for (int i = 0; i < activeTiles.Count; i++)
+            float firstLength = activeTiles[0].GetComponent<PrefabInformation>().tileLength;
+            if ((playerTransform.position.z - firstLength - 30f) > activeTiles[0].transform.position.z)
             {
-                //SpawnTile(difficulty);
-                activeTiles[i].transform.parent = null;
-                activeTiles[i].transform.parent = player.transform;
-                //activeTiles[i].transform.position = new Vector3(0, 0, spawnZ);
-                //spawnZ += activeTiles[i].GetComponent<PrefabInformation>().tileLength;
-            }
-            player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, 0);
-            for (int i = 0; i < activeTiles.Count; i++)
-            {
-                activeTiles[i].transform.parent = this.gameObject.transform;
-            }
-            player.hasControl = true;*/
-        }
-
-        float firstLength = activeTiles[0].GetComponent<PrefabInformation>().tileLength;
-        if ((playerTransform.position.z - firstLength - 30f) > activeTiles[0].transform.position.z)
-        {
-            SpawnTile(difficulty);
-            if (activeTiles.Count > 15 && firstFiveEmpty == 0)
-            {
-                DeleteTile();
+                SpawnTile(difficulty);
+                if (activeTiles.Count > 15 && firstFiveEmpty == 0)
+                {
+                    DeleteTile();
+                }
             }
         }
-        /*(else
-        {
-            SpawnTile(difficulty);
-        }*/
     }
 
     public void SetSpeed(int speed = 0)
@@ -164,221 +158,251 @@ public class GroundSpawner : MonoBehaviour
     {
         GameObject temp;
 
-        switch(difficulty)
+        if(onTutorial == false)
         {
-            //Graphics Debug
-            case 0:
-                {
-                    SetSpeed(110);
-                    if (firstFiveEmpty > 0)
+            switch (difficulty)
+            {
+                //Graphics Debug
+                case 0:
                     {
+                        SetSpeed(110);
+                        if (firstFiveEmpty > 0)
+                        {
+                            temp = Instantiate(tilePrefabsBonus[RandomPreFabindex(1)]) as GameObject;
+                            firstFiveEmpty--;
+                            break;
+                        }
                         temp = Instantiate(tilePrefabsBonus[RandomPreFabindex(1)]) as GameObject;
-                        firstFiveEmpty--;
                         break;
                     }
-                    temp = Instantiate(tilePrefabsBonus[RandomPreFabindex(1)]) as GameObject;
-                    break;
-                }
-            // Easy 1: 120 speed, many bonuses, few normals
-            case 1:
-                {
-                    SetSpeed(120);
-                    if (firstFiveEmpty > 0)
+                // Easy 1: 120 speed, many bonuses, few normals
+                case 1:
                     {
-                        temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
-                        firstFiveEmpty--;
-                        break;
-                    }
-                    else
-                    {
-                        int random = UnityEngine.Random.Range(0, 100);
-                        if (random <= 80)
-                        {
-                            temp = Instantiate(tilePrefabsBonus[RandomPreFabindex(1)]) as GameObject;
-                        }
-                        else
-                        {
-                            temp = Instantiate(tilePrefabsNormal[RandomPreFabindex(3)]) as GameObject;
-                        }
-                    }
-                    break;
-                }
-            // Easy 2: 120 speed, half bonuses, few normals, few hards 
-            case 2:
-                {
-                    SetSpeed(130);
-                    if (firstFiveEmpty > 0)
-                    {
-                        temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
-                        firstFiveEmpty--;
-                        break;
-                    }
-                    else
-                    {
-                        int random = UnityEngine.Random.Range(0, 100);
-                        if (random <= 40)
-                        {
-                            temp = Instantiate(tilePrefabsBonus[RandomPreFabindex(1)]) as GameObject;
-                        }
-                        else if (random > 40 && random <= 50)
+                        SetSpeed(120);
+                        if (firstFiveEmpty > 0)
                         {
                             temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
-                        }
-                        else if (random > 50 && random <= 75)
-                        {
-                            temp = Instantiate(tilePrefabsNormal[RandomPreFabindex(2)]) as GameObject;
+                            firstFiveEmpty--;
+                            break;
                         }
                         else
                         {
-                            temp = Instantiate(tilePrefabsHard[RandomPreFabindex(4)]) as GameObject;
+                            int random = UnityEngine.Random.Range(0, 100);
+                            if (random <= 60)
+                            {
+                                temp = Instantiate(tilePrefabsBonus[RandomPreFabindex(1)]) as GameObject;
+                            }
+                            else
+                            {
+                                temp = Instantiate(tilePrefabsNormal[RandomPreFabindex(3)]) as GameObject;
+                            }
                         }
-                    }
-                    break;
-                }
-            // Medium 1: 120 speed, 20% bonuses, 10% empty 40% normals, 30%  hards 
-            case 3:
-                {
-                    SetSpeed(130);
-                    if (firstFiveEmpty > 0)
-                    {
-                        temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
-                        firstFiveEmpty--;
                         break;
                     }
-                    else
+                // Easy 2: 120 speed, half bonuses, few normals, few hards 
+                case 2:
                     {
-                        int random = UnityEngine.Random.Range(0, 100);
-                        if (random <= 20)
-                        {
-                            temp = Instantiate(tilePrefabsBonus[RandomPreFabindex(1)]) as GameObject;
-                        }
-                        else if (random > 20 && random <= 30)
+                        SetSpeed(130);
+                        if (firstFiveEmpty > 0)
                         {
                             temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
-                        }
-                        else if (random > 30 && random <= 70)
-                        {
-                            temp = Instantiate(tilePrefabsNormal[RandomPreFabindex(2)]) as GameObject;
+                            firstFiveEmpty--;
+                            break;
                         }
                         else
                         {
-                            temp = Instantiate(tilePrefabsHard[RandomPreFabindex(4)]) as GameObject;
+                            int random = UnityEngine.Random.Range(0, 100);
+                            if (random <= 30)
+                            {
+                                temp = Instantiate(tilePrefabsBonus[RandomPreFabindex(1)]) as GameObject;
+                            }
+                            else if (random > 30 && random <= 35)
+                            {
+                                temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
+                            }
+                            else if (random > 35 && random <= 75)
+                            {
+                                temp = Instantiate(tilePrefabsNormal[RandomPreFabindex(2)]) as GameObject;
+                            }
+                            else
+                            {
+                                temp = Instantiate(tilePrefabsHard[RandomPreFabindex(4)]) as GameObject;
+                            }
                         }
-                    }
-                    break;
-                }
-            // Medium 2:  20% bonuses, 10% empty 40% normals, 30%  hards, 150 fwdSpeed
-            case 4:
-                {
-                    SetSpeed(140);
-                    if (firstFiveEmpty > 0)
-                    {
-                        temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
-                        firstFiveEmpty--;
                         break;
                     }
-                    else
+                // Medium 1: 120 speed, 20% bonuses, 10% empty 40% normals, 30%  hards 
+                case 3:
                     {
-                        int random = UnityEngine.Random.Range(0, 100);
-                        if (random <= 40)
-                        {
-                            temp = Instantiate(tilePrefabsBonus[RandomPreFabindex(1)]) as GameObject;
-                        }
-                        else if (random > 40 && random <= 50)
+                        SetSpeed(130);
+                        if (firstFiveEmpty > 0)
                         {
                             temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
-                        }
-                        else if (random > 50 && random <= 75)
-                        {
-                            temp = Instantiate(tilePrefabsNormal[RandomPreFabindex(2)]) as GameObject;
+                            firstFiveEmpty--;
+                            break;
                         }
                         else
                         {
-                            temp = Instantiate(tilePrefabsHard[RandomPreFabindex(4)]) as GameObject;
+                            int random = UnityEngine.Random.Range(0, 100);
+                            if (random <= 20)
+                            {
+                                temp = Instantiate(tilePrefabsBonus[RandomPreFabindex(1)]) as GameObject;
+                            }
+                            else if (random > 20 && random <= 25)
+                            {
+                                temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
+                            }
+                            else if (random > 25 && random <= 75)
+                            {
+                                temp = Instantiate(tilePrefabsNormal[RandomPreFabindex(2)]) as GameObject;
+                            }
+                            else
+                            {
+                                temp = Instantiate(tilePrefabsHard[RandomPreFabindex(4)]) as GameObject;
+                            }
                         }
-                    }
-                    break;
-                }
-            // Medium 2: 120 speed, 10% bonuses, 5% empty 45% normals, 40%  hards, 150 fwdSpeed
-            case 5:
-                {
-                    SetSpeed(150);
-                    if (firstFiveEmpty > 0)
-                    {
-                        temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
-                        firstFiveEmpty--;
                         break;
                     }
-                    else
+                // Medium 2:  20% bonuses, 10% empty 40% normals, 30%  hards, 150 fwdSpeed
+                case 4:
                     {
-                        int random = UnityEngine.Random.Range(0, 100);
-                        if (random <= 1)
+                        SetSpeed(140);
+                        if (firstFiveEmpty > 0)
                         {
-                            temp = Instantiate(tilePrefabsBonus[RandomPreFabindex(1)]) as GameObject;
-                        }
-                        else if (random > 1 && random <= 95)
-                        {
-                            temp = Instantiate(tilePrefabsNormal[RandomPreFabindex(2)]) as GameObject;
+                            temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
+                            firstFiveEmpty--;
+                            break;
                         }
                         else
                         {
-                            temp = Instantiate(tilePrefabsHard[RandomPreFabindex(4)]) as GameObject;
+                            int random = UnityEngine.Random.Range(0, 100);
+                            if (random <= 10)
+                            {
+                                temp = Instantiate(tilePrefabsBonus[RandomPreFabindex(1)]) as GameObject;
+                            }
+                            else if (random > 10 && random <= 15)
+                            {
+                                temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
+                            }
+                            else if (random > 15 && random <= 75)
+                            {
+                                temp = Instantiate(tilePrefabsNormal[RandomPreFabindex(2)]) as GameObject;
+                            }
+                            else
+                            {
+                                temp = Instantiate(tilePrefabsHard[RandomPreFabindex(4)]) as GameObject;
+                            }
                         }
-                    }
-                    break;
-                }
-            //Hard 1: Fuck you.
-            case 6:
-                {
-                    SetSpeed(150);
-                    if (firstFiveEmpty > 0)
-                    {
-                        temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
-                        firstFiveEmpty--;
                         break;
                     }
-                    else
+                // Medium 2: 120 speed, 10% bonuses, 5% empty 45% normals, 40%  hards, 150 fwdSpeed
+                case 5:
                     {
-                        int random = UnityEngine.Random.Range(0, 100);
-                        if (random <= 10)
+                        SetSpeed(150);
+                        if (firstFiveEmpty > 0)
                         {
-                            temp = Instantiate(tilePrefabsBonus[RandomPreFabindex(1)]) as GameObject;
-                        }
-                        else if (random > 10 && random <= 50)
-                        {
-                            temp = Instantiate(tilePrefabsNormal[RandomPreFabindex(2)]) as GameObject;
-                        }
-                        else if (random > 50 && random <= 75)
-                        {
-                            temp = Instantiate(tilePrefabsVeryHard[RandomPreFabindex(6)]) as GameObject;
+                            temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
+                            firstFiveEmpty--;
+                            break;
                         }
                         else
                         {
-                            temp = Instantiate(tilePrefabsVeryHard[RandomPreFabindex(6)]) as GameObject;
+                            int random = UnityEngine.Random.Range(0, 100);
+                            if (random <= 1)
+                            {
+                                temp = Instantiate(tilePrefabsBonus[RandomPreFabindex(1)]) as GameObject;
+                            }
+                            else if (random > 1 && random <= 95)
+                            {
+                                temp = Instantiate(tilePrefabsNormal[RandomPreFabindex(2)]) as GameObject;
+                            }
+                            else
+                            {
+                                temp = Instantiate(tilePrefabsHard[RandomPreFabindex(4)]) as GameObject;
+                            }
                         }
-                    }
-                    break;
-                }
-            default:
-                {
-                    SetSpeed(90);
-                    if (firstFiveEmpty > 0)
-                    {
-                        temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
-                        firstFiveEmpty--;
                         break;
                     }
-                    temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
-                    break;
-                }
-                
-                
+                //Hard 1: Fuck you.
+                case 6:
+                    {
+                        SetSpeed(150);
+                        if (firstFiveEmpty > 0)
+                        {
+                            temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
+                            firstFiveEmpty--;
+                            break;
+                        }
+                        else
+                        {
+                            int random = UnityEngine.Random.Range(0, 100);
+                            if (random <= 10)
+                            {
+                                temp = Instantiate(tilePrefabsBonus[RandomPreFabindex(1)]) as GameObject;
+                            }
+                            else if (random > 10 && random <= 50)
+                            {
+                                temp = Instantiate(tilePrefabsNormal[RandomPreFabindex(2)]) as GameObject;
+                            }
+                            else if (random > 50 && random <= 75)
+                            {
+                                temp = Instantiate(tilePrefabsVeryHard[RandomPreFabindex(6)]) as GameObject;
+                            }
+                            else
+                            {
+                                temp = Instantiate(tilePrefabsVeryHard[RandomPreFabindex(6)]) as GameObject;
+                            }
+                        }
+                        break;
+                    }
+                default:
+                    {
+                        SetSpeed(90);
+                        if (firstFiveEmpty > 0)
+                        {
+                            temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
+                            firstFiveEmpty--;
+                            break;
+                        }
+                        temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
+                        break;
+                    }
+            }
+            temp.transform.SetParent(transform);
+            temp.transform.position = Vector3.forward * spawnZ;
+            tileLength = temp.gameObject.GetComponent<PrefabInformation>().tileLength;
+            spawnZ += tileLength;
+            activeTiles.Add(temp);
         }
-        temp.transform.SetParent(transform);
-        temp.transform.position = Vector3.forward * spawnZ;
-        tileLength = temp.gameObject.GetComponent<PrefabInformation>().tileLength;
-        spawnZ += tileLength;
-        activeTiles.Add(temp);
+        else
+        {
+            bool isDone = true;
+            SetSpeed(110);
+            if (firstFiveEmpty > 0)
+            {
+                temp = Instantiate(tilePrefabsEmpty[0]) as GameObject;
+                firstFiveEmpty--;
+                temp.transform.SetParent(transform);
+                temp.transform.position = Vector3.forward * spawnZ;
+                tileLength = temp.gameObject.GetComponent<PrefabInformation>().tileLength;
+                spawnZ += tileLength;
+                activeTiles.Add(temp);
+            }
+            else
+            {
+                if (tutorialIndex < tutorialTilePrefabs.Length)
+                {
+                    temp = Instantiate(tutorialTilePrefabs[tutorialIndex]) as GameObject;
+                    tutorialIndex++;
+                    temp.transform.SetParent(transform);
+                    temp.transform.position = Vector3.forward * spawnZ;
+                    tileLength = temp.gameObject.GetComponent<PrefabInformation>().tileLength;
+                    spawnZ += tileLength;
+                    activeTiles.Add(temp);
+                }
+            }
+        }
+
     }
 
     private void DeleteTile()
