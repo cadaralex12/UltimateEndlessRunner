@@ -57,10 +57,10 @@ public class GroundSpawner : MonoBehaviour
 
     private void changeMusic()
     {
-        mainMusic.volume = 0.1f;
-
+        mainMusic.volume = 0f;
         if(onTutorial == false)
         {
+            mainMusic.volume = 0.1f;
             switch (difficulty)
             {
                 case 1:
